@@ -115,8 +115,12 @@
     .cart-qty-control { display: flex; align-items: center; gap: 10px; background: var(--app-bg); border-radius: 8px; padding: 4px; }
     .cart-qty-control button { background: var(--card-bg); border: 1px solid var(--border-color); width: 24px; height: 24px; border-radius: 6px; font-weight: bold; cursor: pointer; }
     
-    .outlet-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 13px; margin-top: 15px; margin-bottom: 5px; outline: none; }
+    /* Input Wajib Isi */
+    .outlet-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 13px; margin-top: 15px; margin-bottom: 5px; outline: none; transition: 0.3s; }
     .outlet-input:focus { border-color: var(--accent); }
+    .outlet-input.error { border-color: var(--promo-red); background: #fffcfc; }
+    .error-msg { font-size: 11px; color: var(--promo-red); display: none; margin-bottom: 10px; }
+    
     .modal-btn-wa { width: 100%; padding: 15px; background: #25D366; color: #fff; border: none; border-radius: 12px; font-weight: 600; font-size: 15px; margin-top: 15px; cursor: pointer; }
 </style>
 </head>
@@ -207,7 +211,9 @@
         
         <div id="modalItems"></div>
         
-        <input type="text" id="outletName" class="outlet-input" placeholder="Ketik nama outlet (Contoh: Kopken Sudirman)">
+        <input type="text" id="outletName" class="outlet-input" placeholder="Wajib ketik nama outlet tujuan (Misal: Sudirman)">
+        <div id="outletError" class="error-msg">⚠️ Mohon isi nama outlet Kopi Kenangan terdekat.</div>
+        
         <div style="font-size:11px; color:#8B7A75; margin-bottom:15px;">*Harga di atas dapat sedikit berubah menyesuaikan ketersediaan outlet tujuan.</div>
         
         <button class="modal-btn-wa" onclick="checkoutWA()">Pesan via WhatsApp Sekarang</button>
@@ -215,24 +221,22 @@
 </div>
 
 <script>
-const phone = "6282281884811"; // GANTI NOMOR
+const phone = "628XXXXXXXXXX"; // GANTI NOMOR
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
-// RUMUS CERDAS SESUAI PERMINTAAN!
-// (Harga Normal / 2) + 4.500
-// Kalau Oatmilk: Harga Normalnya ditambah 3000 dulu sebelum dihitung.
+// RUMUS HARGA MINUMAN (Voucher 1)
 function hitungHargaJual(hargaNormal, isOatmilk = false) {
     let baseHarga = hargaNormal;
     if (isOatmilk) baseHarga += 3000;
     return (baseHarga / 2) + 4500;
 }
 
-// Data Menu (Hanya butuh Harga Normal, Harga Jual otomatis dihitung oleh sistem)
 const rawMenuData = [
-    // --- BUNDLING (Custom Harga) ---
-    {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, priceReg: 33000, category:"Bundling", img:"bundle-2.jpg", noSugar: true, noSize: true, noMilk: true},
-    {name:"Paket Roti (Mantan + Thai Tea + Srikaya)", normal: 56000, priceReg: 37000, category:"Bundling", img:"bundle-roti.jpg", noSugar: true, noSize: true, noMilk: true},
+    // --- BUNDLING ---
+    // Rumus Bundling: (Total Normal / 2) + 5000
+    {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, priceReg: 30000, category:"Bundling", img:"bundle-2.jpg", noSugar: true, noSize: true, noMilk: true},
+    {name:"Paket Roti (Mantan + Thai Tea + Srikaya)", normal: 56000, priceReg: 33000, category:"Bundling", img:"bundle-roti.jpg", noSugar: true, noSize: true, noMilk: true},
 
     // --- COFFEE ---
     {name:"Kopi Kenangan Mantan", normal: 19000, normalLarge: 25000, category:"Coffee", img:"kopken-mantan.jpg"},
@@ -260,7 +264,7 @@ const rawMenuData = [
     {name:"Tiramisu Mocha Latte", normal: 25000, normalLarge: 32000, category:"Coffee", img:"tira-mocha.jpg"},
     {name:"Toffee Nut Latte", normal: 19000, normalLarge: 26000, category:"Coffee", img:"toffee.jpg"},
     {name:"Toffee Nut Aren Latte", normal: 21000, normalLarge: 28000, category:"Coffee", img:"toffee-aren.jpg"},
-    {name:"Toffee Nut Oat Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"toffee-oat.jpg", noMilk: true}, // Oatmilk gabisa diganti oat lagi
+    {name:"Toffee Nut Oat Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"toffee-oat.jpg", noMilk: true},
     {name:"Avocado Coffee", normal: 28000, normalLarge: 38000, category:"Coffee", img:"avo-coffee.jpg"},
 
     // --- NON COFFEE ---
@@ -275,7 +279,7 @@ const rawMenuData = [
     {name:"Raspberry Hibiscus", normal: 20000, normalLarge: 27000, category:"Non-Coffee", img:"raspberry.jpg"},
     {name:"Thai Tea", normal: 17000, normalLarge: 22000, category:"Non-Coffee", img:"thaitea.jpg"},
     {name:"Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"matcha-latte.jpg"},
-    {name:"Oatside Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"oatside-matcha.jpg", noMilk: true}, // Udah Oatside
+    {name:"Oatside Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"oatside-matcha.jpg", noMilk: true},
     {name:"Avocado Caramel", normal: 28000, normalLarge: 38000, category:"Non-Coffee", img:"avo-caramel.jpg"},
     {name:"Avocado Milk", normal: 24000, normalLarge: 34000, category:"Non-Coffee", img:"avo-milk.jpg"},
     {name:"Dutch Chocolate", normal: 26000, normalLarge: 36000, category:"Non-Coffee", img:"dutch.jpg"},
@@ -291,7 +295,7 @@ const rawMenuData = [
     {name:"Kopi Kenangan Mantan Frappe", normal: 27000, normalLarge: 34000, category:"Frappe", img:"kopken-frappe.jpg"},
     {name:"Dutch Choco Kenangan Frappe", normal: 29000, normalLarge: 36000, category:"Frappe", img:"dutch-frappe.jpg"},
 
-    // --- FOOD (Harga Fix dari tabel kamu, rumusnya beda krn food) ---
+    // --- FOOD ---
     {name:"Wahyu Sapi Toast", priceReg: 15000, normal: 19000, category:"Food", img:"wahyu-sapi.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Butter Croissant", priceReg: 13000, normal: 15000, category:"Food", img:"butter-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Chocolate Croissant", priceReg: 15000, normal: 19000, category:"Food", img:"choco-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
@@ -341,8 +345,6 @@ function renderAllMenus() {
 
         items.forEach((item) => {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
-            
-            // Tentukan Harga Tampil di Depan (Harga Reguler tanpa Oatmilk)
             let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
 
             const card = document.createElement("div");
@@ -371,12 +373,10 @@ function openVariantModal(itemName) {
     tempItem = rawMenuData.find(i => i.name === itemName);
     document.getElementById("v-title").innerText = tempItem.name;
     
-    // Set Default Status di state sementara
     tempItem.selectedSize = "Regular";
     tempItem.isOatmilk = false;
     tempItem.selectedSugar = "Normal";
 
-    // 1. BAGIAN UKURAN
     const sizeSection = document.getElementById("v-size-section");
     const sizeOptions = document.getElementById("v-size-options");
     sizeOptions.innerHTML = "";
@@ -399,7 +399,6 @@ function openVariantModal(itemName) {
         }
     }
 
-    // 2. BAGIAN SUSU OATMILK
     const milkSection = document.getElementById("v-milk-section");
     if (tempItem.category === "Food" || tempItem.noMilk) {
         milkSection.style.display = "none";
@@ -407,11 +406,10 @@ function openVariantModal(itemName) {
         milkSection.style.display = "block";
         const milkLabels = milkSection.querySelectorAll('.radio-label');
         milkLabels.forEach(l => l.classList.remove('selected'));
-        milkLabels[0].classList.add('selected'); // Default Susu Biasa
+        milkLabels[0].classList.add('selected'); 
         milkLabels[0].querySelector('input').checked = true;
     }
 
-    // 3. BAGIAN GULA
     const sugarSection = document.getElementById("v-sugar-section");
     if (tempItem.category === "Food" || tempItem.noSugar) {
         sugarSection.style.display = "none";
@@ -419,7 +417,7 @@ function openVariantModal(itemName) {
         sugarSection.style.display = "block";
         const sugarLabels = sugarSection.querySelectorAll('.radio-label');
         sugarLabels.forEach(l => l.classList.remove('selected'));
-        sugarLabels[0].classList.add('selected'); // Default Normal
+        sugarLabels[0].classList.add('selected'); 
         sugarLabels[0].querySelector('input').checked = true;
     }
 
@@ -427,20 +425,17 @@ function openVariantModal(itemName) {
     document.getElementById("variantModal").style.display = "flex";
 }
 
-// Fungsi Update Harga Dinamis Tiap Kali Diklik
 function updateVariantPriceUI() {
     let finalPrice = 0;
     
     if (tempItem.category === "Food" || tempItem.priceReg) {
-        // Kalau makanan / Bundle (yg harganya dihardcode)
         finalPrice = tempItem.priceReg;
     } else {
-        // Hitung otomatis pakai rumus maut bosku!
         let baseNormal = tempItem.selectedSize === 'Large' ? tempItem.normalLarge : tempItem.normal;
         finalPrice = hitungHargaJual(baseNormal, tempItem.isOatmilk);
     }
 
-    tempItem.currentPrice = finalPrice; // simpan harga aktif
+    tempItem.currentPrice = finalPrice;
     document.getElementById("v-price-btn").innerText = formatRp(finalPrice);
 }
 
@@ -451,7 +446,7 @@ function selectSize(element, size) {
     element.querySelector('input').checked = true;
     
     tempItem.selectedSize = size;
-    updateVariantPriceUI(); // Hitung ulang harga
+    updateVariantPriceUI();
 }
 
 function selectMilk(element, isOatmilk) {
@@ -461,7 +456,7 @@ function selectMilk(element, isOatmilk) {
     element.querySelector('input').checked = true;
     
     tempItem.isOatmilk = isOatmilk;
-    updateVariantPriceUI(); // Hitung ulang harga (+3000 ke base)
+    updateVariantPriceUI(); 
 }
 
 function selectSugar(element) {
@@ -554,9 +549,22 @@ function openCartModal() { document.getElementById("cartModal").style.display = 
 function closeCartModal() { document.getElementById("cartModal").style.display = "none"; }
 
 function checkoutWA(){
-    const outlet = document.getElementById("outletName").value || "Bebas pilih terdekat";
+    const outletInput = document.getElementById("outletName");
+    const outletError = document.getElementById("outletError");
+    const outlet = outletInput.value.trim();
     
-    let message = `Halo, saya mau order Kopken (Harga Promo):%0A%0A*📌 Outlet:* ${outlet}%0A%0A*🛒 PESANAN:*%0A`;
+    // VALIDASI WAJIB ISI
+    if(!outlet) {
+        outletInput.classList.add("error");
+        outletError.style.display = "block";
+        outletInput.focus();
+        return;
+    } else {
+        outletInput.classList.remove("error");
+        outletError.style.display = "none";
+    }
+
+    let message = `Halo, saya mau order Kopken (Harga Promo):%0A%0A*📌 Outlet Tujuan:* ${outlet}%0A%0A*🛒 PESANAN:*%0A`;
     let total = 0;
 
     for (const key in cart) {
@@ -571,9 +579,15 @@ function checkoutWA(){
         message += `   └ ${item.qty} x Rp ${formatRp(item.price)} = *Rp ${formatRp(subtotal)}*%0A%0A`;
     }
 
-    message += `*Total Estimasi: Rp ${formatRp(total)}*%0A%0AMohon infonya ya. Makasih!`;
+    message += `*Total Estimasi: Rp ${formatRp(total)}*%0A%0AMohon konfirmasinya ya. Makasih!`;
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
+
+// Hapus error state pas user mulai ngetik outlet
+document.getElementById("outletName").addEventListener("input", function() {
+    this.classList.remove("error");
+    document.getElementById("outletError").style.display = "none";
+});
 
 renderAllMenus();
 updateCartUI();
