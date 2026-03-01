@@ -447,7 +447,7 @@ const rawMenuData = [
 
     // --- COFFEE ---
     {name:"Kopi Kenangan Mantan", normal: 19000, normalLarge: 25000, category:"Coffee", img:"kopken-mantan.jpg"},
-    {name:"Americano", normal: 17000, normalLarge: 22000, category:"Coffee", img:"americano.jpg"},
+    {name:"Americano", normal: 17000, normalLarge: 22000, category:"Coffee", img:"americano.jpg", noSugar: true, noMilk: true},
     {name:"Cappuccino", normal: 22000, normalLarge: 29000, category:"Coffee", img:"cappuccino.jpg"},
     {name:"Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"latte.jpg"},
     {name:"Vanilla Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"vanilla-latte.jpg"},
@@ -503,10 +503,12 @@ const rawMenuData = [
     {name:"Dutch Choco Kenangan Frappe", normal: 29000, normalLarge: 36000, category:"Frappe", img:"dutch-frappe.jpg"},
 
     // --- FOOD ---
-    {name:"Wahyu Sapi Toast", priceReg: 15000, normal: 19000, category:"Food", img:"wahyu-sapi.jpg", noSize: true, noSugar: true, noMilk: true},
+// --- FOOD ---
+    // Harga jual sudah diamankan agar margin minimal Rp 2.000 - Rp 3.500 per item
+    {name:"Wahyu Sapi Toast", priceReg: 16000, normal: 19000, category:"Food", img:"wahyu-sapi.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Butter Croissant", priceReg: 13000, normal: 15000, category:"Food", img:"butter-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Chocolate Croissant", priceReg: 15000, normal: 19000, category:"Food", img:"choco-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Sugar Donut", priceReg: 11000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Chocolate Croissant", priceReg: 16000, normal: 19000, category:"Food", img:"choco-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Sugar Donut", priceReg: 10000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true}, // Jangan didiskon, rawan rugi
     {name:"Roti Srikaya", priceReg: 13000, normal: 15000, category:"Food", img:"srikaya.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Choco Chip Cookies", priceReg: 13000, normal: 14000, category:"Food", img:"choco-cookies.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Join The Dark Side Cookie", priceReg: 16000, normal: 21000, category:"Food", img:"darkside-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
@@ -514,7 +516,7 @@ const rawMenuData = [
     {name:"Roti Sisir Coklat", priceReg: 13000, normal: 14000, category:"Food", img:"sisir-coklat.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Dirty Croissant Milo", priceReg: 16000, normal: 20000, category:"Food", img:"dirty-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Bambang Choco Cheese", priceReg: 14000, normal: 17000, category:"Food", img:"bambang-toast.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Adam Ayam Toast", priceReg: 15000, normal: 19000, category:"Food", img:"adam-ayam.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Adam Ayam Toast", priceReg: 16000, normal: 19000, category:"Food", img:"adam-ayam.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Donut Tiramisu", priceReg: 13000, normal: 14000, category:"Food", img:"donut-tiramisu.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Danish Tiramisu", priceReg: 16000, normal: 20000, category:"Food", img:"danish-tiramisu.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Bolu Marble Ube", priceReg: 13000, normal: 15000, category:"Food", img:"bolu-ube.jpg", noSize: true, noSugar: true, noMilk: true},
