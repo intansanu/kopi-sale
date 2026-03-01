@@ -7,16 +7,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg-color: #FAF6F0; /* Krem sangat lembut */
+        --bg-color: #FAF6F0;
         --card-bg: #FFFFFF;
-        --text-dark: #4A3A36; /* Cokelat gelap */
-        --text-light: #8B7A75; /* Cokelat pudar */
-        --accent: #C28C65; /* Karamel / Cokelat susu */
+        --text-dark: #4A3A36;
+        --text-light: #8B7A75;
+        --accent: #C28C65;
         --accent-hover: #A6724E;
         --badge-bg: #F4E8D9;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
 
     body {
         background: var(--bg-color);
@@ -24,19 +25,18 @@
         min-height: 100vh;
         display: flex;
         justify-content: center;
-        padding: 20px 15px;
         padding-bottom: 100px; /* Space untuk cart melayang */
     }
 
     .container {
         width: 100%;
         max-width: 500px;
+        background: var(--bg-color);
+        position: relative;
     }
 
     .header {
-        text-align: center;
-        margin-bottom: 25px;
-        padding-top: 10px;
+        padding: 25px 20px 15px;
     }
 
     .badge {
@@ -48,198 +48,199 @@
         font-size: 12px;
         font-weight: 600;
         margin-bottom: 12px;
-        letter-spacing: 0.5px;
     }
 
-    .header h1 {
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--text-dark);
-    }
+    .header h1 { font-size: 24px; font-weight: 700; line-height: 1.2; }
+    .header p { font-size: 13px; color: var(--text-light); margin-top: 5px; }
 
-    .header p {
-        font-size: 13px;
-        color: var(--text-light);
-        margin-top: 5px;
-    }
-
-    /* Kategori Tabs */
-    .categories {
+    /* Sticky Navigation seperti GoFood/GrabFood */
+    .sticky-nav {
+        position: sticky;
+        top: 0;
+        background: rgba(250, 246, 240, 0.95);
+        backdrop-filter: blur(5px);
+        padding: 12px 20px;
+        z-index: 10;
         display: flex;
         gap: 10px;
         overflow-x: auto;
-        padding-bottom: 15px;
-        margin-bottom: 10px;
+        border-bottom: 1px solid #EAE0D5;
         scrollbar-width: none;
     }
-    .categories::-webkit-scrollbar { display: none; }
+    .sticky-nav::-webkit-scrollbar { display: none; }
     
-    .tab-btn {
+    .sticky-nav a {
+        text-decoration: none;
         background: var(--card-bg);
-        border: 1px solid #EAE0D5;
-        color: var(--text-light);
-        padding: 8px 16px;
+        color: var(--text-dark);
+        padding: 8px 18px;
         border-radius: 20px;
         font-size: 13px;
         font-weight: 500;
-        cursor: pointer;
         white-space: nowrap;
-        transition: 0.3s ease;
+        border: 1px solid #EAE0D5;
+        transition: 0.2s;
     }
-    .tab-btn.active {
+    .sticky-nav a:hover, .sticky-nav a:active {
         background: var(--accent);
         color: #fff;
         border-color: var(--accent);
     }
 
-    .menu {
+    /* Area Menu */
+    .menu-section {
+        padding: 20px;
+        padding-top: 30px; /* Jarak pasca scroll */
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Grid 2 Kolom Profesional */
+    .menu-grid {
         display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
 
     .card {
         background: var(--card-bg);
-        padding: 12px;
-        border-radius: 20px;
+        border-radius: 18px;
+        overflow: hidden;
         display: flex;
-        align-items: center;
-        gap: 15px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        transition: transform 0.2s ease;
+        flex-direction: column;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        border: 1px solid #F0EBE1;
     }
 
     .card img {
-        width: 75px;
-        height: 75px;
-        border-radius: 15px;
+        width: 100%;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
-        background: #F0EBE1; /* Placeholder color */
+        background: #F0EBE1;
     }
 
-    .card-info { flex: 1; }
+    .card-body {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
+    }
 
     .card-info h3 {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 600;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
         line-height: 1.3;
+        color: var(--text-dark);
+        /* Maksimal 2 baris text */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .price {
         font-size: 14px;
         color: var(--accent);
         font-weight: 700;
+        margin-bottom: 10px;
     }
 
-    .qty-btn {
+    /* Tombol QTY gaya baru */
+    .qty-control {
         display: flex;
         align-items: center;
-        gap: 10px;
+        justify-content: space-between;
         background: var(--bg-color);
-        padding: 4px 8px;
         border-radius: 12px;
+        padding: 4px;
+        margin-top: auto;
     }
 
-    .qty-btn button {
-        background: transparent;
+    .qty-control button {
+        background: var(--card-bg);
         color: var(--text-dark);
-        border: none;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        cursor: pointer;
+        border: 1px solid #EAE0D5;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
         font-size: 16px;
+        font-weight: 600;
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
         transition: 0.2s;
     }
     
-    .qty-btn button:active { background: #E2D7C8; }
-    .qty-btn span { font-size: 13px; font-weight: 600; min-width: 12px; text-align: center; }
+    .qty-control button:active { background: #EAE0D5; }
+    .qty-control span { font-size: 13px; font-weight: 600; text-align: center; width: 100%; }
 
-    /* Floating Cart */
+    /* Floating Cart Bawah */
     .cart-wrapper {
         position: fixed;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        width: calc(100% - 30px);
-        max-width: 500px;
+        width: calc(100% - 40px);
+        max-width: 460px;
         z-index: 100;
     }
 
     .cart {
         background: var(--text-dark);
         color: #fff;
-        padding: 16px 20px;
-        border-radius: 20px;
+        padding: 15px 20px;
+        border-radius: 18px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         box-shadow: 0 10px 25px rgba(74, 58, 54, 0.3);
     }
 
-    .cart-info div:first-child {
-        font-size: 12px;
-        color: #D3C9C5;
-    }
-
-    .total {
-        font-size: 18px;
-        font-weight: 700;
-        color: #fff;
-    }
+    .cart-info { display: flex; flex-direction: column; }
+    .cart-info small { font-size: 11px; color: #D3C9C5; margin-bottom: 2px; }
+    .total { font-size: 16px; font-weight: 700; color: #fff; }
 
     .checkout {
         background: var(--accent);
         color: #fff;
         border: none;
-        padding: 10px 20px;
-        border-radius: 14px;
+        padding: 10px 18px;
+        border-radius: 12px;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 13px;
         cursor: pointer;
-        transition: 0.3s;
     }
-    .checkout:hover { background: var(--accent-hover); }
 
-    /* Modal Keranjang (Muncul saat mau checkout) */
+    /* Modal */
     .modal-overlay {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 999;
-        justify-content: center;
-        align-items: flex-end;
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5); z-index: 999; justify-content: center; align-items: flex-end;
     }
     .modal-content {
-        background: #fff;
-        width: 100%;
-        max-width: 500px;
-        border-radius: 25px 25px 0 0;
-        padding: 25px 20px;
-        max-height: 80vh;
-        overflow-y: auto;
+        background: #fff; width: 100%; max-width: 500px; border-radius: 25px 25px 0 0;
+        padding: 25px 20px; max-height: 80vh; overflow-y: auto;
     }
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .modal-header h2 { font-size: 18px; }
-    .close-modal {
-        background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light);
-    }
+    .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light); }
     .modal-item {
-        display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px;
-        border-bottom: 1px dashed #eee; padding-bottom: 8px;
+        display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; 
+        font-size: 14px; border-bottom: 1px solid #F0EBE1; padding-bottom: 10px;
     }
     .modal-btn-wa {
-        width: 100%; padding: 14px; background: #25D366; color: #fff; border: none;
-        border-radius: 15px; font-weight: 600; font-size: 15px; margin-top: 20px; cursor: pointer;
+        width: 100%; padding: 15px; background: #25D366; color: #fff; border: none;
+        border-radius: 14px; font-weight: 600; font-size: 15px; margin-top: 20px; cursor: pointer;
     }
 </style>
 </head>
@@ -248,27 +249,27 @@
 <div class="container">
     <div class="header">
         <div class="badge">✨ Promo Spesial</div>
-        <h1>Pesan Minuman Favoritmu</h1>
+        <h1>Menu Favoritmu</h1>
         <p>Harga reseller lebih hemat, rasa tetap nikmat.</p>
     </div>
 
-    <div class="categories" id="categoryTabs">
-        <button class="tab-btn active" onclick="filterMenu('Semua')">Semua</button>
-        <button class="tab-btn" onclick="filterMenu('Coffee')">Coffee</button>
-        <button class="tab-btn" onclick="filterMenu('Non-Coffee')">Non-Coffee</button>
-        <button class="tab-btn" onclick="filterMenu('Food')">Food & Toast</button>
+    <div class="sticky-nav">
+        <a href="#cat-Coffee">☕ Coffee</a>
+        <a href="#cat-Non-Coffee">🥤 Non-Coffee</a>
+        <a href="#cat-Food">🥐 Food & Toast</a>
     </div>
 
-    <div class="menu" id="menuList"></div>
+    <div id="allMenuContainer"></div>
+
 </div>
 
 <div class="cart-wrapper" id="cartBar" style="display: none;">
     <div class="cart">
         <div class="cart-info">
-            <div id="itemCount">0 Item</div>
+            <small id="itemCount">0 Item</small>
             <div class="total">Rp <span id="totalPrice">0</span></div>
         </div>
-        <button class="checkout" onclick="openModal()">Lihat Pesanan</button>
+        <button class="checkout" onclick="openModal()">Cek Pesanan</button>
     </div>
 </div>
 
@@ -279,19 +280,15 @@
             <button class="close-modal" onclick="closeModal()">&times;</button>
         </div>
         <div id="modalItems"></div>
-        <button class="modal-btn-wa" onclick="checkoutWA()">Kirim Order via WhatsApp</button>
+        <button class="modal-btn-wa" onclick="checkoutWA()">Pesan via WhatsApp</button>
     </div>
 </div>
 
 <script>
 const phone = "628XXXXXXXXXX"; // GANTI NOMOR KAMU DI SINI
 
-// Format Ulang Harga ke Rupiah
-const formatRp = (angka) => {
-    return angka.toLocaleString('id-ID');
-}
+const formatRp = (angka) => angka.toLocaleString('id-ID');
 
-// Data Lengkap Menu
 const menuData = [
     // --- COFFEE ---
     {name:"Americano", price:14000, category:"Coffee", img:"images/americano.jpg"},
@@ -366,46 +363,59 @@ const menuData = [
 ];
 
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
-let currentFilter = "Semua";
 
-// Render Menu dengan Filter
-function renderMenu() {
-    const menuList = document.getElementById("menuList");
-    menuList.innerHTML = "";
+// Fungsi Render Semua Kategori Ngalir ke Bawah
+function renderAllMenus() {
+    const container = document.getElementById("allMenuContainer");
+    container.innerHTML = "";
 
-    const filteredData = currentFilter === "Semua" 
-        ? menuData 
-        : menuData.filter(item => item.category === currentFilter);
+    // Ambil daftar kategori unik
+    const categories = [...new Set(menuData.map(item => item.category))];
 
-    filteredData.forEach((item, index) => {
-        const qty = cart[item.name] || 0;
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-            <img src="${item.img}" onerror="this.src='https://placehold.co/150x150/F0EBE1/8B7A75?text=${encodeURIComponent(item.name.substring(0,2))}'">
-            <div class="card-info">
-                <h3>${item.name}</h3>
-                <div class="price">Rp ${formatRp(item.price)}</div>
-            </div>
-            <div class="qty-btn">
-                <button onclick="changeQty('${item.name}', -1)">-</button>
-                <span id="qty-${item.name}">${qty}</span>
-                <button onclick="changeQty('${item.name}', 1)">+</button>
-            </div>
-        `;
-        menuList.appendChild(card);
+    categories.forEach(cat => {
+        // Buat div pembungkus per kategori
+        const section = document.createElement("div");
+        section.className = "menu-section";
+        section.id = `cat-${cat}`;
+
+        // Ikon sesuai kategori
+        let icon = cat === 'Coffee' ? '☕' : cat === 'Non-Coffee' ? '🥤' : '🥐';
+        
+        // Judul Kategori
+        section.innerHTML = `<div class="section-title">${icon} ${cat}</div>`;
+
+        // Buat Grid
+        const grid = document.createElement("div");
+        grid.className = "menu-grid";
+
+        // Filter & Masukkan produk
+        const items = menuData.filter(item => item.category === cat);
+        items.forEach(item => {
+            const qty = cart[item.name] || 0;
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <img src="${item.img}" onerror="this.src='https://placehold.co/200x200/F0EBE1/8B7A75?text=${encodeURIComponent(item.name.substring(0,3))}'" alt="${item.name}">
+                <div class="card-body">
+                    <div class="card-info">
+                        <h3>${item.name}</h3>
+                        <div class="price">Rp ${formatRp(item.price)}</div>
+                    </div>
+                    <div class="qty-control">
+                        <button onclick="changeQty('${item.name}', -1)">-</button>
+                        <span id="qty-${item.name.replace(/\s+/g, '-')}">${qty}</span>
+                        <button onclick="changeQty('${item.name}', 1)">+</button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        container.appendChild(section);
     });
 }
 
-// Filter Tab
-function filterMenu(category) {
-    currentFilter = category;
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    renderMenu();
-}
-
-// Ubah Jumlah Beli
 function changeQty(name, amount){
     if(!cart[name]) cart[name] = 0;
     cart[name] += amount;
@@ -414,14 +424,14 @@ function changeQty(name, amount){
 
     localStorage.setItem("cart", JSON.stringify(cart));
     
-    // Update angka di layar tanpa re-render semua
-    const qtySpan = document.getElementById(`qty-${name}`);
+    // Update spesifik angka agar tidak reload semua gambar
+    const idFriendlyName = name.replace(/\s+/g, '-');
+    const qtySpan = document.getElementById(`qty-${idFriendlyName}`);
     if(qtySpan) qtySpan.innerText = cart[name] || 0;
     
     updateCartUI();
 }
 
-// Update Keranjang Mengambang & Modal
 function updateCartUI() {
     let totalHarga = 0;
     let totalItem = 0;
@@ -437,7 +447,10 @@ function updateCartUI() {
             
             modalItems.innerHTML += `
                 <div class="modal-item">
-                    <div><b>${item.name}</b> <br> <small>${qty}x @ Rp ${formatRp(item.price)}</small></div>
+                    <div>
+                        <b style="color: #4A3A36">${item.name}</b><br>
+                        <span style="color: #8B7A75; font-size:13px">${qty}x @ Rp ${formatRp(item.price)}</span>
+                    </div>
                     <div style="font-weight:600; color:#C28C65;">Rp ${formatRp(subtotal)}</div>
                 </div>
             `;
@@ -449,18 +462,16 @@ function updateCartUI() {
 
     const cartBar = document.getElementById("cartBar");
     if(totalItem > 0) {
-        cartBar.style.display = "block";
+        cartBar.style.display = "flex";
     } else {
         cartBar.style.display = "none";
         closeModal();
     }
 }
 
-// Kontrol Modal
 function openModal() { document.getElementById("cartModal").style.display = "flex"; }
 function closeModal() { document.getElementById("cartModal").style.display = "none"; }
 
-// Checkout ke WA
 function checkoutWA(){
     let message = "Halo, saya mau order promo spesial:%0A%0A";
     let total = 0;
@@ -470,7 +481,7 @@ function checkoutWA(){
         if(qty){
             const subtotal = qty * item.price;
             total += subtotal;
-            message += `▪️ ${item.name}%0A  ${qty} x Rp ${formatRp(item.price)} = Rp ${formatRp(subtotal)}%0A`;
+            message += `▪️ *${item.name}*%0A  ${qty} x Rp ${formatRp(item.price)} = Rp ${formatRp(subtotal)}%0A`;
         }
     });
 
@@ -478,8 +489,8 @@ function checkoutWA(){
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 
-// Inisialisasi awal
-renderMenu();
+// Jalankan saat pertama load
+renderAllMenus();
 updateCartUI();
 </script>
 </body>
