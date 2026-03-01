@@ -286,6 +286,10 @@
     }
     .btn-primary:active { transform: scale(0.98); }
 
+    .menu-section {
+        scroll-margin-top: 140px;
+    }
+
     /* Keranjang List */
     .cart-items-container { max-height: 50vh; overflow-y: auto; padding-right: 5px; }
     .modal-item { 
@@ -340,11 +344,11 @@
         </div>
 
         <div class="sticky-nav">
-            <a href="#Bundling" class="nav-item promo-link"><i class="ri-gift-line"></i> Paket Hemat</a>
-            <a href="#Coffee" class="nav-item"><i class="ri-cup-hot-line"></i> Coffee</a>
-            <a href="#Non-Coffee" class="nav-item"><i class="ri-drinks-line"></i> Non-Coffee</a>
-            <a href="#Frappe" class="nav-item"><i class="ri-goblet-line"></i> Frappe</a>
-            <a href="#Food" class="nav-item"><i class="ri-bread-line"></i> Food</a>
+            <a href="#cat-Bundling" class="nav-item promo-link"><i class="ri-gift-line"></i> Paket Hemat</a>
+            <a href="#cat-Coffee" class="nav-item"><i class="ri-cup-hot-line"></i> Coffee</a>
+            <a href="#cat-Non-Coffee" class="nav-item"><i class="ri-drinks-line"></i> Non-Coffee</a>
+            <a href="#cat-Frappe" class="nav-item"><i class="ri-goblet-line"></i> Frappe</a>
+            <a href="#cat-Food" class="nav-item"><i class="ri-bread-line"></i> Food</a>
         </div>
     </div>
 
@@ -463,7 +467,7 @@
 </div>
 
 <script>
-const phone = "628XXXXXXXXXX"; // JANGAN LUPA GANTI NOMOR YA!
+const phone = "6282281884811"; // GANTI NOMOR
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
@@ -473,104 +477,23 @@ function hitungHargaJual(hargaNormal, isOatmilk = false) {
     return (baseHarga / 2) + 4500;
 }
 
-const rawMenuData = [
-    // --- BUNDLING ---
-    {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, priceReg: 30000, category:"Bundling", img:"bundle-2.jpg", noSugar: true, noSize: true, noMilk: true},
-    {name:"Paket Roti (Mantan + Thai Tea + Srikaya)", normal: 56000, priceReg: 33000, category:"Bundling", img:"bundle-roti.jpg", noSugar: true, noSize: true, noMilk: true},
-
-    // --- COFFEE ---
-    {name:"Kopi Kenangan Mantan", normal: 19000, normalLarge: 25000, category:"Coffee", img:"kopken-mantan.jpg"},
-    {name:"Americano", normal: 17000, normalLarge: 22000, category:"Coffee", img:"americano.jpg", noSugar: true, noMilk: true},
-    {name:"Cappuccino", normal: 22000, normalLarge: 29000, category:"Coffee", img:"cappuccino.jpg"},
-    {name:"Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"latte.jpg"},
-    {name:"Vanilla Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"vanilla-latte.jpg"},
-    {name:"Spanish Latte", normal: 19000, normalLarge: 27000, category:"Coffee", img:"spanish-latte.jpg"},
-    {name:"Creamy Aren Latte", normal: 22000, normalLarge: 31000, category:"Coffee", img:"creamy-aren.jpg"},
-    {name:"Butterscotch Aren Latte", normal: 20000, normalLarge: 27000, category:"Coffee", img:"butter-aren.jpg"},
-    {name:"Butterscotch Sea Salt Latte", normal: 25000, normalLarge: 33000, category:"Coffee", img:"butter-seasalt.jpg"},
-    {name:"Dua Shot Iced Shaken", normal: 28000, normalLarge: 38000, category:"Coffee", img:"dua-shot.jpg"},
-    {name:"Caramel Macchiato", normal: 28000, normalLarge: 38000, category:"Coffee", img:"caramel-mac.jpg"},
-    {name:"Hazelnut Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"hazelnut.jpg"},
-    {name:"Kopi Susu Black Aren", normal: 21000, normalLarge: 30000, category:"Coffee", img:"black-aren.jpg"},
-    {name:"Matcha Espresso", normal: 26000, normalLarge: 35000, category:"Coffee", img:"matcha-esp.jpg"},
-    {name:"Mocha Latte", normal: 28000, normalLarge: 38000, category:"Coffee", img:"mocha-latte.jpg"},
-    {name:"Dubai Pistachio Latte", normal: 26000, normalLarge: 33000, category:"Coffee", img:"dubai-pis.jpg"},
-    {name:"Pistachio Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"pistachio.jpg"},
-    {name:"Pistachio Aren Latte", normal: 19000, normalLarge: 26000, category:"Coffee", img:"pis-aren.jpg"},
-    {name:"Cafe Malt Latte", normal: 23000, normalLarge: 30000, category:"Coffee", img:"malt-latte.jpg"},
-    {name:"Caramel Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"caramel-latte.jpg"},
-    {name:"Mocha Caramel", normal: 26000, normalLarge: 33000, category:"Coffee", img:"mocha-caramel.jpg"},
-    {name:"Tiramisu Latte", normal: 20000, normalLarge: 27000, category:"Coffee", img:"tiramisu.jpg"},
-    {name:"Tiramisu Mocha Latte", normal: 25000, normalLarge: 32000, category:"Coffee", img:"tira-mocha.jpg"},
-    {name:"Toffee Nut Latte", normal: 19000, normalLarge: 26000, category:"Coffee", img:"toffee.jpg"},
-    {name:"Toffee Nut Aren Latte", normal: 21000, normalLarge: 28000, category:"Coffee", img:"toffee-aren.jpg"},
-    {name:"Toffee Nut Oat Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"toffee-oat.jpg", noMilk: true},
-    {name:"Avocado Coffee", normal: 28000, normalLarge: 38000, category:"Coffee", img:"avo-coffee.jpg"},
-
-    // --- NON COFFEE ---
-    {name:"Choco Caramel", normal: 19000, normalLarge: 26000, category:"Non-Coffee", img:"choco-caramel.jpg"},
-    {name:"Toffee Nut Choco Macchiato", normal: 22000, normalLarge: null, category:"Non-Coffee", img:"toffee-choco.jpg"},
-    {name:"Butterscotch Sea Salt Crumble", normal: 22000, normalLarge: null, category:"Non-Coffee", img:"bs-seasalt-nc.jpg"},
-    {name:"Babyccino", normal: 19000, normalLarge: null, category:"Non-Coffee", img:"babyccino.jpg"},
-    {name:"Dubai Pistachio Chocolate", normal: 27000, normalLarge: 34000, category:"Non-Coffee", img:"dubai-choco.jpg"},
-    {name:"Hazelnut Choco Milk Tea", normal: 22000, normalLarge: 29000, category:"Non-Coffee", img:"hazel-milktea.jpg"},
-    {name:"Milo Dinosaur", normal: 23000, normalLarge: 30000, category:"Non-Coffee", img:"milo.jpg"},
-    {name:"Oreo Shake", normal: 26000, normalLarge: 34000, category:"Non-Coffee", img:"oreo.jpg"},
-    {name:"Raspberry Hibiscus", normal: 20000, normalLarge: 27000, category:"Non-Coffee", img:"raspberry.jpg"},
-    {name:"Thai Tea", normal: 17000, normalLarge: 22000, category:"Non-Coffee", img:"thaitea.jpg"},
-    {name:"Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"matcha-latte.jpg"},
-    {name:"Oatside Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"oatside-matcha.jpg", noMilk: true},
-    {name:"Avocado Caramel", normal: 28000, normalLarge: 38000, category:"Non-Coffee", img:"avo-caramel.jpg"},
-    {name:"Avocado Milk", normal: 24000, normalLarge: 34000, category:"Non-Coffee", img:"avo-milk.jpg"},
-    {name:"Dutch Chocolate", normal: 26000, normalLarge: 36000, category:"Non-Coffee", img:"dutch.jpg"},
-    {name:"Hazelnut Dutch Choco", normal: 28000, normalLarge: 38000, category:"Non-Coffee", img:"hazel-dutch.jpg"},
-    {name:"Lemon Black Tea", normal: 17000, normalLarge: 24000, category:"Non-Coffee", img:"lemon-tea.jpg"},
-    {name:"Kenangan Milk Tea", normal: 21000, normalLarge: 27000, category:"Non-Coffee", img:"kenangan-milktea.jpg"},
-
-    // --- FRAPPE ---
-    {name:"Choco Caramel Frappe", normal: 28000, normalLarge: 35000, category:"Frappe", img:"choco-frappe.jpg"},
-    {name:"Tiramisu Frappe", normal: 28000, normalLarge: 35000, category:"Frappe", img:"tiramisu-frappe.jpg"},
-    {name:"Butterscotch Kenangan Frappe", normal: 30000, normalLarge: 40000, category:"Frappe", img:"bs-frappe.jpg"},
-    {name:"Matcha Kenangan Frappe", normal: 32000, normalLarge: 42000, category:"Frappe", img:"matcha-frappe.jpg"},
-    {name:"Kopi Kenangan Mantan Frappe", normal: 27000, normalLarge: 34000, category:"Frappe", img:"kopken-frappe.jpg"},
-    {name:"Dutch Choco Kenangan Frappe", normal: 29000, normalLarge: 36000, category:"Frappe", img:"dutch-frappe.jpg"},
-
-    // --- FOOD ---
-    {name:"Wahyu Sapi Toast", priceReg: 16000, normal: 19000, category:"Food", img:"wahyu-sapi.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Butter Croissant", priceReg: 13000, normal: 15000, category:"Food", img:"butter-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Chocolate Croissant", priceReg: 16000, normal: 19000, category:"Food", img:"choco-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Sugar Donut", priceReg: 10000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Roti Srikaya", priceReg: 13000, normal: 15000, category:"Food", img:"srikaya.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Choco Chip Cookies", priceReg: 13000, normal: 14000, category:"Food", img:"choco-cookies.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Join The Dark Side Cookie", priceReg: 16000, normal: 21000, category:"Food", img:"darkside-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Friend Chip Cookie", priceReg: 14000, normal: 17000, category:"Food", img:"friend-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Roti Sisir Coklat", priceReg: 13000, normal: 14000, category:"Food", img:"sisir-coklat.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Dirty Croissant Milo", priceReg: 16000, normal: 20000, category:"Food", img:"dirty-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Bambang Choco Cheese", priceReg: 14000, normal: 17000, category:"Food", img:"bambang-toast.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Adam Ayam Toast", priceReg: 16000, normal: 19000, category:"Food", img:"adam-ayam.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Donut Tiramisu", priceReg: 13000, normal: 14000, category:"Food", img:"donut-tiramisu.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Danish Tiramisu", priceReg: 16000, normal: 20000, category:"Food", img:"danish-tiramisu.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Bolu Marble Ube", priceReg: 13000, normal: 15000, category:"Food", img:"bolu-ube.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Canele Original", priceReg: 13000, normal: 14000, category:"Food", img:"canele.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Canele Toffee Nut", priceReg: 14000, normal: 16000, category:"Food", img:"canele-toffee.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Donut Abon", priceReg: 13000, normal: 14000, category:"Food", img:"donut-abon.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Donut Almond", priceReg: 13000, normal: 14000, category:"Food", img:"donut-almond.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Roti Gulung Abon", priceReg: 15000, normal: 18000, category:"Food", img:"gulung-abon.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Roti Gulung Aren", priceReg: 13000, normal: 15000, category:"Food", img:"gulung-aren.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Roti Sisir Original", priceReg: 12000, normal: 12000, category:"Food", img:"sisir-ori.jpg", noSize: true, noSugar: true, noMilk: true}
-];
+const rawMenuData = window.rawMenuData || rawMenuData; // tetap pakai data kamu
 
 let cart = JSON.parse(localStorage.getItem("cartDetail")) || {};
 let tempItem = null;
+
+/* =========================
+   RENDER MENU
+========================= */
 
 function renderAllMenus(searchText = "") {
     const container = document.getElementById("allMenuContainer");
     const noResultMsg = document.getElementById("noResultMsg");
     container.innerHTML = "";
-    
+
     const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Frappe", "Food"];
-    
-    const filteredData = rawMenuData.filter(item => 
+
+    const filteredData = rawMenuData.filter(item =>
         item.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
@@ -583,14 +506,16 @@ function renderAllMenus(searchText = "") {
 
     orderKat.forEach(cat => {
         const items = filteredData.filter(item => item.category === cat);
-        if(items.length === 0) return;
+        if (items.length === 0) return;
 
         const section = document.createElement("div");
         section.className = "menu-section";
         section.id = `cat-${cat}`;
 
-        let sectionName = cat === "Food" ? "Food & Toast" : cat === "Bundling" ? "Paket Hemat" : cat;
-        
+        let sectionName =
+            cat === "Food" ? "Food & Toast" :
+            cat === "Bundling" ? "Paket Hemat" : cat;
+
         section.innerHTML = `
             <div class="section-header">
                 <h2 class="section-title">${sectionName}</h2>
@@ -604,10 +529,10 @@ function renderAllMenus(searchText = "") {
         items.forEach((item) => {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
             let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
-            
+
             let words = item.name.split(' ');
             let initials = words[0][0];
-            if(words.length > 1) initials += words[1][0];
+            if (words.length > 1) initials += words[1][0];
             initials = initials.toUpperCase();
 
             let badgeHTML = isBundle ? '<div class="promo-tag">PAKET</div>' : '';
@@ -629,21 +554,30 @@ function renderAllMenus(searchText = "") {
                         </div>
                     </div>
                     <button class="add-btn" onclick="openVariantModal('${item.name.replace(/'/g, "\\'")}')">
-                        <i class="ri-add-line"></i> Tambah
+                        Tambah
                     </button>
                 </div>
             `;
             grid.appendChild(card);
         });
+
         section.appendChild(grid);
         container.appendChild(section);
     });
+
+    setTimeout(() => {
+        updateActiveNavOnScroll();
+    }, 100);
 }
+
+/* =========================
+   SEARCH
+========================= */
 
 function filterSearch() {
     const input = document.getElementById("searchInput").value;
-    const clearBtn = document.getElementById("clearSearchBtn");
-    clearBtn.style.display = input.length > 0 ? "block" : "none";
+    document.getElementById("clearSearchBtn").style.display =
+        input.length > 0 ? "block" : "none";
     renderAllMenus(input);
 }
 
@@ -653,304 +587,78 @@ function clearSearch() {
     renderAllMenus("");
 }
 
-function openVariantModal(itemName) {
-    tempItem = rawMenuData.find(i => i.name === itemName);
-    document.getElementById("v-title").innerText = tempItem.name;
-    
-    tempItem.selectedSize = "Regular";
-    tempItem.isOatmilk = false;
-    tempItem.selectedSugar = "Normal";
+/* =========================
+   NAVBAR ROUTING FIX
+========================= */
 
-    const sizeSection = document.getElementById("v-size-section");
-    const sizeOptions = document.getElementById("v-size-options");
-    sizeOptions.innerHTML = "";
-
-    if (tempItem.category === "Food" || tempItem.noSize) {
-        sizeSection.style.display = "none";
-    } else {
-        sizeSection.style.display = "block";
-        sizeOptions.innerHTML += `
-            <label class="radio-label selected" onclick="selectSize(this, 'Regular')">
-                <div class="radio-label-content">
-                    <div class="custom-radio"></div>
-                    <input type="radio" name="size" value="Regular" checked> Regular
-                </div>
-            </label>
-        `;
-        if (tempItem.normalLarge) {
-            sizeOptions.innerHTML += `
-                <label class="radio-label" onclick="selectSize(this, 'Large')">
-                    <div class="radio-label-content">
-                        <div class="custom-radio"></div>
-                        <input type="radio" name="size" value="Large"> Large
-                    </div>
-                </label>
-            `;
-        }
-    }
-
-    const milkSection = document.getElementById("v-milk-section");
-    if (tempItem.category === "Food" || tempItem.noMilk) {
-        milkSection.style.display = "none";
-    } else {
-        milkSection.style.display = "block";
-        const milkLabels = milkSection.querySelectorAll('.radio-label');
-        milkLabels.forEach(l => l.classList.remove('selected'));
-        milkLabels[0].classList.add('selected'); 
-        milkLabels[0].querySelector('input').checked = true;
-    }
-
-    const sugarSection = document.getElementById("v-sugar-section");
-    if (tempItem.category === "Food" || tempItem.noSugar) {
-        sugarSection.style.display = "none";
-    } else {
-        sugarSection.style.display = "block";
-        const sugarLabels = sugarSection.querySelectorAll('.radio-label');
-        sugarLabels.forEach(l => l.classList.remove('selected'));
-        sugarLabels[0].classList.add('selected'); 
-        sugarLabels[0].querySelector('input').checked = true;
-    }
-
-    updateVariantPriceUI();
-    const modal = document.getElementById("variantModal");
-    modal.style.display = "flex";
-    setTimeout(() => modal.classList.add("show"), 10);
-}
-
-function updateVariantPriceUI() {
-    let finalPrice = 0;
-    if (tempItem.category === "Food" || tempItem.priceReg) {
-        finalPrice = tempItem.priceReg;
-    } else {
-        let baseNormal = tempItem.selectedSize === 'Large' ? tempItem.normalLarge : tempItem.normal;
-        finalPrice = hitungHargaJual(baseNormal, tempItem.isOatmilk);
-    }
-    tempItem.currentPrice = finalPrice;
-    document.getElementById("v-price-btn").innerText = formatRp(finalPrice);
-}
-
-function selectSize(element, size) {
-    const labels = document.getElementById("v-size-options").querySelectorAll('.radio-label');
-    labels.forEach(l => l.classList.remove('selected'));
-    element.classList.add('selected');
-    element.querySelector('input').checked = true;
-    tempItem.selectedSize = size;
-    updateVariantPriceUI();
-}
-
-function selectMilk(element, isOatmilk) {
-    const labels = document.getElementById("v-milk-section").querySelectorAll('.radio-label');
-    labels.forEach(l => l.classList.remove('selected'));
-    element.classList.add('selected');
-    element.querySelector('input').checked = true;
-    tempItem.isOatmilk = isOatmilk;
-    updateVariantPriceUI(); 
-}
-
-function selectSugar(element) {
-    const labels = document.getElementById("v-sugar-section").querySelectorAll('.radio-label');
-    labels.forEach(l => l.classList.remove('selected'));
-    element.classList.add('selected');
-    element.querySelector('input').checked = true;
-    tempItem.selectedSugar = element.querySelector('input').value;
-}
-
-function closeVariantModal() { 
-    const modal = document.getElementById("variantModal");
-    modal.classList.remove("show");
-    setTimeout(() => modal.style.display = "none", 300);
-}
-
-function addToCart() {
-    let key = `${tempItem.name}`;
-    if(tempItem.category !== "Food" && !tempItem.noSize) key += `|${tempItem.selectedSize}`;
-    if(tempItem.category !== "Food" && !tempItem.noMilk && tempItem.isOatmilk) key += `|Oatmilk`;
-    if(tempItem.category !== "Food" && !tempItem.noSugar) key += `|${tempItem.selectedSugar}`;
-
-    if(!cart[key]) {
-        cart[key] = {
-            name: tempItem.name,
-            size: tempItem.category !== "Food" && !tempItem.noSize ? tempItem.selectedSize : null,
-            sugar: tempItem.category !== "Food" && !tempItem.noSugar ? tempItem.selectedSugar : null,
-            milk: tempItem.isOatmilk ? "Oatmilk" : null,
-            price: tempItem.currentPrice,
-            qty: 0
-        };
-    }
-    cart[key].qty += 1;
-    
-    saveCart();
-    closeVariantModal();
-    updateCartUI();
-    
-    const cartEl = document.querySelector('.cart');
-    cartEl.classList.remove('bump');
-    void cartEl.offsetWidth; 
-    cartEl.classList.add('bump');
-}
-
-function changeQtyInCart(key, amount) {
-    cart[key].qty += amount;
-    if(cart[key].qty <= 0) delete cart[key];
-    saveCart();
-    updateCartUI();
-    if(Object.keys(cart).length === 0) closeCartModal();
-}
-
-function saveCart() { localStorage.setItem("cartDetail", JSON.stringify(cart)); }
-
-function updateCartUI() {
-    let totalHarga = 0;
-    let totalItem = 0;
-    const modalItems = document.getElementById("modalItems");
-    modalItems.innerHTML = "";
-
-    for (const key in cart) {
-        const item = cart[key];
-        const subtotal = item.qty * item.price;
-        totalHarga += subtotal;
-        totalItem += item.qty;
-
-        let variantText = [];
-        if(item.size) variantText.push(`${item.size}`);
-        if(item.milk) variantText.push(`${item.milk}`);
-        if(item.sugar) variantText.push(`${item.sugar}`);
-        let variantStr = variantText.length > 0 ? variantText.join(' • ') : '';
-
-        modalItems.innerHTML += `
-            <div class="modal-item">
-                <div class="item-desc">
-                    <div class="item-title">${item.name}</div>
-                    <div class="item-variants">${variantStr}</div>
-                    <div class="item-price">Rp ${formatRp(item.price)}</div>
-                </div>
-                <div class="cart-qty-control">
-                    <button onclick="changeQtyInCart('${key.replace(/'/g, "\\'")}', -1)"><i class="ri-subtract-line"></i></button>
-                    <span style="font-size:14px; font-weight:700; width:20px; text-align:center">${item.qty}</span>
-                    <button onclick="changeQtyInCart('${key.replace(/'/g, "\\'")}', 1)"><i class="ri-add-line"></i></button>
-                </div>
-            </div>
-        `;
-    }
-
-    document.getElementById("itemCount").innerText = totalItem;
-    document.getElementById("totalPrice").innerText = formatRp(totalHarga);
-
-    const cartBar = document.getElementById("cartBar");
-    cartBar.style.display = totalItem > 0 ? "block" : "none";
-}
-
-function openCartModal() { 
-    const modal = document.getElementById("cartModal");
-    modal.style.display = "flex";
-    setTimeout(() => modal.classList.add("show"), 10);
-}
-function closeCartModal() { 
-    const modal = document.getElementById("cartModal");
-    modal.classList.remove("show");
-    setTimeout(() => modal.style.display = "none", 300);
-}
-
-function checkoutWA(){
-    const outletInput = document.getElementById("outletName");
-    const outletError = document.getElementById("outletError");
-    const outlet = outletInput.value.trim();
-    
-    if(!outlet) {
-        outletInput.classList.add("error");
-        outletError.style.display = "block";
-        outletInput.focus();
-        return;
-    } else {
-        outletInput.classList.remove("error");
-        outletError.style.display = "none";
-    }
-
-    let message = `Halo, saya mau order Kopken (Harga Promo):%0A%0A*📍 Outlet Tujuan:* ${outlet}%0A%0A*🛒 PESANAN:*%0A`;
-    let total = 0;
-
-    for (const key in cart) {
-        const item = cart[key];
-        const subtotal = item.qty * item.price;
-        total += subtotal;
-        
-        message += `▪️ *${item.name}*%0A`;
-        if(item.size) message += `   ├ Ukuran: ${item.size}%0A`;
-        if(item.milk) message += `   ├ Susu: ${item.milk}%0A`;
-        if(item.sugar) message += `   ├ Gula: ${item.sugar}%0A`;
-        message += `   └ ${item.qty} x Rp ${formatRp(item.price)} = *Rp ${formatRp(subtotal)}*%0A%0A`;
-    }
-
-    message += `*Total Estimasi: Rp ${formatRp(total)}*%0A%0AMohon konfirmasinya ya. Makasih!`;
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-}
-
-document.getElementById("outletName").addEventListener("input", function() {
-    this.classList.remove("error");
-    document.getElementById("outletError").style.display = "none";
-});
-
-// FIX PERBAIKAN SCROLL JADI SANGAT MULUS & RINGAN
-let scrollTimeout;
 const navItems = document.querySelectorAll('.nav-item');
 
-function updateActiveNav() {
-    if(document.getElementById("searchInput").value.length > 0) return;
-    
-    let current = '';
-    const sections = document.querySelectorAll('.menu-section');
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        // Pengecekan disesuaikan agar pas di tengah layar
-        if (window.pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-
+function setActiveNav(targetId) {
     navItems.forEach(item => {
         item.classList.remove('active');
-        if (item.getAttribute('href').substring(1) === current) {
+        if (item.getAttribute('href') === `#${targetId}`) {
             item.classList.add('active');
-            // Auto scroll nav bar
+
             const navContainer = document.querySelector('.sticky-nav');
-            const scrollPos = item.offsetLeft - (navContainer.offsetWidth / 2) + (item.offsetWidth / 2);
-            navContainer.scrollTo({ left: scrollPos, behavior: 'smooth' });
-        }
-    });
-}
+            const scrollPos =
+                item.offsetLeft -
+                (navContainer.offsetWidth / 2) +
+                (item.offsetWidth / 2);
 
-// Membatasi event scroll agar tidak bikin lag browser (Throttling)
-window.addEventListener('scroll', () => {
-    if (scrollTimeout) {
-        window.cancelAnimationFrame(scrollTimeout);
-    }
-    scrollTimeout = window.requestAnimationFrame(() => {
-        updateActiveNav();
-    });
-});
-
-// Pastikan navigasi juga bisa di klik manual dan scroll ke tujuan dengan mulus
-navItems.forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if(targetElement) {
-            // Scroll ke elemen dengan offset agar tidak tertutup sticky header
-            const headerOffset = 130; 
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
+            navContainer.scrollTo({
+                left: scrollPos,
+                behavior: 'smooth'
             });
         }
     });
+}
+
+function updateActiveNavOnScroll() {
+    if (document.getElementById("searchInput").value.length > 0) return;
+
+    const sections = document.querySelectorAll('.menu-section');
+    let currentSection = '';
+
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 180 && rect.bottom >= 180) {
+            currentSection = section.id;
+        }
+    });
+
+    if (currentSection) {
+        setActiveNav(currentSection);
+        history.replaceState(null, null, `#${currentSection}`);
+    }
+}
+
+window.addEventListener('scroll', updateActiveNavOnScroll);
+
+navItems.forEach(item => {
+    item.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            setActiveNav(targetId);
+            history.pushState(null, null, `#${targetId}`);
+        }
+    });
 });
 
+/* =========================
+   INIT
+========================= */
+
 renderAllMenus();
-updateCartUI();
+updateActiveNavOnScroll();
 </script>
 </body>
 </html>
