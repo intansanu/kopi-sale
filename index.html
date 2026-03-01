@@ -3,265 +3,484 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kopken Luxury Voucher</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+<title>Kopken Luxury Order</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+    :root {
+        --bg-color: #FAF6F0; /* Krem sangat lembut */
+        --card-bg: #FFFFFF;
+        --text-dark: #4A3A36; /* Cokelat gelap */
+        --text-light: #8B7A75; /* Cokelat pudar */
+        --accent: #C28C65; /* Karamel / Cokelat susu */
+        --accent-hover: #A6724E;
+        --badge-bg: #F4E8D9;
+    }
 
-body{
-  background:linear-gradient(135deg,#1e1a18,#2b221f);
-  color:#fff;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  padding:30px 15px;
-}
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
 
-.container{
-  width:100%;
-  max-width:550px;
-}
+    body {
+        background: var(--bg-color);
+        color: var(--text-dark);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 20px 15px;
+        padding-bottom: 100px; /* Space untuk cart melayang */
+    }
 
-.header{
-  text-align:center;
-  margin-bottom:25px;
-}
+    .container {
+        width: 100%;
+        max-width: 500px;
+    }
 
-.badge{
-  background:gold;
-  color:#000;
-  display:inline-block;
-  padding:6px 15px;
-  border-radius:999px;
-  font-size:12px;
-  margin-bottom:10px;
-}
+    .header {
+        text-align: center;
+        margin-bottom: 25px;
+        padding-top: 10px;
+    }
 
-.header h1{
-  font-size:22px;
-}
+    .badge {
+        background: var(--badge-bg);
+        color: var(--accent-hover);
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        letter-spacing: 0.5px;
+    }
 
-.menu{
-  display:grid;
-  gap:14px;
-  margin-bottom:25px;
-}
+    .header h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
 
-.card{
-  background:#2f2522;
-  padding:12px;
-  border-radius:18px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  transition:0.3s;
-}
+    .header p {
+        font-size: 13px;
+        color: var(--text-light);
+        margin-top: 5px;
+    }
 
-.card:hover{
-  background:#3a2e2a;
-  transform:translateY(-3px);
-}
+    /* Kategori Tabs */
+    .categories {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 15px;
+        margin-bottom: 10px;
+        scrollbar-width: none;
+    }
+    .categories::-webkit-scrollbar { display: none; }
+    
+    .tab-btn {
+        background: var(--card-bg);
+        border: 1px solid #EAE0D5;
+        color: var(--text-light);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: 0.3s ease;
+    }
+    .tab-btn.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+    }
 
-.card img{
-  width:65px;
-  height:65px;
-  border-radius:12px;
-  object-fit:cover;
-}
+    .menu {
+        display: grid;
+        gap: 15px;
+    }
 
-.card-info{
-  flex:1;
-}
+    .card {
+        background: var(--card-bg);
+        padding: 12px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        transition: transform 0.2s ease;
+    }
 
-.card-info h3{
-  font-size:14px;
-}
+    .card img {
+        width: 75px;
+        height: 75px;
+        border-radius: 15px;
+        object-fit: cover;
+        background: #F0EBE1; /* Placeholder color */
+    }
 
-.price{
-  font-size:13px;
-  color:gold;
-}
+    .card-info { flex: 1; }
 
-.qty-btn{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
+    .card-info h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        line-height: 1.3;
+    }
 
-.qty-btn button{
-  background:gold;
-  border:none;
-  width:28px;
-  height:28px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-}
+    .price {
+        font-size: 14px;
+        color: var(--accent);
+        font-weight: 700;
+    }
 
-.cart{
-  background:#2f2522;
-  padding:18px;
-  border-radius:18px;
-}
+    .qty-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--bg-color);
+        padding: 4px 8px;
+        border-radius: 12px;
+    }
 
-.cart h2{
-  margin-bottom:10px;
-  font-size:16px;
-}
+    .qty-btn button {
+        background: transparent;
+        color: var(--text-dark);
+        border: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+    }
+    
+    .qty-btn button:active { background: #E2D7C8; }
+    .qty-btn span { font-size: 13px; font-weight: 600; min-width: 12px; text-align: center; }
 
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  font-size:13px;
-  margin-bottom:6px;
-}
+    /* Floating Cart */
+    .cart-wrapper {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 30px);
+        max-width: 500px;
+        z-index: 100;
+    }
 
-.total{
-  font-weight:700;
-  margin-top:10px;
-}
+    .cart {
+        background: var(--text-dark);
+        color: #fff;
+        padding: 16px 20px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 10px 25px rgba(74, 58, 54, 0.3);
+    }
 
-.checkout{
-  width:100%;
-  margin-top:15px;
-  padding:12px;
-  background:gold;
-  border:none;
-  border-radius:12px;
-  font-weight:700;
-  cursor:pointer;
-}
+    .cart-info div:first-child {
+        font-size: 12px;
+        color: #D3C9C5;
+    }
+
+    .total {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .checkout {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 14px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .checkout:hover { background: var(--accent-hover); }
+
+    /* Modal Keranjang (Muncul saat mau checkout) */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+        justify-content: center;
+        align-items: flex-end;
+    }
+    .modal-content {
+        background: #fff;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 25px 25px 0 0;
+        padding: 25px 20px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .modal-header h2 { font-size: 18px; }
+    .close-modal {
+        background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light);
+    }
+    .modal-item {
+        display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px;
+        border-bottom: 1px dashed #eee; padding-bottom: 8px;
+    }
+    .modal-btn-wa {
+        width: 100%; padding: 14px; background: #25D366; color: #fff; border: none;
+        border-radius: 15px; font-weight: 600; font-size: 15px; margin-top: 20px; cursor: pointer;
+    }
 </style>
 </head>
-
 <body>
 
 <div class="container">
+    <div class="header">
+        <div class="badge">✨ Promo Spesial</div>
+        <h1>Pesan Minuman Favoritmu</h1>
+        <p>Harga reseller lebih hemat, rasa tetap nikmat.</p>
+    </div>
 
-  <div class="header">
-    <div class="badge">Voucher 50%</div>
-    <h1>Kopi Kenangan Small Cup</h1>
-  </div>
+    <div class="categories" id="categoryTabs">
+        <button class="tab-btn active" onclick="filterMenu('Semua')">Semua</button>
+        <button class="tab-btn" onclick="filterMenu('Coffee')">Coffee</button>
+        <button class="tab-btn" onclick="filterMenu('Non-Coffee')">Non-Coffee</button>
+        <button class="tab-btn" onclick="filterMenu('Food')">Food & Toast</button>
+    </div>
 
-  <div class="menu" id="menuList"></div>
+    <div class="menu" id="menuList"></div>
+</div>
 
-  <div class="cart">
-    <h2>Keranjang</h2>
-    <div id="cartItems"></div>
-    <div class="total">Total: Rp <span id="totalPrice">0</span></div>
-    <button class="checkout" onclick="checkout()">Checkout via WhatsApp</button>
-  </div>
+<div class="cart-wrapper" id="cartBar" style="display: none;">
+    <div class="cart">
+        <div class="cart-info">
+            <div id="itemCount">0 Item</div>
+            <div class="total">Rp <span id="totalPrice">0</span></div>
+        </div>
+        <button class="checkout" onclick="openModal()">Lihat Pesanan</button>
+    </div>
+</div>
 
+<div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Rincian Pesanan</h2>
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+        </div>
+        <div id="modalItems"></div>
+        <button class="modal-btn-wa" onclick="checkoutWA()">Kirim Order via WhatsApp</button>
+    </div>
 </div>
 
 <script>
-const phone = "628XXXXXXXXXX"; // GANTI NOMOR
+const phone = "628XXXXXXXXXX"; // GANTI NOMOR KAMU DI SINI
 
-// ====== DAFTAR MENU ======
+// Format Ulang Harga ke Rupiah
+const formatRp = (angka) => {
+    return angka.toLocaleString('id-ID');
+}
+
+// Data Lengkap Menu
 const menuData = [
-  {name:"Americano", price:14000, img:"images/americano.jpg"},
-  {name:"Kopi Kenangan Mantan", price:15000, img:"images/kopken.jpg"},
-  {name:"Thai Tea", price:17000, img:"images/thai-tea.jpg"},
-  {name:"Cappuccino", price:17000, img:"images/cappuccino.jpg"},
-  {name:"Latte", price:17000, img:"images/latte.jpg"},
-  {name:"Vanilla Latte", price:18000, img:"images/vanilla.jpg"},
-  {name:"Hazelnut Latte", price:18000, img:"images/hazelnut.jpg"},
-  {name:"Caramel Macchiato", price:19000, img:"images/caramel.jpg"},
-  {name:"Matcha Latte", price:18000, img:"images/matcha.jpg"},
-  {name:"Avocado Caramel", price:19000, img:"images/avocado.jpg"}
+    // --- COFFEE ---
+    {name:"Americano", price:14000, category:"Coffee", img:"images/americano.jpg"},
+    {name:"Cappuccino", price:17000, category:"Coffee", img:"images/cappuccino.jpg"},
+    {name:"Latte", price:17000, category:"Coffee", img:"images/latte.jpg"},
+    {name:"Vanilla Latte", price:18000, category:"Coffee", img:"images/vanilla.jpg"},
+    {name:"Spanish Latte", price:15000, category:"Coffee", img:"images/spanish.jpg"},
+    {name:"Creamy Aren Latte", price:17000, category:"Coffee", img:"images/creamy-aren.jpg"},
+    {name:"Butterscotch Aren Latte", price:16000, category:"Coffee", img:"images/butter-aren.jpg"},
+    {name:"Butterscotch Sea Salt Latte", price:18000, category:"Coffee", img:"images/butter-seasalt.jpg"},
+    {name:"Dua Shot Iced Shaken", price:19000, category:"Coffee", img:"images/duashot.jpg"},
+    {name:"Caramel Macchiato", price:19000, category:"Coffee", img:"images/caramel-macchiato.jpg"},
+    {name:"Hazelnut Latte", price:18000, category:"Coffee", img:"images/hazelnut-latte.jpg"},
+    {name:"Kopi Susu Black Aren", price:16000, category:"Coffee", img:"images/black-aren.jpg"},
+    {name:"Matcha Espresso", price:18000, category:"Coffee", img:"images/matcha-espresso.jpg"},
+    {name:"Mocha Latte", price:19000, category:"Coffee", img:"images/mocha-latte.jpg"},
+    {name:"Dubai Pistachio Latte", price:18000, category:"Coffee", img:"images/dubai-pistachio.jpg"},
+    {name:"Pistachio Latte", price:17000, category:"Coffee", img:"images/pistachio.jpg"},
+    {name:"Pistachio Aren Latte", price:15000, category:"Coffee", img:"images/pistachio-aren.jpg"},
+    {name:"Cafe Malt Latte", price:17000, category:"Coffee", img:"images/malt-latte.jpg"},
+    {name:"Kopi Kenangan Mantan", price:15000, category:"Coffee", img:"images/kopken.jpg"},
+    {name:"Caramel Latte", price:18000, category:"Coffee", img:"images/caramel.jpg"},
+    {name:"Mocha Caramel", price:18000, category:"Coffee", img:"images/mocha-caramel.jpg"},
+    {name:"Tiramisu Latte", price:16000, category:"Coffee", img:"images/tiramisu-latte.jpg"},
+    {name:"Tiramisu Mocha Latte", price:18000, category:"Coffee", img:"images/tiramisu-mocha.jpg"},
+    {name:"Toffee Nut Latte", price:15000, category:"Coffee", img:"images/toffee.jpg"},
+    {name:"Toffee Nut Aren Latte", price:16000, category:"Coffee", img:"images/toffee-aren.jpg"},
+    {name:"Toffee Nut Oat Latte", price:17000, category:"Coffee", img:"images/toffee-oat.jpg"},
+
+    // --- NON COFFEE ---
+    {name:"Choco Caramel", price:15000, category:"Non-Coffee", img:"images/choco-caramel.jpg"},
+    {name:"Toffee Nut Choco Macchiato", price:17000, category:"Non-Coffee", img:"images/toffee-choco.jpg"},
+    {name:"Butterscotch Sea Salt", price:17000, category:"Non-Coffee", img:"images/butter-seasalt-nc.jpg"},
+    {name:"Babyccino", price:15000, category:"Non-Coffee", img:"images/babyccino.jpg"},
+    {name:"Dubai Pistachio Chocolate", price:19000, category:"Non-Coffee", img:"images/pistachio-choco.jpg"},
+    {name:"Hazelnut Choco Milk Tea", price:17000, category:"Non-Coffee", img:"images/hazelnut-choco.jpg"},
+    {name:"Milo Dinosaur", price:17000, category:"Non-Coffee", img:"images/milo.jpg"},
+    {name:"Oreo Shake", price:18000, category:"Non-Coffee", img:"images/oreo.jpg"},
+    {name:"Raspberry Hibiscus", price:16000, category:"Non-Coffee", img:"images/raspberry.jpg"},
+    {name:"Thai Tea", price:17000, category:"Non-Coffee", img:"images/thai-tea.jpg"},
+    {name:"Matcha Latte", price:18000, category:"Non-Coffee", img:"images/matcha.jpg"},
+    {name:"Avocado Caramel", price:19000, category:"Non-Coffee", img:"images/avocado-caramel.jpg"},
+    {name:"Avocado Milk", price:17000, category:"Non-Coffee", img:"images/avocado-milk.jpg"},
+    {name:"Dutch Chocolate", price:18000, category:"Non-Coffee", img:"images/dutch.jpg"},
+    {name:"Hazelnut Dutch Choco", price:19000, category:"Non-Coffee", img:"images/hazelnut-dutch.jpg"},
+    {name:"Lemon Black Tea", price:14000, category:"Non-Coffee", img:"images/lemon-tea.jpg"},
+    {name:"Kenangan Milk Tea", price:16000, category:"Non-Coffee", img:"images/milk-tea.jpg"},
+
+    // --- FOOD & TOAST ---
+    {name:"Wahyu Sapi Toast", price:15000, category:"Food", img:"images/wahyu-sapi.jpg"},
+    {name:"Butter Croissant", price:13000, category:"Food", img:"images/croissant.jpg"},
+    {name:"Chocolate Croissant", price:15000, category:"Food", img:"images/choco-croissant.jpg"},
+    {name:"Sugar Donut", price:11000, category:"Food", img:"images/sugar-donut.jpg"},
+    {name:"Roti Srikaya", price:13000, category:"Food", img:"images/roti-srikaya.jpg"},
+    {name:"Choco Chip Cookies", price:13000, category:"Food", img:"images/cookies.jpg"},
+    {name:"Join The Dark Side Cookie", price:16000, category:"Food", img:"images/dark-cookie.jpg"},
+    {name:"Friend Chip Cookie", price:14000, category:"Food", img:"images/friend-cookie.jpg"},
+    {name:"Roti Sisir Coklat", price:13000, category:"Food", img:"images/roti-sisir-coklat.jpg"},
+    {name:"Dirty Croissant Milo", price:16000, category:"Food", img:"images/dirty-croissant.jpg"},
+    {name:"Bambang Choco Cheese", price:14000, category:"Food", img:"images/bambang.jpg"},
+    {name:"Adam Ayam Toast", price:15000, category:"Food", img:"images/adam-ayam.jpg"},
+    {name:"Donut Tiramisu", price:13000, category:"Food", img:"images/donut-tiramisu.jpg"},
+    {name:"Danish Tiramisu", price:16000, category:"Food", img:"images/danish-tiramisu.jpg"},
+    {name:"Bolu Marble Ube", price:13000, category:"Food", img:"images/bolu-ube.jpg"},
+    {name:"Canele Original", price:13000, category:"Food", img:"images/canele.jpg"},
+    {name:"Canele Toffee Nut", price:14000, category:"Food", img:"images/canele-toffee.jpg"},
+    {name:"Donut Abon", price:13000, category:"Food", img:"images/donut-abon.jpg"},
+    {name:"Donut Almond", price:13000, category:"Food", img:"images/donut-almond.jpg"},
+    {name:"Roti Gulung Abon", price:15000, category:"Food", img:"images/roti-abon.jpg"},
+    {name:"Roti Gulung Aren", price:13000, category:"Food", img:"images/roti-aren.jpg"},
+    {name:"Roti Sisir Original", price:12000, category:"Food", img:"images/roti-sisir.jpg"}
 ];
 
-// ====== LOAD CART DARI LOCAL STORAGE ======
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
+let currentFilter = "Semua";
 
-// ====== RENDER MENU ======
-const menuList = document.getElementById("menuList");
+// Render Menu dengan Filter
+function renderMenu() {
+    const menuList = document.getElementById("menuList");
+    menuList.innerHTML = "";
 
-menuData.forEach(item=>{
-  const card = document.createElement("div");
-  card.className = "card";
+    const filteredData = currentFilter === "Semua" 
+        ? menuData 
+        : menuData.filter(item => item.category === currentFilter);
 
-  card.innerHTML = `
-    <img src="${item.img}">
-    <div class="card-info">
-      <h3>${item.name}</h3>
-      <div class="price">Rp ${item.price}</div>
-    </div>
-    <div class="qty-btn">
-      <button onclick="changeQty('${item.name}', -1)">-</button>
-      <span id="qty-${item.name}">${cart[item.name] || 0}</span>
-      <button onclick="changeQty('${item.name}', 1)">+</button>
-    </div>
-  `;
+    filteredData.forEach((item, index) => {
+        const qty = cart[item.name] || 0;
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <img src="${item.img}" onerror="this.src='https://placehold.co/150x150/F0EBE1/8B7A75?text=${encodeURIComponent(item.name.substring(0,2))}'">
+            <div class="card-info">
+                <h3>${item.name}</h3>
+                <div class="price">Rp ${formatRp(item.price)}</div>
+            </div>
+            <div class="qty-btn">
+                <button onclick="changeQty('${item.name}', -1)">-</button>
+                <span id="qty-${item.name}">${qty}</span>
+                <button onclick="changeQty('${item.name}', 1)">+</button>
+            </div>
+        `;
+        menuList.appendChild(card);
+    });
+}
 
-  menuList.appendChild(card);
-});
+// Filter Tab
+function filterMenu(category) {
+    currentFilter = category;
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    renderMenu();
+}
 
-// ====== UBAH QTY ======
+// Ubah Jumlah Beli
 function changeQty(name, amount){
-  if(!cart[name]) cart[name] = 0;
-  cart[name] += amount;
+    if(!cart[name]) cart[name] = 0;
+    cart[name] += amount;
 
-  if(cart[name] <= 0) delete cart[name];
+    if(cart[name] <= 0) delete cart[name];
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateUI();
+    localStorage.setItem("cart", JSON.stringify(cart));
+    
+    // Update angka di layar tanpa re-render semua
+    const qtySpan = document.getElementById(`qty-${name}`);
+    if(qtySpan) qtySpan.innerText = cart[name] || 0;
+    
+    updateCartUI();
 }
 
-// ====== UPDATE UI CART ======
-function updateUI(){
-  const container = document.getElementById("cartItems");
-  container.innerHTML = "";
-  let total = 0;
+// Update Keranjang Mengambang & Modal
+function updateCartUI() {
+    let totalHarga = 0;
+    let totalItem = 0;
+    const modalItems = document.getElementById("modalItems");
+    modalItems.innerHTML = "";
 
-  menuData.forEach(item=>{
-    const qty = cart[item.name] || 0;
-    const qtySpan = document.getElementById(`qty-${item.name}`);
-    if(qtySpan) qtySpan.innerText = qty;
+    menuData.forEach(item => {
+        const qty = cart[item.name];
+        if(qty > 0) {
+            const subtotal = qty * item.price;
+            totalHarga += subtotal;
+            totalItem += qty;
+            
+            modalItems.innerHTML += `
+                <div class="modal-item">
+                    <div><b>${item.name}</b> <br> <small>${qty}x @ Rp ${formatRp(item.price)}</small></div>
+                    <div style="font-weight:600; color:#C28C65;">Rp ${formatRp(subtotal)}</div>
+                </div>
+            `;
+        }
+    });
 
-    if(qty > 0){
-      const subtotal = qty * item.price;
-      total += subtotal;
+    document.getElementById("itemCount").innerText = `${totalItem} Item`;
+    document.getElementById("totalPrice").innerText = formatRp(totalHarga);
 
-      container.innerHTML += `
-        <div class="cart-item">
-          <span>${item.name} x${qty}</span>
-          <span>Rp ${subtotal}</span>
-        </div>
-      `;
+    const cartBar = document.getElementById("cartBar");
+    if(totalItem > 0) {
+        cartBar.style.display = "block";
+    } else {
+        cartBar.style.display = "none";
+        closeModal();
     }
-  });
-
-  document.getElementById("totalPrice").innerText = total;
 }
 
-updateUI();
+// Kontrol Modal
+function openModal() { document.getElementById("cartModal").style.display = "flex"; }
+function closeModal() { document.getElementById("cartModal").style.display = "none"; }
 
-// ====== CHECKOUT ======
-function checkout(){
-  if(Object.keys(cart).length === 0){
-    alert("Keranjang kosong.");
-    return;
-  }
+// Checkout ke WA
+function checkoutWA(){
+    let message = "Halo, saya mau order promo spesial:%0A%0A";
+    let total = 0;
 
-  let message = "Halo, saya mau order:%0A";
-  let total = 0;
+    menuData.forEach(item=>{
+        const qty = cart[item.name];
+        if(qty){
+            const subtotal = qty * item.price;
+            total += subtotal;
+            message += `▪️ ${item.name}%0A  ${qty} x Rp ${formatRp(item.price)} = Rp ${formatRp(subtotal)}%0A`;
+        }
+    });
 
-  menuData.forEach(item=>{
-    const qty = cart[item.name];
-    if(qty){
-      const subtotal = qty * item.price;
-      total += subtotal;
-      message += `- ${item.name} x${qty} (Rp ${subtotal})%0A`;
-    }
-  });
-
-  message += `%0ATotal: Rp ${total}`;
-
-  window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+    message += `%0A*Total Pembayaran: Rp ${formatRp(total)}*%0A%0AMohon info ketersediaan dan metode pembayarannya ya. Terima kasih!`;
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
+
+// Inisialisasi awal
+renderMenu();
+updateCartUI();
 </script>
-
 </body>
 </html>
