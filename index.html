@@ -24,7 +24,8 @@
 
     .app-container {
         width: 100%; max-width: 480px; background: var(--app-bg); position: relative;
-        min-height: 100vh; box-shadow: 0 0 50px rgba(0,0,0,0.1); padding-bottom: 120px; 
+        min-height: 100vh; box-shadow: 0 0 50px rgba(0,0,0,0.1); 
+        padding-bottom: 140px; /* Tambah jarak bawah agar tidak tertutup keranjang melayang */
     }
 
     .hero-banner {
@@ -56,7 +57,7 @@
 
     .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
-    /* PERBAIKAN STRUKTUR CARD AGAR TIDAK BOCOR/TERPOTONG */
+    /* FIX: KOTAK ANTI JEBOL */
     .card {
         background: var(--card-bg); border-radius: 16px; overflow: hidden;
         display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
@@ -64,12 +65,11 @@
     }
     .card.bundle { border: 1.5px solid var(--promo-red); background: #FFF9F9; }
     
-    .img-wrapper {
-        width: 100%; padding-bottom: 100%; /* Memaksa kotak gambar jadi persegi sempurna 1:1 */
-        position: relative; background: #EAE0D5; flex-shrink: 0;
-    }
-    .img-wrapper img {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+    .card img { 
+        width: 100%; 
+        aspect-ratio: 1 / 1; 
+        object-fit: cover; 
+        background: #EAE0D5; 
     }
 
     .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -249,7 +249,7 @@ function hitungHargaJual(hargaNormal, isOatmilk = false) {
 }
 
 const rawMenuData = [
-    // --- BUNDLING (Harga sudah Fix dari rumusmu) ---
+    // --- BUNDLING (Harga sudah Fix dari rumusmu: (Normal/2)+5k) ---
     {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, priceReg: 30000, category:"Bundling", img:"bundle-2.jpg", noSugar: true, noSize: true, noMilk: true},
     {name:"Paket Roti (Mantan + Thai Tea + Srikaya)", normal: 56000, priceReg: 33000, category:"Bundling", img:"bundle-roti.jpg", noSugar: true, noSize: true, noMilk: true},
 
@@ -362,15 +362,13 @@ function renderAllMenus() {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
             let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
             
-            // Generate Inisial untuk placeholder yang keren! (Maks 2 huruf)
+            // Singkatan otomatis buat dummy image estetik (maks 2 huruf kapital)
             let initials = item.name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
 
             const card = document.createElement("div");
             card.className = `card ${isBundle}`;
             card.innerHTML = `
-                <div class="img-wrapper">
-                    <img src="images/${item.img}" onerror="this.src='https://placehold.co/400x400/EAE0D5/8B7A75?text=${initials}'" alt="${item.name}">
-                </div>
+                <img src="images/${item.img}" onerror="this.src='https://placehold.co/400x400/EAE0D5/8B7A75?text=${initials}'" alt="${item.name}">
                 <div class="card-body">
                     <div class="card-info">
                         <h3>${item.name}</h3>
