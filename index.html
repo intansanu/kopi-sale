@@ -3,259 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kopken Luxury Order</title>
+<title>Kopi Kenangan Reseller | Promo Spesial</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg-color: #FAF6F0;
+        --bg-body: #F4ECE1; /* Warna latar luar untuk versi desktop */
+        --app-bg: #FAF6F0; /* Warna krem utama aplikasi */
         --card-bg: #FFFFFF;
-        --text-dark: #4A3A36;
+        --text-dark: #3A2E2A;
         --text-light: #8B7A75;
         --accent: #C28C65;
         --accent-hover: #A6724E;
-        --badge-bg: #F4E8D9;
+        --promo-red: #D9534F;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
     html { scroll-behavior: smooth; }
 
+    /* Pengunci Layout agar rapi di Desktop/Laptop (Vercel) */
     body {
-        background: var(--bg-color);
+        background: var(--bg-body);
         color: var(--text-dark);
-        min-height: 100vh;
         display: flex;
         justify-content: center;
-        padding-bottom: 100px; /* Space untuk cart melayang */
+        min-height: 100vh;
     }
 
-    .container {
+    .app-container {
         width: 100%;
-        max-width: 500px;
-        background: var(--bg-color);
+        max-width: 480px; /* Lebar maksimal seukuran HP besar */
+        background: var(--app-bg);
         position: relative;
+        min-height: 100vh;
+        box-shadow: 0 0 50px rgba(0,0,0,0.1); /* Bayangan estetik di desktop */
+        padding-bottom: 120px; 
     }
 
-    .header {
-        padding: 25px 20px 15px;
+    /* Hero Banner */
+    .hero-banner {
+        width: 100%; height: 200px;
+        background: linear-gradient(to bottom, rgba(58, 46, 42, 0.2), rgba(58, 46, 42, 0.8)), 
+                    url('https://placehold.co/600x400/C28C65/FFFFFF?text=KOPKEN+PROMO') center/cover;
+        display: flex; flex-direction: column; justify-content: flex-end;
+        padding: 25px 20px; color: white;
     }
 
-    .badge {
-        background: var(--badge-bg);
-        color: var(--accent-hover);
-        display: inline-block;
-        padding: 6px 16px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 600;
-        margin-bottom: 12px;
+    .badge-top {
+        background: var(--promo-red); color: #fff;
+        padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 600;
+        width: max-content; margin-bottom: 8px; letter-spacing: 0.5px;
     }
 
-    .header h1 { font-size: 24px; font-weight: 700; line-height: 1.2; }
-    .header p { font-size: 13px; color: var(--text-light); margin-top: 5px; }
+    .hero-banner h1 { font-size: 24px; font-weight: 700; line-height: 1.2; }
+    .hero-banner p { font-size: 13px; opacity: 0.9; margin-top: 5px; }
 
-    /* Sticky Navigation seperti GoFood/GrabFood */
+    /* Sticky Nav (Nempel di Atas saat Scroll) */
     .sticky-nav {
-        position: sticky;
-        top: 0;
-        background: rgba(250, 246, 240, 0.95);
-        backdrop-filter: blur(5px);
-        padding: 12px 20px;
-        z-index: 10;
-        display: flex;
-        gap: 10px;
-        overflow-x: auto;
-        border-bottom: 1px solid #EAE0D5;
+        position: sticky; top: 0; background: rgba(250, 246, 240, 0.95);
+        backdrop-filter: blur(10px); padding: 15px 20px; z-index: 10;
+        display: flex; gap: 12px; overflow-x: auto; border-bottom: 1px solid #EAE0D5;
         scrollbar-width: none;
     }
     .sticky-nav::-webkit-scrollbar { display: none; }
     
     .sticky-nav a {
-        text-decoration: none;
-        background: var(--card-bg);
-        color: var(--text-dark);
-        padding: 8px 18px;
-        border-radius: 20px;
-        font-size: 13px;
-        font-weight: 500;
-        white-space: nowrap;
-        border: 1px solid #EAE0D5;
-        transition: 0.2s;
+        text-decoration: none; background: var(--card-bg); color: var(--text-dark);
+        padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 500;
+        white-space: nowrap; border: 1px solid #EAE0D5; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
-    .sticky-nav a:hover, .sticky-nav a:active {
-        background: var(--accent);
-        color: #fff;
-        border-color: var(--accent);
-    }
+    .sticky-nav a.promo-link { border-color: var(--promo-red); color: var(--promo-red); font-weight: 600; background: #fffcfc; }
+    .sticky-nav a:hover, .sticky-nav a:active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-    /* Area Menu */
-    .menu-section {
-        padding: 20px;
-        padding-top: 30px; /* Jarak pasca scroll */
-    }
+    /* Area Menu & Grid */
+    .menu-section { padding: 20px; padding-top: 30px; }
+    .section-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
 
-    .section-title {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 15px;
-        color: var(--text-dark);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    /* Grid 2 Kolom Profesional */
-    .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
+    .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
     .card {
-        background: var(--card-bg);
-        border-radius: 18px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-        border: 1px solid #F0EBE1;
+        background: var(--card-bg); border-radius: 16px; overflow: hidden;
+        display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        border: 1px solid rgba(234, 224, 213, 0.5); position: relative;
+    }
+    .card.bundle { border: 1.5px solid var(--promo-red); background: #FFF9F9; }
+
+    /* Label Diskon di Foto */
+    .discount-label {
+        position: absolute; top: 8px; left: 8px; background: var(--promo-red);
+        color: white; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 8px; z-index: 2;
     }
 
     .card img {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        background: #F0EBE1;
+        width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #F0EBE1;
     }
 
-    .card-body {
-        padding: 12px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        justify-content: space-between;
-    }
-
-    .card-info h3 {
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 6px;
-        line-height: 1.3;
-        color: var(--text-dark);
-        /* Maksimal 2 baris text */
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .price {
-        font-size: 14px;
-        color: var(--accent);
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    /* Tombol QTY gaya baru */
-    .qty-control {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: var(--bg-color);
-        border-radius: 12px;
-        padding: 4px;
-        margin-top: auto;
-    }
-
-    .qty-control button {
-        background: var(--card-bg);
-        color: var(--text-dark);
-        border: 1px solid #EAE0D5;
-        width: 28px;
-        height: 28px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: 0.2s;
-    }
+    .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; }
     
-    .qty-control button:active { background: #EAE0D5; }
+    .card-info h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; color: var(--text-dark); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    
+    .price-core { display: flex; flex-direction: column; margin-bottom: 12px; }
+    .price-core .coret { text-decoration: line-through; color: #b5a9a5; font-size: 11px; }
+    .price-core .real { font-size: 14px; color: var(--accent); font-weight: 700; }
+    .card.bundle .price-core .real { color: var(--promo-red); }
+
+    /* QTY Button masuk ke dalam card */
+    .qty-control {
+        display: flex; align-items: center; justify-content: space-between;
+        background: var(--app-bg); border-radius: 10px; padding: 4px; margin-top: auto;
+    }
+    .qty-control button {
+        background: var(--card-bg); color: var(--text-dark); border: 1px solid #EAE0D5;
+        width: 28px; height: 28px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;
+    }
     .qty-control span { font-size: 13px; font-weight: 600; text-align: center; width: 100%; }
 
     /* Floating Cart Bawah */
     .cart-wrapper {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: calc(100% - 40px);
-        max-width: 460px;
-        z-index: 100;
+        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+        width: 100%; max-width: 440px; z-index: 100;
     }
-
     .cart {
-        background: var(--text-dark);
-        color: #fff;
-        padding: 15px 20px;
-        border-radius: 18px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 10px 25px rgba(74, 58, 54, 0.3);
+        background: #3a2e2a; color: #fff; padding: 14px 20px; border-radius: 16px;
+        display: flex; justify-content: space-between; align-items: center;
+        box-shadow: 0 10px 30px rgba(58, 46, 42, 0.3); margin: 0 20px;
     }
-
     .cart-info { display: flex; flex-direction: column; }
-    .cart-info small { font-size: 11px; color: #D3C9C5; margin-bottom: 2px; }
+    .cart-info small { font-size: 11px; color: #D3C9C5; }
     .total { font-size: 16px; font-weight: 700; color: #fff; }
-
     .checkout {
-        background: var(--accent);
-        color: #fff;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 13px;
-        cursor: pointer;
+        background: var(--accent); color: #fff; border: none; padding: 10px 18px;
+        border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer;
     }
 
-    /* Modal */
-    .modal-overlay {
-        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.5); z-index: 999; justify-content: center; align-items: flex-end;
-    }
-    .modal-content {
-        background: #fff; width: 100%; max-width: 500px; border-radius: 25px 25px 0 0;
-        padding: 25px 20px; max-height: 80vh; overflow-y: auto;
-    }
+    /* Modal Rincian */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: flex-end; }
+    .modal-content { background: #fff; width: 100%; max-width: 480px; border-radius: 20px 20px 0 0; padding: 25px 20px; max-height: 80vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .modal-header h2 { font-size: 18px; }
     .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light); }
-    .modal-item {
-        display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; 
-        font-size: 14px; border-bottom: 1px solid #F0EBE1; padding-bottom: 10px;
-    }
-    .modal-btn-wa {
-        width: 100%; padding: 15px; background: #25D366; color: #fff; border: none;
-        border-radius: 14px; font-weight: 600; font-size: 15px; margin-top: 20px; cursor: pointer;
-    }
+    .modal-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 14px; border-bottom: 1px solid #F0EBE1; padding-bottom: 10px; }
+    .modal-btn-wa { width: 100%; padding: 15px; background: #25D366; color: #fff; border: none; border-radius: 12px; font-weight: 600; font-size: 15px; margin-top: 20px; cursor: pointer; display: flex; justify-content: center; gap: 8px; align-items: center; }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <div class="badge">✨ Promo Spesial</div>
-        <h1>Menu Favoritmu</h1>
-        <p>Harga reseller lebih hemat, rasa tetap nikmat.</p>
+<div class="app-container">
+    
+    <div class="hero-banner">
+        <div class="badge-top">Voucher Terbatas 🏷️</div>
+        <h1>Pesan Kopken<br>Jauh Lebih Hemat!</h1>
+        <p>Harga reseller. Otomatis lebih murah dari aplikasi resmi.</p>
     </div>
 
     <div class="sticky-nav">
+        <a href="#cat-Bundling" class="promo-link">📦 Paket Bundling</a>
         <a href="#cat-Coffee">☕ Coffee</a>
         <a href="#cat-Non-Coffee">🥤 Non-Coffee</a>
+        <a href="#cat-Oatside">🌾 Oatside Series</a>
+        <a href="#cat-Frappe">🍦 Frappe</a>
         <a href="#cat-Food">🥐 Food & Toast</a>
     </div>
 
@@ -269,7 +174,7 @@
             <small id="itemCount">0 Item</small>
             <div class="total">Rp <span id="totalPrice">0</span></div>
         </div>
-        <button class="checkout" onclick="openModal()">Cek Pesanan</button>
+        <button class="checkout" onclick="openModal()">Cek Pesanan 🛒</button>
     </div>
 </div>
 
@@ -280,131 +185,175 @@
             <button class="close-modal" onclick="closeModal()">&times;</button>
         </div>
         <div id="modalItems"></div>
-        <button class="modal-btn-wa" onclick="checkoutWA()">Pesan via WhatsApp</button>
+        <button class="modal-btn-wa" onclick="checkoutWA()">
+            <span>Pesan via WhatsApp Sekarang</span>
+        </button>
     </div>
 </div>
 
 <script>
-const phone = "628XXXXXXXXXX"; // GANTI NOMOR KAMU DI SINI
+const phone = "628XXXXXXXXXX"; // JANGAN LUPA GANTI NOMOR KAMU
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
-const menuData = [
+// RUMUS HARGA JUAL OTOMATIS: (Harga Asli / 2) + Modal Voucher 3500 + Margin Keuntungan (2500)
+// Dibulatkan ke ribuan terdekat supaya angkanya cantik (misal: 14.000, 17.000)
+const hitungJual = (hargaNormal) => {
+    let hargaDasar = (hargaNormal * 0.5) + 3500;
+    let hargaJual = hargaDasar + 2500; 
+    return Math.round(hargaJual / 1000) * 1000;
+}
+
+// Data Lengkap Menu dari Gambar Aplikasi
+const rawMenuData = [
+    // --- PAKET BUNDLING (Custom untuk maksimalkan voucher 2 dan 3) ---
+    {name:"Paket Berdua (2 Kopken Mantan Large)", normal: 50000, overridePrice: 33000, category:"Bundling", img:"bundle-2.jpg"},
+    {name:"Paket Bertiga (3 Kopken Mantan Large)", normal: 75000, overridePrice: 46000, category:"Bundling", img:"bundle-3.jpg"},
+
     // --- COFFEE ---
-    {name:"Americano", price:14000, category:"Coffee", img:"images/americano.jpg"},
-    {name:"Cappuccino", price:17000, category:"Coffee", img:"images/cappuccino.jpg"},
-    {name:"Latte", price:17000, category:"Coffee", img:"images/latte.jpg"},
-    {name:"Vanilla Latte", price:18000, category:"Coffee", img:"images/vanilla.jpg"},
-    {name:"Spanish Latte", price:15000, category:"Coffee", img:"images/spanish.jpg"},
-    {name:"Creamy Aren Latte", price:17000, category:"Coffee", img:"images/creamy-aren.jpg"},
-    {name:"Butterscotch Aren Latte", price:16000, category:"Coffee", img:"images/butter-aren.jpg"},
-    {name:"Butterscotch Sea Salt Latte", price:18000, category:"Coffee", img:"images/butter-seasalt.jpg"},
-    {name:"Dua Shot Iced Shaken", price:19000, category:"Coffee", img:"images/duashot.jpg"},
-    {name:"Caramel Macchiato", price:19000, category:"Coffee", img:"images/caramel-macchiato.jpg"},
-    {name:"Hazelnut Latte", price:18000, category:"Coffee", img:"images/hazelnut-latte.jpg"},
-    {name:"Kopi Susu Black Aren", price:16000, category:"Coffee", img:"images/black-aren.jpg"},
-    {name:"Matcha Espresso", price:18000, category:"Coffee", img:"images/matcha-espresso.jpg"},
-    {name:"Mocha Latte", price:19000, category:"Coffee", img:"images/mocha-latte.jpg"},
-    {name:"Dubai Pistachio Latte", price:18000, category:"Coffee", img:"images/dubai-pistachio.jpg"},
-    {name:"Pistachio Latte", price:17000, category:"Coffee", img:"images/pistachio.jpg"},
-    {name:"Pistachio Aren Latte", price:15000, category:"Coffee", img:"images/pistachio-aren.jpg"},
-    {name:"Cafe Malt Latte", price:17000, category:"Coffee", img:"images/malt-latte.jpg"},
-    {name:"Kopi Kenangan Mantan", price:15000, category:"Coffee", img:"images/kopken.jpg"},
-    {name:"Caramel Latte", price:18000, category:"Coffee", img:"images/caramel.jpg"},
-    {name:"Mocha Caramel", price:18000, category:"Coffee", img:"images/mocha-caramel.jpg"},
-    {name:"Tiramisu Latte", price:16000, category:"Coffee", img:"images/tiramisu-latte.jpg"},
-    {name:"Tiramisu Mocha Latte", price:18000, category:"Coffee", img:"images/tiramisu-mocha.jpg"},
-    {name:"Toffee Nut Latte", price:15000, category:"Coffee", img:"images/toffee.jpg"},
-    {name:"Toffee Nut Aren Latte", price:16000, category:"Coffee", img:"images/toffee-aren.jpg"},
-    {name:"Toffee Nut Oat Latte", price:17000, category:"Coffee", img:"images/toffee-oat.jpg"},
+    {name:"Americano", normal: 17000, category:"Coffee", img:"americano.jpg"},
+    {name:"Cappuccino", normal: 22000, category:"Coffee", img:"cappuccino.jpg"},
+    {name:"Latte", normal: 22000, category:"Coffee", img:"latte.jpg"},
+    {name:"Vanilla Latte", normal: 26000, category:"Coffee", img:"vanilla-latte.jpg"},
+    {name:"Spanish Latte", normal: 19000, category:"Coffee", img:"spanish-latte.jpg"},
+    {name:"Creamy Aren Latte", normal: 22000, category:"Coffee", img:"creamy-aren.jpg"},
+    {name:"Butterscotch Aren Latte", normal: 20000, category:"Coffee", img:"butter-aren.jpg"},
+    {name:"Butterscotch Sea Salt Latte", normal: 25000, category:"Coffee", img:"butter-seasalt.jpg"},
+    {name:"Dua Shot Iced Shaken", normal: 28000, category:"Coffee", img:"dua-shot.jpg"},
+    {name:"Caramel Macchiato", normal: 28000, category:"Coffee", img:"caramel-mac.jpg"},
+    {name:"Hazelnut Latte", normal: 26000, category:"Coffee", img:"hazelnut.jpg"},
+    {name:"Kopi Susu Black Aren", normal: 21000, category:"Coffee", img:"black-aren.jpg"},
+    {name:"Matcha Espresso", normal: 26000, category:"Coffee", img:"matcha-esp.jpg"},
+    {name:"Mocha Latte", normal: 28000, category:"Coffee", img:"mocha-latte.jpg"},
+    {name:"Dubai Pistachio Latte", normal: 26000, category:"Coffee", img:"dubai-pis.jpg"},
+    {name:"Pistachio Latte", normal: 22000, category:"Coffee", img:"pistachio.jpg"},
+    {name:"Pistachio Aren Latte", normal: 19000, category:"Coffee", img:"pis-aren.jpg"},
+    {name:"Cafe Malt Latte", normal: 23000, category:"Coffee", img:"malt-latte.jpg"},
+    {name:"Kopi Kenangan Mantan", normal: 19000, category:"Coffee", img:"kopken-mantan.jpg"},
+    {name:"Caramel Latte", normal: 26000, category:"Coffee", img:"caramel-latte.jpg"},
+    {name:"Mocha Caramel", normal: 26000, category:"Coffee", img:"mocha-caramel.jpg"},
+    {name:"Tiramisu Latte", normal: 20000, category:"Coffee", img:"tiramisu.jpg"},
+    {name:"Tiramisu Mocha Latte", normal: 25000, category:"Coffee", img:"tira-mocha.jpg"},
+    {name:"Toffee Nut Latte", normal: 19000, category:"Coffee", img:"toffee.jpg"},
+    {name:"Toffee Nut Aren Latte", normal: 21000, category:"Coffee", img:"toffee-aren.jpg"},
+    {name:"Toffee Nut Oat Latte", normal: 22000, category:"Coffee", img:"toffee-oat.jpg"},
+    {name:"Avocado Coffee", normal: 28000, category:"Coffee", img:"avo-coffee.jpg"},
 
     // --- NON COFFEE ---
-    {name:"Choco Caramel", price:15000, category:"Non-Coffee", img:"images/choco-caramel.jpg"},
-    {name:"Toffee Nut Choco Macchiato", price:17000, category:"Non-Coffee", img:"images/toffee-choco.jpg"},
-    {name:"Butterscotch Sea Salt", price:17000, category:"Non-Coffee", img:"images/butter-seasalt-nc.jpg"},
-    {name:"Babyccino", price:15000, category:"Non-Coffee", img:"images/babyccino.jpg"},
-    {name:"Dubai Pistachio Chocolate", price:19000, category:"Non-Coffee", img:"images/pistachio-choco.jpg"},
-    {name:"Hazelnut Choco Milk Tea", price:17000, category:"Non-Coffee", img:"images/hazelnut-choco.jpg"},
-    {name:"Milo Dinosaur", price:17000, category:"Non-Coffee", img:"images/milo.jpg"},
-    {name:"Oreo Shake", price:18000, category:"Non-Coffee", img:"images/oreo.jpg"},
-    {name:"Raspberry Hibiscus", price:16000, category:"Non-Coffee", img:"images/raspberry.jpg"},
-    {name:"Thai Tea", price:17000, category:"Non-Coffee", img:"images/thai-tea.jpg"},
-    {name:"Matcha Latte", price:18000, category:"Non-Coffee", img:"images/matcha.jpg"},
-    {name:"Avocado Caramel", price:19000, category:"Non-Coffee", img:"images/avocado-caramel.jpg"},
-    {name:"Avocado Milk", price:17000, category:"Non-Coffee", img:"images/avocado-milk.jpg"},
-    {name:"Dutch Chocolate", price:18000, category:"Non-Coffee", img:"images/dutch.jpg"},
-    {name:"Hazelnut Dutch Choco", price:19000, category:"Non-Coffee", img:"images/hazelnut-dutch.jpg"},
-    {name:"Lemon Black Tea", price:14000, category:"Non-Coffee", img:"images/lemon-tea.jpg"},
-    {name:"Kenangan Milk Tea", price:16000, category:"Non-Coffee", img:"images/milk-tea.jpg"},
+    {name:"Choco Caramel", normal: 19000, category:"Non-Coffee", img:"choco-caramel.jpg"},
+    {name:"Toffee Nut Choco Macchiato", normal: 22000, category:"Non-Coffee", img:"toffee-choco.jpg"},
+    {name:"Butterscotch Sea Salt", normal: 22000, category:"Non-Coffee", img:"bs-seasalt-nc.jpg"},
+    {name:"Babyccino", normal: 19000, category:"Non-Coffee", img:"babyccino.jpg"},
+    {name:"Dubai Pistachio Chocolate", normal: 27000, category:"Non-Coffee", img:"dubai-choco.jpg"},
+    {name:"Hazelnut Choco Milk Tea", normal: 22000, category:"Non-Coffee", img:"hazel-milktea.jpg"},
+    {name:"Milo Dinosaurus", normal: 23000, category:"Non-Coffee", img:"milo.jpg"},
+    {name:"Oreo Shake", normal: 26000, category:"Non-Coffee", img:"oreo.jpg"},
+    {name:"Raspberry Hibiscus", normal: 20000, category:"Non-Coffee", img:"raspberry.jpg"},
+    {name:"Thai Tea", normal: 22000, category:"Non-Coffee", img:"thaitea.jpg"},
+    {name:"Matcha Latte", normal: 25000, category:"Non-Coffee", img:"matcha-latte.jpg"},
+    {name:"Avocado Caramel", normal: 28000, category:"Non-Coffee", img:"avo-caramel.jpg"},
+    {name:"Avocado Milk", normal: 24000, category:"Non-Coffee", img:"avo-milk.jpg"},
+    {name:"Dutch Chocolate", normal: 26000, category:"Non-Coffee", img:"dutch.jpg"},
+    {name:"Hazelnut Dutch Choco", normal: 28000, category:"Non-Coffee", img:"hazel-dutch.jpg"},
+    {name:"Lemon Black Tea", normal: 17000, category:"Non-Coffee", img:"lemon-tea.jpg"},
+    {name:"Kenangan Milk Tea", normal: 21000, category:"Non-Coffee", img:"kenangan-milktea.jpg"},
+
+    // --- OATSIDE SERIES ---
+    {name:"Oatside Kopi Kenangan Mantan", normal: 22000, category:"Oatside", img:"oatside-kopken.jpg"},
+    {name:"Oatside Latte", normal: 25000, category:"Oatside", img:"oatside-latte.jpg"},
+    {name:"Oatside Matcha Latte", normal: 25000, category:"Oatside", img:"oatside-matcha.jpg"},
+
+    // --- FRAPPE ---
+    {name:"Choco Caramel Frappe", normal: 28000, category:"Frappe", img:"choco-frappe.jpg"},
+    {name:"Tiramisu Frappe", normal: 28000, category:"Frappe", img:"tiramisu-frappe.jpg"},
+    {name:"Butterscotch Kenangan Frappe", normal: 30000, category:"Frappe", img:"bs-frappe.jpg"},
+    {name:"Matcha Kenangan Frappe", normal: 32000, category:"Frappe", img:"matcha-frappe.jpg"},
+    {name:"Kopi Kenangan Mantan Frappe", normal: 30000, category:"Frappe", img:"kopken-frappe.jpg"},
+    {name:"Dutch Choco Kenangan Frappe", normal: 32000, category:"Frappe", img:"dutch-frappe.jpg"},
 
     // --- FOOD & TOAST ---
-    {name:"Wahyu Sapi Toast", price:15000, category:"Food", img:"images/wahyu-sapi.jpg"},
-    {name:"Butter Croissant", price:13000, category:"Food", img:"images/croissant.jpg"},
-    {name:"Chocolate Croissant", price:15000, category:"Food", img:"images/choco-croissant.jpg"},
-    {name:"Sugar Donut", price:11000, category:"Food", img:"images/sugar-donut.jpg"},
-    {name:"Roti Srikaya", price:13000, category:"Food", img:"images/roti-srikaya.jpg"},
-    {name:"Choco Chip Cookies", price:13000, category:"Food", img:"images/cookies.jpg"},
-    {name:"Join The Dark Side Cookie", price:16000, category:"Food", img:"images/dark-cookie.jpg"},
-    {name:"Friend Chip Cookie", price:14000, category:"Food", img:"images/friend-cookie.jpg"},
-    {name:"Roti Sisir Coklat", price:13000, category:"Food", img:"images/roti-sisir-coklat.jpg"},
-    {name:"Dirty Croissant Milo", price:16000, category:"Food", img:"images/dirty-croissant.jpg"},
-    {name:"Bambang Choco Cheese", price:14000, category:"Food", img:"images/bambang.jpg"},
-    {name:"Adam Ayam Toast", price:15000, category:"Food", img:"images/adam-ayam.jpg"},
-    {name:"Donut Tiramisu", price:13000, category:"Food", img:"images/donut-tiramisu.jpg"},
-    {name:"Danish Tiramisu", price:16000, category:"Food", img:"images/danish-tiramisu.jpg"},
-    {name:"Bolu Marble Ube", price:13000, category:"Food", img:"images/bolu-ube.jpg"},
-    {name:"Canele Original", price:13000, category:"Food", img:"images/canele.jpg"},
-    {name:"Canele Toffee Nut", price:14000, category:"Food", img:"images/canele-toffee.jpg"},
-    {name:"Donut Abon", price:13000, category:"Food", img:"images/donut-abon.jpg"},
-    {name:"Donut Almond", price:13000, category:"Food", img:"images/donut-almond.jpg"},
-    {name:"Roti Gulung Abon", price:15000, category:"Food", img:"images/roti-abon.jpg"},
-    {name:"Roti Gulung Aren", price:13000, category:"Food", img:"images/roti-aren.jpg"},
-    {name:"Roti Sisir Original", price:12000, category:"Food", img:"images/roti-sisir.jpg"}
+    {name:"Sugar Donut", normal: 10000, category:"Food", img:"sugar-donut.jpg"},
+    {name:"Roti Srikaya", normal: 15000, category:"Food", img:"srikaya.jpg"},
+    {name:"Choco Chip Cookies", normal: 14000, category:"Food", img:"choco-cookies.jpg"},
+    {name:"Join the Dark Side Cookie", normal: 21000, category:"Food", img:"darkside-cookie.jpg"},
+    {name:"Friend Chip Cookie", normal: 17000, category:"Food", img:"friend-cookie.jpg"},
+    {name:"Wahyu Sapi Toast", normal: 19000, category:"Food", img:"wahyu-sapi.jpg"},
+    {name:"Butter Croissant", normal: 15000, category:"Food", img:"butter-croissant.jpg"},
+    {name:"Chocolate Croissant", normal: 19000, category:"Food", img:"choco-croissant.jpg"},
+    {name:"Roti Sisir Coklat", normal: 14000, category:"Food", img:"sisir-coklat.jpg"},
+    {name:"Dirty Croissant Milo", normal: 20000, category:"Food", img:"dirty-croissant.jpg"},
+    {name:"Bambang Choco Cheese", normal: 17000, category:"Food", img:"bambang-toast.jpg"},
+    {name:"Adam Ayam Toast", normal: 19000, category:"Food", img:"adam-ayam.jpg"},
+    {name:"Donut Tiramisu", normal: 14000, category:"Food", img:"donut-tiramisu.jpg"},
+    {name:"Danish Tiramisu", normal: 20000, category:"Food", img:"danish-tiramisu.jpg"},
+    {name:"Bolu Marble Ube", normal: 15000, category:"Food", img:"bolu-ube.jpg"},
+    {name:"Canele Original", normal: 14000, category:"Food", img:"canele.jpg"},
+    {name:"Canele Toffee Nut Crumble", normal: 16000, category:"Food", img:"canele-toffee.jpg"},
+    {name:"Donut Abon", normal: 14000, category:"Food", img:"donut-abon.jpg"},
+    {name:"Donut Almond", normal: 14000, category:"Food", img:"donut-almond.jpg"},
+    {name:"Roti Gulung Abon", normal: 18000, category:"Food", img:"gulung-abon.jpg"},
+    {name:"Roti Gulung Aren", normal: 15000, category:"Food", img:"gulung-aren.jpg"},
+    {name:"Roti Sisir Original", normal: 12000, category:"Food", img:"sisir-ori.jpg"}
 ];
+
+// Proses Menu: Hitung harga jual otomatis
+const menuData = rawMenuData.map(item => {
+    return {
+        ...item,
+        price: item.overridePrice ? item.overridePrice : hitungJual(item.normal)
+    };
+});
 
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
-// Fungsi Render Semua Kategori Ngalir ke Bawah
 function renderAllMenus() {
     const container = document.getElementById("allMenuContainer");
     container.innerHTML = "";
 
-    // Ambil daftar kategori unik
-    const categories = [...new Set(menuData.map(item => item.category))];
+    const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Oatside", "Frappe", "Food"];
 
-    categories.forEach(cat => {
-        // Buat div pembungkus per kategori
+    orderKat.forEach(cat => {
+        const items = menuData.filter(item => item.category === cat);
+        if(items.length === 0) return;
+
         const section = document.createElement("div");
         section.className = "menu-section";
         section.id = `cat-${cat}`;
 
-        // Ikon sesuai kategori
-        let icon = cat === 'Coffee' ? '☕' : cat === 'Non-Coffee' ? '🥤' : '🥐';
+        let icon = cat === 'Coffee' ? '☕' : cat === 'Non-Coffee' ? '🥤' : cat === 'Bundling' ? '📦' : cat === 'Oatside' ? '🌾' : cat === 'Frappe' ? '🍦' : '🥐';
         
-        // Judul Kategori
-        section.innerHTML = `<div class="section-title">${icon} ${cat}</div>`;
+        let titleColor = cat === 'Bundling' ? 'color: var(--promo-red);' : '';
+        let sectionName = cat === 'Food' ? 'Food & Toast' : cat === 'Oatside' ? 'Oatside Series' : cat;
 
-        // Buat Grid
+        section.innerHTML = `<div class="section-title" style="${titleColor}">${icon} ${sectionName}</div>`;
+
         const grid = document.createElement("div");
         grid.className = "menu-grid";
 
-        // Filter & Masukkan produk
-        const items = menuData.filter(item => item.category === cat);
         items.forEach(item => {
             const qty = cart[item.name] || 0;
+            const isBundle = item.category === "Bundling" ? "bundle" : "";
+            
+            // Hitung persentase diskon
+            const persenDiskon = Math.round(((item.normal - item.price) / item.normal) * 100);
+
             const card = document.createElement("div");
-            card.className = "card";
+            card.className = `card ${isBundle}`;
             card.innerHTML = `
-                <img src="${item.img}" onerror="this.src='https://placehold.co/200x200/F0EBE1/8B7A75?text=${encodeURIComponent(item.name.substring(0,3))}'" alt="${item.name}">
+                <div class="discount-label">Diskon ${persenDiskon}%</div>
+                <img src="images/${item.img}" onerror="this.src='https://placehold.co/200x200/F0EBE1/8B7A75?text=${encodeURIComponent(item.name.substring(0,3))}'" alt="${item.name}">
                 <div class="card-body">
                     <div class="card-info">
                         <h3>${item.name}</h3>
-                        <div class="price">Rp ${formatRp(item.price)}</div>
+                        <div class="price-core">
+                            <span class="coret">Rp ${formatRp(item.normal)}</span>
+                            <span class="real">Rp ${formatRp(item.price)}</span>
+                        </div>
                     </div>
                     <div class="qty-control">
-                        <button onclick="changeQty('${item.name}', -1)">-</button>
-                        <span id="qty-${item.name.replace(/\s+/g, '-')}">${qty}</span>
-                        <button onclick="changeQty('${item.name}', 1)">+</button>
+                        <button onclick="changeQty('${item.name.replace(/'/g, "\\'")}', -1)">-</button>
+                        <span id="qty-${item.name.replace(/[\s']/g, '-')}">${qty}</span>
+                        <button onclick="changeQty('${item.name.replace(/'/g, "\\'")}', 1)">+</button>
                     </div>
                 </div>
             `;
@@ -419,13 +368,10 @@ function renderAllMenus() {
 function changeQty(name, amount){
     if(!cart[name]) cart[name] = 0;
     cart[name] += amount;
-
     if(cart[name] <= 0) delete cart[name];
-
     localStorage.setItem("cart", JSON.stringify(cart));
     
-    // Update spesifik angka agar tidak reload semua gambar
-    const idFriendlyName = name.replace(/\s+/g, '-');
+    const idFriendlyName = name.replace(/[\s']/g, '-');
     const qtySpan = document.getElementById(`qty-${idFriendlyName}`);
     if(qtySpan) qtySpan.innerText = cart[name] || 0;
     
@@ -448,8 +394,8 @@ function updateCartUI() {
             modalItems.innerHTML += `
                 <div class="modal-item">
                     <div>
-                        <b style="color: #4A3A36">${item.name}</b><br>
-                        <span style="color: #8B7A75; font-size:13px">${qty}x @ Rp ${formatRp(item.price)}</span>
+                        <b style="color: #3A2E2A">${item.name}</b><br>
+                        <span style="color: #8B7A75; font-size:12px">${qty}x @ Rp ${formatRp(item.price)}</span>
                     </div>
                     <div style="font-weight:600; color:#C28C65;">Rp ${formatRp(subtotal)}</div>
                 </div>
@@ -473,7 +419,7 @@ function openModal() { document.getElementById("cartModal").style.display = "fle
 function closeModal() { document.getElementById("cartModal").style.display = "none"; }
 
 function checkoutWA(){
-    let message = "Halo, saya mau order promo spesial:%0A%0A";
+    let message = "Halo, saya mau order Kopken harga promo ya:%0A%0A";
     let total = 0;
 
     menuData.forEach(item=>{
@@ -481,15 +427,14 @@ function checkoutWA(){
         if(qty){
             const subtotal = qty * item.price;
             total += subtotal;
-            message += `▪️ *${item.name}*%0A  ${qty} x Rp ${formatRp(item.price)} = Rp ${formatRp(subtotal)}%0A`;
+            message += `▪️ *${item.name}*%0A   ${qty} x Rp ${formatRp(item.price)} = Rp ${formatRp(subtotal)}%0A`;
         }
     });
 
-    message += `%0A*Total Pembayaran: Rp ${formatRp(total)}*%0A%0AMohon info ketersediaan dan metode pembayarannya ya. Terima kasih!`;
+    message += `%0A*Total Pembayaran: Rp ${formatRp(total)}*%0A%0ATolong rincikan biaya ongkir/metode ambilnya ya. Terima kasih!`;
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 
-// Jalankan saat pertama load
 renderAllMenus();
 updateCartUI();
 </script>
