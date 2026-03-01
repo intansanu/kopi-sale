@@ -7,36 +7,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg-body: #F4ECE1; /* Warna latar luar untuk versi desktop */
-        --app-bg: #FAF6F0; /* Warna krem utama aplikasi */
+        --bg-body: #F4ECE1;
+        --app-bg: #FAF6F0;
         --card-bg: #FFFFFF;
         --text-dark: #3A2E2A;
         --text-light: #8B7A75;
         --accent: #C28C65;
-        --accent-hover: #A6724E;
         --promo-red: #D9534F;
+        --border-color: #EAE0D5;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
     html { scroll-behavior: smooth; }
 
-    /* Pengunci Layout agar rapi di Desktop/Laptop (Vercel) */
-    body {
-        background: var(--bg-body);
-        color: var(--text-dark);
-        display: flex;
-        justify-content: center;
-        min-height: 100vh;
-    }
+    body { background: var(--bg-body); color: var(--text-dark); display: flex; justify-content: center; min-height: 100vh; }
 
     .app-container {
-        width: 100%;
-        max-width: 480px; /* Lebar maksimal seukuran HP besar */
-        background: var(--app-bg);
-        position: relative;
-        min-height: 100vh;
-        box-shadow: 0 0 50px rgba(0,0,0,0.1); /* Bayangan estetik di desktop */
-        padding-bottom: 120px; 
+        width: 100%; max-width: 480px; background: var(--app-bg); position: relative;
+        min-height: 100vh; box-shadow: 0 0 50px rgba(0,0,0,0.1); padding-bottom: 120px; 
     }
 
     /* Hero Banner */
@@ -44,38 +32,29 @@
         width: 100%; height: 200px;
         background: linear-gradient(to bottom, rgba(58, 46, 42, 0.2), rgba(58, 46, 42, 0.8)), 
                     url('https://placehold.co/600x400/C28C65/FFFFFF?text=KOPKEN+PROMO') center/cover;
-        display: flex; flex-direction: column; justify-content: flex-end;
-        padding: 25px 20px; color: white;
+        display: flex; flex-direction: column; justify-content: flex-end; padding: 25px 20px; color: white;
     }
-
-    .badge-top {
-        background: var(--promo-red); color: #fff;
-        padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 600;
-        width: max-content; margin-bottom: 8px; letter-spacing: 0.5px;
-    }
-
     .hero-banner h1 { font-size: 24px; font-weight: 700; line-height: 1.2; }
     .hero-banner p { font-size: 13px; opacity: 0.9; margin-top: 5px; }
 
-    /* Sticky Nav (Nempel di Atas saat Scroll) */
+    /* Sticky Nav */
     .sticky-nav {
         position: sticky; top: 0; background: rgba(250, 246, 240, 0.95);
         backdrop-filter: blur(10px); padding: 15px 20px; z-index: 10;
-        display: flex; gap: 12px; overflow-x: auto; border-bottom: 1px solid #EAE0D5;
+        display: flex; gap: 12px; overflow-x: auto; border-bottom: 1px solid var(--border-color);
         scrollbar-width: none;
     }
     .sticky-nav::-webkit-scrollbar { display: none; }
-    
     .sticky-nav a {
         text-decoration: none; background: var(--card-bg); color: var(--text-dark);
         padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 500;
-        white-space: nowrap; border: 1px solid #EAE0D5; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        white-space: nowrap; border: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .sticky-nav a.promo-link { border-color: var(--promo-red); color: var(--promo-red); font-weight: 600; background: #fffcfc; }
-    .sticky-nav a:hover, .sticky-nav a:active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .sticky-nav a:active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-    /* Area Menu & Grid */
-    .menu-section { padding: 20px; padding-top: 30px; }
+    /* Area Menu */
+    .menu-section { padding: 20px; padding-top: 25px; }
     .section-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
 
     .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -83,22 +62,13 @@
     .card {
         background: var(--card-bg); border-radius: 16px; overflow: hidden;
         display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        border: 1px solid rgba(234, 224, 213, 0.5); position: relative;
+        border: 1px solid rgba(234, 224, 213, 0.5);
     }
     .card.bundle { border: 1.5px solid var(--promo-red); background: #FFF9F9; }
 
-    /* Label Diskon di Foto */
-    .discount-label {
-        position: absolute; top: 8px; left: 8px; background: var(--promo-red);
-        color: white; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 8px; z-index: 2;
-    }
+    .card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #F0EBE1; }
 
-    .card img {
-        width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #F0EBE1;
-    }
-
-    .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; }
-    
+    .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
     .card-info h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; color: var(--text-dark); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     
     .price-core { display: flex; flex-direction: column; margin-bottom: 12px; }
@@ -106,43 +76,60 @@
     .price-core .real { font-size: 14px; color: var(--accent); font-weight: 700; }
     .card.bundle .price-core .real { color: var(--promo-red); }
 
-    /* QTY Button masuk ke dalam card */
-    .qty-control {
-        display: flex; align-items: center; justify-content: space-between;
-        background: var(--app-bg); border-radius: 10px; padding: 4px; margin-top: auto;
+    /* Tombol Tambah ala GoFood */
+    .add-btn {
+        width: 100%; background: var(--card-bg); color: var(--accent); border: 1px solid var(--accent);
+        padding: 6px 0; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;
     }
-    .qty-control button {
-        background: var(--card-bg); color: var(--text-dark); border: 1px solid #EAE0D5;
-        width: 28px; height: 28px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;
-    }
-    .qty-control span { font-size: 13px; font-weight: 600; text-align: center; width: 100%; }
+    .add-btn:active { background: var(--accent); color: #fff; }
+
+    /* Disclaimer */
+    .disclaimer { text-align: center; font-size: 11px; color: var(--text-light); padding: 10px 20px 30px; font-style: italic; }
 
     /* Floating Cart Bawah */
     .cart-wrapper {
         position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-        width: 100%; max-width: 440px; z-index: 100;
+        width: 100%; max-width: 440px; z-index: 50;
     }
     .cart {
         background: #3a2e2a; color: #fff; padding: 14px 20px; border-radius: 16px;
         display: flex; justify-content: space-between; align-items: center;
-        box-shadow: 0 10px 30px rgba(58, 46, 42, 0.3); margin: 0 20px;
+        box-shadow: 0 10px 30px rgba(58, 46, 42, 0.3); margin: 0 20px; cursor: pointer;
     }
-    .cart-info { display: flex; flex-direction: column; }
     .cart-info small { font-size: 11px; color: #D3C9C5; }
     .total { font-size: 16px; font-weight: 700; color: #fff; }
-    .checkout {
-        background: var(--accent); color: #fff; border: none; padding: 10px 18px;
-        border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer;
-    }
+    .checkout { background: var(--accent); color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; }
 
-    /* Modal Rincian */
+    /* Modals Overlay */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: flex-end; }
-    .modal-content { background: #fff; width: 100%; max-width: 480px; border-radius: 20px 20px 0 0; padding: 25px 20px; max-height: 80vh; overflow-y: auto; }
+    .modal-content { background: #fff; width: 100%; max-width: 480px; border-radius: 20px 20px 0 0; padding: 25px 20px; max-height: 85vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .modal-header h2 { font-size: 18px; }
     .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light); }
-    .modal-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 14px; border-bottom: 1px solid #F0EBE1; padding-bottom: 10px; }
-    .modal-btn-wa { width: 100%; padding: 15px; background: #25D366; color: #fff; border: none; border-radius: 12px; font-weight: 600; font-size: 15px; margin-top: 20px; cursor: pointer; display: flex; justify-content: center; gap: 8px; align-items: center; }
+    
+    /* Variant Modal Specifics */
+    .variant-section { margin-bottom: 20px; }
+    .variant-section h4 { font-size: 14px; margin-bottom: 10px; color: var(--text-dark); }
+    .radio-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-label { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 13px; cursor: pointer; }
+    .radio-label input { margin-right: 10px; accent-color: var(--accent); }
+    .radio-label.selected { border-color: var(--accent); background: #FAF6F0; font-weight: 600; }
+    .btn-simpan-varian { width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 12px; font-weight: 600; font-size: 15px; margin-top: 10px; cursor: pointer; }
+
+    /* Cart Modal Specifics */
+    .modal-item { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; font-size: 14px; border-bottom: 1px solid #F0EBE1; padding-bottom: 15px; }
+    .item-desc { flex: 1; padding-right: 15px; }
+    .item-title { font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
+    .item-variants { font-size: 11px; color: var(--text-light); margin-bottom: 8px; }
+    .item-price { font-weight: 600; color: var(--accent); font-size: 13px; }
+    
+    .cart-qty-control { display: flex; align-items: center; gap: 10px; background: var(--app-bg); border-radius: 8px; padding: 4px; }
+    .cart-qty-control button { background: var(--card-bg); border: 1px solid var(--border-color); width: 24px; height: 24px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    
+    .outlet-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 13px; margin-top: 15px; margin-bottom: 5px; outline: none; }
+    .outlet-input:focus { border-color: var(--accent); }
+    .modal-btn-wa { width: 100%; padding: 15px; background: #25D366; color: #fff; border: none; border-radius: 12px; font-weight: 600; font-size: 15px; margin-top: 15px; cursor: pointer; }
+
 </style>
 </head>
 <body>
@@ -150,31 +137,66 @@
 <div class="app-container">
     
     <div class="hero-banner">
-        <div class="badge-top">Voucher Terbatas 🏷️</div>
         <h1>Pesan Kopken<br>Jauh Lebih Hemat!</h1>
-        <p>Harga reseller. Otomatis lebih murah dari aplikasi resmi.</p>
+        <p>Harga reseller. Otomatis lebih murah dari aplikasi.</p>
     </div>
 
     <div class="sticky-nav">
-        <a href="#cat-Bundling" class="promo-link">📦 Paket Bundling</a>
+        <a href="#cat-Bundling" class="promo-link">📦 Paket Spesial Voucher</a>
         <a href="#cat-Coffee">☕ Coffee</a>
         <a href="#cat-Non-Coffee">🥤 Non-Coffee</a>
-        <a href="#cat-Oatside">🌾 Oatside Series</a>
+        <a href="#cat-Oatside">🌾 Oatside</a>
         <a href="#cat-Frappe">🍦 Frappe</a>
-        <a href="#cat-Food">🥐 Food & Toast</a>
+        <a href="#cat-Food">🥐 Food</a>
     </div>
 
     <div id="allMenuContainer"></div>
 
+    <div class="disclaimer">
+        *Harga dapat berubah sewaktu-waktu menyesuaikan kebijakan outlet Kopi Kenangan terdekat.
+    </div>
+
 </div>
 
 <div class="cart-wrapper" id="cartBar" style="display: none;">
-    <div class="cart">
+    <div class="cart" onclick="openCartModal()">
         <div class="cart-info">
             <small id="itemCount">0 Item</small>
             <div class="total">Rp <span id="totalPrice">0</span></div>
         </div>
-        <button class="checkout" onclick="openModal()">Cek Pesanan 🛒</button>
+        <button class="checkout">Cek Keranjang 🛒</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="variantModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="v-title">Nama Minuman</h2>
+            <button class="close-modal" onclick="closeVariantModal()">&times;</button>
+        </div>
+        
+        <div id="v-size-section" class="variant-section">
+            <h4>Pilih Ukuran</h4>
+            <div class="radio-group" id="v-size-options">
+                </div>
+        </div>
+
+        <div id="v-sugar-section" class="variant-section">
+            <h4>Tingkat Kemanisan</h4>
+            <div class="radio-group">
+                <label class="radio-label selected" onclick="selectSugar(this)">
+                    <div><input type="radio" name="sugar" value="Normal" checked> Normal</div>
+                </label>
+                <label class="radio-label" onclick="selectSugar(this)">
+                    <div><input type="radio" name="sugar" value="Less Sugar"> Less Sugar</div>
+                </label>
+                <label class="radio-label" onclick="selectSugar(this)">
+                    <div><input type="radio" name="sugar" value="No Sugar"> No Sugar</div>
+                </label>
+            </div>
+        </div>
+
+        <button class="btn-simpan-varian" onclick="addToCart()">Tambah ke Keranjang - Rp <span id="v-price-btn">0</span></button>
     </div>
 </div>
 
@@ -182,135 +204,81 @@
     <div class="modal-content">
         <div class="modal-header">
             <h2>Rincian Pesanan</h2>
-            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <button class="close-modal" onclick="closeCartModal()">&times;</button>
         </div>
+        
         <div id="modalItems"></div>
-        <button class="modal-btn-wa" onclick="checkoutWA()">
-            <span>Pesan via WhatsApp Sekarang</span>
-        </button>
+        
+        <input type="text" id="outletName" class="outlet-input" placeholder="Ketik nama outlet (Opsional, misal: Kopken Sudirman)">
+        <div style="font-size:11px; color:#8B7A75; margin-bottom:15px;">*Harga di atas dapat sedikit berubah menyesuaikan outlet tujuan.</div>
+        
+        <button class="modal-btn-wa" onclick="checkoutWA()">Pesan via WhatsApp Sekarang</button>
     </div>
 </div>
 
 <script>
-const phone = "628XXXXXXXXXX"; // JANGAN LUPA GANTI NOMOR KAMU
+const phone = "628XXXXXXXXXX"; // GANTI NOMOR
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
-// RUMUS HARGA JUAL OTOMATIS: (Harga Asli / 2) + Modal Voucher 3500 + Margin Keuntungan (2500)
-// Dibulatkan ke ribuan terdekat supaya angkanya cantik (misal: 14.000, 17.000)
+// Rumus dasar jual otomatis
 const hitungJual = (hargaNormal) => {
-    let hargaDasar = (hargaNormal * 0.5) + 3500;
-    let hargaJual = hargaDasar + 2500; 
+    let hargaJual = (hargaNormal * 0.5) + 3500 + 2500; 
     return Math.round(hargaJual / 1000) * 1000;
 }
 
-// Data Lengkap Menu dari Gambar Aplikasi
+// Data Menu Lengkap (Disiapkan untuk harga Large)
 const rawMenuData = [
-    // --- PAKET BUNDLING (Custom untuk maksimalkan voucher 2 dan 3) ---
-    {name:"Paket Berdua (2 Kopken Mantan Large)", normal: 50000, overridePrice: 33000, category:"Bundling", img:"bundle-2.jpg"},
-    {name:"Paket Bertiga (3 Kopken Mantan Large)", normal: 75000, overridePrice: 46000, category:"Bundling", img:"bundle-3.jpg"},
+    // --- BUNDLING KHUSUS VOUCHER 2 (Min. 50k Normal) ---
+    // Total normal harus > 50k biar diskon 25k (Voucher 2) maksimal
+    {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, category:"Bundling", img:"bundle-2.jpg", overridePrice: 33000, noSugar: false, noSize: true},
+    {name:"Paket Nongkrong (1 Latte L + 1 Matcha L)", normal: 60000, category:"Bundling", img:"bundle-latte.jpg", overridePrice: 38000, noSugar: true, noSize: true},
+    {name:"Paket Roti (Kopken Mantan + Thai Tea + Roti Srikaya)", normal: 56000, category:"Bundling", img:"bundle-roti.jpg", overridePrice: 37000, noSugar: true, noSize: true},
 
     // --- COFFEE ---
-    {name:"Americano", normal: 17000, category:"Coffee", img:"americano.jpg"},
-    {name:"Cappuccino", normal: 22000, category:"Coffee", img:"cappuccino.jpg"},
-    {name:"Latte", normal: 22000, category:"Coffee", img:"latte.jpg"},
-    {name:"Vanilla Latte", normal: 26000, category:"Coffee", img:"vanilla-latte.jpg"},
-    {name:"Spanish Latte", normal: 19000, category:"Coffee", img:"spanish-latte.jpg"},
-    {name:"Creamy Aren Latte", normal: 22000, category:"Coffee", img:"creamy-aren.jpg"},
-    {name:"Butterscotch Aren Latte", normal: 20000, category:"Coffee", img:"butter-aren.jpg"},
-    {name:"Butterscotch Sea Salt Latte", normal: 25000, category:"Coffee", img:"butter-seasalt.jpg"},
-    {name:"Dua Shot Iced Shaken", normal: 28000, category:"Coffee", img:"dua-shot.jpg"},
-    {name:"Caramel Macchiato", normal: 28000, category:"Coffee", img:"caramel-mac.jpg"},
-    {name:"Hazelnut Latte", normal: 26000, category:"Coffee", img:"hazelnut.jpg"},
-    {name:"Kopi Susu Black Aren", normal: 21000, category:"Coffee", img:"black-aren.jpg"},
-    {name:"Matcha Espresso", normal: 26000, category:"Coffee", img:"matcha-esp.jpg"},
-    {name:"Mocha Latte", normal: 28000, category:"Coffee", img:"mocha-latte.jpg"},
-    {name:"Dubai Pistachio Latte", normal: 26000, category:"Coffee", img:"dubai-pis.jpg"},
-    {name:"Pistachio Latte", normal: 22000, category:"Coffee", img:"pistachio.jpg"},
-    {name:"Pistachio Aren Latte", normal: 19000, category:"Coffee", img:"pis-aren.jpg"},
-    {name:"Cafe Malt Latte", normal: 23000, category:"Coffee", img:"malt-latte.jpg"},
-    {name:"Kopi Kenangan Mantan", normal: 19000, category:"Coffee", img:"kopken-mantan.jpg"},
-    {name:"Caramel Latte", normal: 26000, category:"Coffee", img:"caramel-latte.jpg"},
-    {name:"Mocha Caramel", normal: 26000, category:"Coffee", img:"mocha-caramel.jpg"},
-    {name:"Tiramisu Latte", normal: 20000, category:"Coffee", img:"tiramisu.jpg"},
-    {name:"Tiramisu Mocha Latte", normal: 25000, category:"Coffee", img:"tira-mocha.jpg"},
-    {name:"Toffee Nut Latte", normal: 19000, category:"Coffee", img:"toffee.jpg"},
-    {name:"Toffee Nut Aren Latte", normal: 21000, category:"Coffee", img:"toffee-aren.jpg"},
-    {name:"Toffee Nut Oat Latte", normal: 22000, category:"Coffee", img:"toffee-oat.jpg"},
-    {name:"Avocado Coffee", normal: 28000, category:"Coffee", img:"avo-coffee.jpg"},
+    {name:"Kopi Kenangan Mantan", normal: 19000, normalLarge: 25000, category:"Coffee", img:"kopken-mantan.jpg"},
+    {name:"Americano", normal: 17000, normalLarge: 23000, category:"Coffee", img:"americano.jpg"},
+    {name:"Cappuccino", normal: 22000, normalLarge: 28000, category:"Coffee", img:"cappuccino.jpg"},
+    {name:"Latte", normal: 22000, normalLarge: 28000, category:"Coffee", img:"latte.jpg"},
+    {name:"Vanilla Latte", normal: 26000, normalLarge: 32000, category:"Coffee", img:"vanilla-latte.jpg"},
+    {name:"Spanish Latte", normal: 19000, normalLarge: 25000, category:"Coffee", img:"spanish-latte.jpg"},
+    {name:"Creamy Aren Latte", normal: 22000, normalLarge: 28000, category:"Coffee", img:"creamy-aren.jpg"},
+    {name:"Caramel Macchiato", normal: 28000, normalLarge: 34000, category:"Coffee", img:"caramel-mac.jpg"},
+    {name:"Hazelnut Latte", normal: 26000, normalLarge: 32000, category:"Coffee", img:"hazelnut.jpg"},
 
     // --- NON COFFEE ---
-    {name:"Choco Caramel", normal: 19000, category:"Non-Coffee", img:"choco-caramel.jpg"},
-    {name:"Toffee Nut Choco Macchiato", normal: 22000, category:"Non-Coffee", img:"toffee-choco.jpg"},
-    {name:"Butterscotch Sea Salt", normal: 22000, category:"Non-Coffee", img:"bs-seasalt-nc.jpg"},
-    {name:"Babyccino", normal: 19000, category:"Non-Coffee", img:"babyccino.jpg"},
-    {name:"Dubai Pistachio Chocolate", normal: 27000, category:"Non-Coffee", img:"dubai-choco.jpg"},
-    {name:"Hazelnut Choco Milk Tea", normal: 22000, category:"Non-Coffee", img:"hazel-milktea.jpg"},
-    {name:"Milo Dinosaurus", normal: 23000, category:"Non-Coffee", img:"milo.jpg"},
-    {name:"Oreo Shake", normal: 26000, category:"Non-Coffee", img:"oreo.jpg"},
-    {name:"Raspberry Hibiscus", normal: 20000, category:"Non-Coffee", img:"raspberry.jpg"},
-    {name:"Thai Tea", normal: 22000, category:"Non-Coffee", img:"thaitea.jpg"},
-    {name:"Matcha Latte", normal: 25000, category:"Non-Coffee", img:"matcha-latte.jpg"},
-    {name:"Avocado Caramel", normal: 28000, category:"Non-Coffee", img:"avo-caramel.jpg"},
-    {name:"Avocado Milk", normal: 24000, category:"Non-Coffee", img:"avo-milk.jpg"},
-    {name:"Dutch Chocolate", normal: 26000, category:"Non-Coffee", img:"dutch.jpg"},
-    {name:"Hazelnut Dutch Choco", normal: 28000, category:"Non-Coffee", img:"hazel-dutch.jpg"},
-    {name:"Lemon Black Tea", normal: 17000, category:"Non-Coffee", img:"lemon-tea.jpg"},
-    {name:"Kenangan Milk Tea", normal: 21000, category:"Non-Coffee", img:"kenangan-milktea.jpg"},
+    {name:"Thai Tea", normal: 22000, normalLarge: 28000, category:"Non-Coffee", img:"thaitea.jpg"},
+    {name:"Matcha Latte", normal: 25000, normalLarge: 31000, category:"Non-Coffee", img:"matcha-latte.jpg"},
+    {name:"Milo Dinosaurus", normal: 23000, normalLarge: 29000, category:"Non-Coffee", img:"milo.jpg"},
+    {name:"Oreo Shake", normal: 26000, normalLarge: 32000, category:"Non-Coffee", img:"oreo.jpg"},
+    {name:"Dutch Chocolate", normal: 26000, normalLarge: 32000, category:"Non-Coffee", img:"dutch.jpg"},
 
-    // --- OATSIDE SERIES ---
-    {name:"Oatside Kopi Kenangan Mantan", normal: 22000, category:"Oatside", img:"oatside-kopken.jpg"},
-    {name:"Oatside Latte", normal: 25000, category:"Oatside", img:"oatside-latte.jpg"},
-    {name:"Oatside Matcha Latte", normal: 25000, category:"Oatside", img:"oatside-matcha.jpg"},
-
-    // --- FRAPPE ---
-    {name:"Choco Caramel Frappe", normal: 28000, category:"Frappe", img:"choco-frappe.jpg"},
-    {name:"Tiramisu Frappe", normal: 28000, category:"Frappe", img:"tiramisu-frappe.jpg"},
-    {name:"Butterscotch Kenangan Frappe", normal: 30000, category:"Frappe", img:"bs-frappe.jpg"},
-    {name:"Matcha Kenangan Frappe", normal: 32000, category:"Frappe", img:"matcha-frappe.jpg"},
-    {name:"Kopi Kenangan Mantan Frappe", normal: 30000, category:"Frappe", img:"kopken-frappe.jpg"},
-    {name:"Dutch Choco Kenangan Frappe", normal: 32000, category:"Frappe", img:"dutch-frappe.jpg"},
-
-    // --- FOOD & TOAST ---
-    {name:"Sugar Donut", normal: 10000, category:"Food", img:"sugar-donut.jpg"},
-    {name:"Roti Srikaya", normal: 15000, category:"Food", img:"srikaya.jpg"},
-    {name:"Choco Chip Cookies", normal: 14000, category:"Food", img:"choco-cookies.jpg"},
-    {name:"Join the Dark Side Cookie", normal: 21000, category:"Food", img:"darkside-cookie.jpg"},
-    {name:"Friend Chip Cookie", normal: 17000, category:"Food", img:"friend-cookie.jpg"},
+    // --- FOOD (Tidak ada Size & Gula) ---
     {name:"Wahyu Sapi Toast", normal: 19000, category:"Food", img:"wahyu-sapi.jpg"},
+    {name:"Roti Srikaya", normal: 15000, category:"Food", img:"srikaya.jpg"},
     {name:"Butter Croissant", normal: 15000, category:"Food", img:"butter-croissant.jpg"},
     {name:"Chocolate Croissant", normal: 19000, category:"Food", img:"choco-croissant.jpg"},
-    {name:"Roti Sisir Coklat", normal: 14000, category:"Food", img:"sisir-coklat.jpg"},
-    {name:"Dirty Croissant Milo", normal: 20000, category:"Food", img:"dirty-croissant.jpg"},
-    {name:"Bambang Choco Cheese", normal: 17000, category:"Food", img:"bambang-toast.jpg"},
-    {name:"Adam Ayam Toast", normal: 19000, category:"Food", img:"adam-ayam.jpg"},
-    {name:"Donut Tiramisu", normal: 14000, category:"Food", img:"donut-tiramisu.jpg"},
-    {name:"Danish Tiramisu", normal: 20000, category:"Food", img:"danish-tiramisu.jpg"},
-    {name:"Bolu Marble Ube", normal: 15000, category:"Food", img:"bolu-ube.jpg"},
-    {name:"Canele Original", normal: 14000, category:"Food", img:"canele.jpg"},
-    {name:"Canele Toffee Nut Crumble", normal: 16000, category:"Food", img:"canele-toffee.jpg"},
-    {name:"Donut Abon", normal: 14000, category:"Food", img:"donut-abon.jpg"},
-    {name:"Donut Almond", normal: 14000, category:"Food", img:"donut-almond.jpg"},
-    {name:"Roti Gulung Abon", normal: 18000, category:"Food", img:"gulung-abon.jpg"},
-    {name:"Roti Gulung Aren", normal: 15000, category:"Food", img:"gulung-aren.jpg"},
-    {name:"Roti Sisir Original", normal: 12000, category:"Food", img:"sisir-ori.jpg"}
+    {name:"Roti Sisir Coklat", normal: 14000, category:"Food", img:"sisir-coklat.jpg"}
 ];
 
-// Proses Menu: Hitung harga jual otomatis
+// Map Menu Data dengan Harga Jual yang dihitung
 const menuData = rawMenuData.map(item => {
     return {
         ...item,
-        price: item.overridePrice ? item.overridePrice : hitungJual(item.normal)
+        priceReg: item.overridePrice || hitungJual(item.normal),
+        priceLarge: item.normalLarge ? hitungJual(item.normalLarge) : null
     };
 });
 
-let cart = JSON.parse(localStorage.getItem("cart")) || {};
+let cart = JSON.parse(localStorage.getItem("cartDetail")) || {};
+let tempItem = null;
 
+// RENDER HOME MENU
 function renderAllMenus() {
     const container = document.getElementById("allMenuContainer");
     container.innerHTML = "";
 
-    const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Oatside", "Frappe", "Food"];
+    const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Food"];
 
     orderKat.forEach(cat => {
         const items = menuData.filter(item => item.category === cat);
@@ -320,63 +288,155 @@ function renderAllMenus() {
         section.className = "menu-section";
         section.id = `cat-${cat}`;
 
-        let icon = cat === 'Coffee' ? '☕' : cat === 'Non-Coffee' ? '🥤' : cat === 'Bundling' ? '📦' : cat === 'Oatside' ? '🌾' : cat === 'Frappe' ? '🍦' : '🥐';
-        
+        let icon = cat === 'Coffee' ? '☕' : cat === 'Non-Coffee' ? '🥤' : cat === 'Bundling' ? '📦' : '🥐';
         let titleColor = cat === 'Bundling' ? 'color: var(--promo-red);' : '';
-        let sectionName = cat === 'Food' ? 'Food & Toast' : cat === 'Oatside' ? 'Oatside Series' : cat;
-
-        section.innerHTML = `<div class="section-title" style="${titleColor}">${icon} ${sectionName}</div>`;
+        section.innerHTML = `<div class="section-title" style="${titleColor}">${icon} ${cat}</div>`;
 
         const grid = document.createElement("div");
         grid.className = "menu-grid";
 
-        items.forEach(item => {
-            const qty = cart[item.name] || 0;
+        items.forEach((item, idx) => {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
             
-            // Hitung persentase diskon
-            const persenDiskon = Math.round(((item.normal - item.price) / item.normal) * 100);
-
             const card = document.createElement("div");
             card.className = `card ${isBundle}`;
             card.innerHTML = `
-                <div class="discount-label">Diskon ${persenDiskon}%</div>
                 <img src="images/${item.img}" onerror="this.src='https://placehold.co/200x200/F0EBE1/8B7A75?text=${encodeURIComponent(item.name.substring(0,3))}'" alt="${item.name}">
                 <div class="card-body">
                     <div class="card-info">
                         <h3>${item.name}</h3>
                         <div class="price-core">
                             <span class="coret">Rp ${formatRp(item.normal)}</span>
-                            <span class="real">Rp ${formatRp(item.price)}</span>
+                            <span class="real">Rp ${formatRp(item.priceReg)}</span>
                         </div>
                     </div>
-                    <div class="qty-control">
-                        <button onclick="changeQty('${item.name.replace(/'/g, "\\'")}', -1)">-</button>
-                        <span id="qty-${item.name.replace(/[\s']/g, '-')}">${qty}</span>
-                        <button onclick="changeQty('${item.name.replace(/'/g, "\\'")}', 1)">+</button>
-                    </div>
+                    <button class="add-btn" onclick="openVariantModal('${item.name}')">Tambah</button>
                 </div>
             `;
             grid.appendChild(card);
         });
-
         section.appendChild(grid);
         container.appendChild(section);
     });
 }
 
-function changeQty(name, amount){
-    if(!cart[name]) cart[name] = 0;
-    cart[name] += amount;
-    if(cart[name] <= 0) delete cart[name];
-    localStorage.setItem("cart", JSON.stringify(cart));
+// LOGIKA VARIANT MODAL
+function openVariantModal(itemName) {
+    tempItem = menuData.find(i => i.name === itemName);
+    document.getElementById("v-title").innerText = tempItem.name;
     
-    const idFriendlyName = name.replace(/[\s']/g, '-');
-    const qtySpan = document.getElementById(`qty-${idFriendlyName}`);
-    if(qtySpan) qtySpan.innerText = cart[name] || 0;
+    // Set Ukuran
+    const sizeSection = document.getElementById("v-size-section");
+    const sizeOptions = document.getElementById("v-size-options");
+    sizeOptions.innerHTML = "";
+
+    if (tempItem.category === "Food" || tempItem.noSize) {
+        sizeSection.style.display = "none";
+        tempItem.selectedSize = "Regular";
+        tempItem.currentPrice = tempItem.priceReg;
+    } else {
+        sizeSection.style.display = "block";
+        tempItem.selectedSize = "Regular"; // Default
+        tempItem.currentPrice = tempItem.priceReg;
+
+        // Radio Regular
+        sizeOptions.innerHTML += `
+            <label class="radio-label selected" onclick="selectSize(this, 'Regular', ${tempItem.priceReg})">
+                <div><input type="radio" name="size" value="Regular" checked> Regular</div>
+                <div style="font-weight:600">Rp ${formatRp(tempItem.priceReg)}</div>
+            </label>
+        `;
+        
+        // Radio Large (Jika ada)
+        if(tempItem.priceLarge) {
+            sizeOptions.innerHTML += `
+                <label class="radio-label" onclick="selectSize(this, 'Large', ${tempItem.priceLarge})">
+                    <div><input type="radio" name="size" value="Large"> Large</div>
+                    <div style="font-weight:600">Rp ${formatRp(tempItem.priceLarge)}</div>
+                </label>
+            `;
+        }
+    }
+
+    // Set Gula
+    const sugarSection = document.getElementById("v-sugar-section");
+    if (tempItem.category === "Food" || tempItem.noSugar) {
+        sugarSection.style.display = "none";
+        tempItem.selectedSugar = "Normal";
+    } else {
+        sugarSection.style.display = "block";
+        tempItem.selectedSugar = "Normal";
+        // Reset radio UI gula ke Normal
+        const sugarLabels = sugarSection.querySelectorAll('.radio-label');
+        sugarLabels.forEach(l => l.classList.remove('selected'));
+        sugarLabels[0].classList.add('selected');
+        sugarLabels[0].querySelector('input').checked = true;
+    }
+
+    updateVariantPriceUI();
+    document.getElementById("variantModal").style.display = "flex";
+}
+
+function selectSize(element, size, price) {
+    const labels = document.getElementById("v-size-options").querySelectorAll('.radio-label');
+    labels.forEach(l => l.classList.remove('selected'));
+    element.classList.add('selected');
+    element.querySelector('input').checked = true;
     
+    tempItem.selectedSize = size;
+    tempItem.currentPrice = price;
+    updateVariantPriceUI();
+}
+
+function selectSugar(element) {
+    const labels = document.getElementById("v-sugar-section").querySelectorAll('.radio-label');
+    labels.forEach(l => l.classList.remove('selected'));
+    element.classList.add('selected');
+    const input = element.querySelector('input');
+    input.checked = true;
+    tempItem.selectedSugar = input.value;
+}
+
+function updateVariantPriceUI() {
+    document.getElementById("v-price-btn").innerText = formatRp(tempItem.currentPrice);
+}
+
+function closeVariantModal() { document.getElementById("variantModal").style.display = "none"; }
+
+// LOGIKA KERANJANG
+function addToCart() {
+    // Generate unique key. Format: Name|Size|Sugar
+    let key = `${tempItem.name}`;
+    if(tempItem.category !== "Food" && !tempItem.noSize) key += `|${tempItem.selectedSize}`;
+    if(tempItem.category !== "Food" && !tempItem.noSugar) key += `|${tempItem.selectedSugar}`;
+
+    if(!cart[key]) {
+        cart[key] = {
+            name: tempItem.name,
+            size: tempItem.category !== "Food" && !tempItem.noSize ? tempItem.selectedSize : null,
+            sugar: tempItem.category !== "Food" && !tempItem.noSugar ? tempItem.selectedSugar : null,
+            price: tempItem.currentPrice,
+            qty: 0
+        };
+    }
+    cart[key].qty += 1;
+    
+    saveCart();
+    closeVariantModal();
     updateCartUI();
 }
+
+function changeQtyInCart(key, amount) {
+    cart[key].qty += amount;
+    if(cart[key].qty <= 0) delete cart[key];
+    saveCart();
+    updateCartUI();
+    
+    // Jika keranjang kosong saat modal terbuka, tutup modal
+    if(Object.keys(cart).length === 0) closeCartModal();
+}
+
+function saveCart() { localStorage.setItem("cartDetail", JSON.stringify(cart)); }
 
 function updateCartUI() {
     let totalHarga = 0;
@@ -384,54 +444,61 @@ function updateCartUI() {
     const modalItems = document.getElementById("modalItems");
     modalItems.innerHTML = "";
 
-    menuData.forEach(item => {
-        const qty = cart[item.name];
-        if(qty > 0) {
-            const subtotal = qty * item.price;
-            totalHarga += subtotal;
-            totalItem += qty;
-            
-            modalItems.innerHTML += `
-                <div class="modal-item">
-                    <div>
-                        <b style="color: #3A2E2A">${item.name}</b><br>
-                        <span style="color: #8B7A75; font-size:12px">${qty}x @ Rp ${formatRp(item.price)}</span>
-                    </div>
-                    <div style="font-weight:600; color:#C28C65;">Rp ${formatRp(subtotal)}</div>
+    for (const key in cart) {
+        const item = cart[key];
+        const subtotal = item.qty * item.price;
+        totalHarga += subtotal;
+        totalItem += item.qty;
+
+        let variantText = [];
+        if(item.size) variantText.push(`Ukuran: ${item.size}`);
+        if(item.sugar) variantText.push(`Gula: ${item.sugar}`);
+        let variantStr = variantText.length > 0 ? variantText.join(' | ') : ' ';
+
+        modalItems.innerHTML += `
+            <div class="modal-item">
+                <div class="item-desc">
+                    <div class="item-title">${item.name}</div>
+                    <div class="item-variants">${variantStr}</div>
+                    <div class="item-price">Rp ${formatRp(item.price)}</div>
                 </div>
-            `;
-        }
-    });
+                <div class="cart-qty-control">
+                    <button onclick="changeQtyInCart('${key}', -1)">-</button>
+                    <span style="font-size:13px; font-weight:bold; width:15px; text-align:center">${item.qty}</span>
+                    <button onclick="changeQtyInCart('${key}', 1)">+</button>
+                </div>
+            </div>
+        `;
+    }
 
     document.getElementById("itemCount").innerText = `${totalItem} Item`;
     document.getElementById("totalPrice").innerText = formatRp(totalHarga);
 
     const cartBar = document.getElementById("cartBar");
-    if(totalItem > 0) {
-        cartBar.style.display = "flex";
-    } else {
-        cartBar.style.display = "none";
-        closeModal();
-    }
+    cartBar.style.display = totalItem > 0 ? "flex" : "none";
 }
 
-function openModal() { document.getElementById("cartModal").style.display = "flex"; }
-function closeModal() { document.getElementById("cartModal").style.display = "none"; }
+function openCartModal() { document.getElementById("cartModal").style.display = "flex"; }
+function closeCartModal() { document.getElementById("cartModal").style.display = "none"; }
 
 function checkoutWA(){
-    let message = "Halo, saya mau order Kopken harga promo ya:%0A%0A";
+    const outlet = document.getElementById("outletName").value || "Outlet Bebas";
+    
+    let message = `Halo, saya mau order Kopken harga reseller promo ya:%0A%0A*📌 Outlet Tujuan:* ${outlet}%0A%0A*🛒 RINCIAN PESANAN:*%0A`;
     let total = 0;
 
-    menuData.forEach(item=>{
-        const qty = cart[item.name];
-        if(qty){
-            const subtotal = qty * item.price;
-            total += subtotal;
-            message += `▪️ *${item.name}*%0A   ${qty} x Rp ${formatRp(item.price)} = Rp ${formatRp(subtotal)}%0A`;
-        }
-    });
+    for (const key in cart) {
+        const item = cart[key];
+        const subtotal = item.qty * item.price;
+        total += subtotal;
+        
+        message += `▪️ *${item.name}*%0A`;
+        if(item.size) message += `   ├ Ukuran: ${item.size}%0A`;
+        if(item.sugar) message += `   ├ Gula: ${item.sugar}%0A`;
+        message += `   └ ${item.qty} x Rp ${formatRp(item.price)} = *Rp ${formatRp(subtotal)}*%0A%0A`;
+    }
 
-    message += `%0A*Total Pembayaran: Rp ${formatRp(total)}*%0A%0ATolong rincikan biaya ongkir/metode ambilnya ya. Terima kasih!`;
+    message += `*Total Estimasi: Rp ${formatRp(total)}*%0A%0ATolong rincikan biaya ongkir/metode ambilnya ya. Terima kasih!`;
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 
