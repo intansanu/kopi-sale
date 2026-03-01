@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kopken Luxury Voucher</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  background:linear-gradient(135deg,#1e1a18,#2b221f);
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:30px 15px;
+}
+
+.container{
+  width:100%;
+  max-width:500px;
+}
+
+.header{
+  text-align:center;
+  margin-bottom:25px;
+  animation:fadeDown 0.8s ease;
+}
+
+.header h1{
+  font-weight:700;
+  font-size:24px;
+  letter-spacing:1px;
+}
+
+.badge{
+  background:gold;
+  color:#000;
+  display:inline-block;
+  padding:6px 15px;
+  border-radius:999px;
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+.menu{
+  display:grid;
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.card{
+  background:#2f2522;
+  padding:15px;
+  border-radius:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:0.3s;
+  cursor:pointer;
+  animation:fadeUp 0.6s ease;
+}
+
+.card:hover{
+  background:#3a2e2a;
+  transform:translateY(-3px);
+}
+
+.card button{
+  background:gold;
+  border:none;
+  padding:6px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.cart{
+  background:#2f2522;
+  padding:18px;
+  border-radius:18px;
+  animation:fadeUp 0.8s ease;
+}
+
+.cart h2{
+  margin-bottom:10px;
+  font-size:18px;
+}
+
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.total{
+  font-weight:700;
+  margin-top:10px;
+  font-size:16px;
+}
+
+.checkout{
+  width:100%;
+  margin-top:15px;
+  padding:12px;
+  background:gold;
+  border:none;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+@keyframes fadeDown{
+  from{opacity:0;transform:translateY(-20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="badge">Voucher 50%</div>
+    <h1>Kopi Kenangan Luxury Deal</h1>
+  </div>
+
+  <div class="menu">
+    <div class="card">
+      <div>
+        <div>Kopi Kenangan Mantan Large</div>
+        <div>Rp19.000</div>
+      </div>
+      <button onclick="addToCart('Kopi Kenangan Mantan Large',19000)">+</button>
+    </div>
+
+    <div class="card">
+      <div>
+        <div>Americano Large</div>
+        <div>Rp19.000</div>
+      </div>
+      <button onclick="addToCart('Americano Large',19000)">+</button>
+    </div>
+
+    <div class="card">
+      <div>
+        <div>Thai Tea Large</div>
+        <div>Rp19.000</div>
+      </div>
+      <button onclick="addToCart('Thai Tea Large',19000)">+</button>
+    </div>
+  </div>
+
+  <div class="cart">
+    <h2>Keranjang</h2>
+    <div id="cartItems"></div>
+    <div class="total">Total: Rp <span id="totalPrice">0</span></div>
+    <button class="checkout" onclick="checkout()">Checkout via WhatsApp</button>
+  </div>
+
+</div>
+
+<script>
+let cart = [];
+
+function addToCart(name, price){
+  cart.push({name, price});
+  renderCart();
+}
+
+function renderCart(){
+  const container = document.getElementById("cartItems");
+  container.innerHTML = "";
+  let total = 0;
+
+  cart.forEach(item=>{
+    total += item.price;
+    container.innerHTML += `
+      <div class="cart-item">
+        <span>${item.name}</span>
+        <span>Rp ${item.price}</span>
+      </div>
+    `;
+  });
+
+  document.getElementById("totalPrice").innerText = total;
+}
+
+function checkout(){
+  if(cart.length === 0){
+    alert("Keranjang masih kosong.");
+    return;
+  }
+
+  let message = "Halo, saya mau order:%0A";
+  cart.forEach(item=>{
+    message += `- ${item.name} (Rp ${item.price})%0A`;
+  });
+
+  message += `%0ATotal: Rp ${cart.reduce((sum,i)=>sum+i.price,0)}`;
+
+  let phone = "628XXXXXXXXXX"; // GANTI NOMOR
+  window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+}
+</script>
+
+</body>
+</html>
