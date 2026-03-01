@@ -21,7 +21,7 @@
         --brand-light: #FCE8E8;
         --accent-gold: #F59E0B;
         
-        --border-subtle: #F3F4F6; /* Lebih soft dari sebelumnya */
+        --border-subtle: #F3F4F6;
         --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
         --shadow-md: 0 10px 30px rgba(0,0,0,0.05);
         --shadow-lg: 0 16px 40px rgba(217, 56, 58, 0.15); 
@@ -35,11 +35,25 @@
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; background-color: var(--bg-color); }
 
-    body { display: flex; justify-content: center; min-height: 100vh; color: var(--text-main); }
+    /* FIX SCROLL & LAYOUT */
+    body { 
+        background-color: var(--bg-color); 
+        color: var(--text-main); 
+        margin: 0; 
+        padding: 0;
+        /* Penting agar scroll lancar di iOS */
+        -webkit-overflow-scrolling: touch; 
+    }
 
     .app-container {
-        width: 100%; max-width: 480px; background: var(--app-bg); position: relative;
-        min-height: 100vh; box-shadow: var(--shadow-md); padding-bottom: 140px;
+        margin: 0 auto; 
+        width: 100%; 
+        max-width: 480px; 
+        background: var(--app-bg); 
+        position: relative;
+        min-height: 100vh; 
+        box-shadow: var(--shadow-md); 
+        padding-bottom: 140px;
         overflow-x: hidden;
     }
 
@@ -76,28 +90,18 @@
         display: flex; flex-direction: column;
     }
 
-    /* SEARCH BAR (BARU!) */
-    .search-container {
-        padding: 16px 20px 0;
-    }
-    .search-box {
-        position: relative; width: 100%; display: flex; align-items: center;
-    }
-    .search-box i {
-        position: absolute; left: 16px; color: var(--text-muted); font-size: 18px;
-    }
+    /* SEARCH BAR */
+    .search-container { padding: 16px 20px 0; }
+    .search-box { position: relative; width: 100%; display: flex; align-items: center; }
+    .search-box i { position: absolute; left: 16px; color: var(--text-muted); font-size: 18px; }
     .search-input {
         width: 100%; padding: 12px 16px 12px 42px; 
         background: var(--bg-color); border: 1.5px solid transparent; 
         border-radius: var(--radius-pill); font-size: 14px; font-weight: 500;
         outline: none; transition: all 0.3s ease; color: var(--text-main);
     }
-    .search-input:focus {
-        background: white; border-color: var(--brand-primary); box-shadow: var(--shadow-sm);
-    }
+    .search-input:focus { background: white; border-color: var(--brand-primary); box-shadow: var(--shadow-sm); }
     .search-input::placeholder { color: #9CA3AF; }
-    
-    /* Tombol Reset Search */
     .clear-search {
         position: absolute; right: 12px; background: none; border: none;
         color: var(--text-muted); font-size: 18px; cursor: pointer; display: none;
@@ -125,31 +129,26 @@
     .section-title { font-size: 20px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
     .section-line { height: 2px; flex-grow: 1; background: var(--border-subtle); border-radius: 2px;}
 
-    /* PESAN JIKA PENCARIAN KOSONG */
+    /* KOSONG PENCARIAN */
     .no-result {
         text-align: center; padding: 40px 20px; color: var(--text-muted); display: none;
         flex-direction: column; align-items: center; gap: 10px;
     }
     .no-result i { font-size: 48px; color: #D1D5DB; }
 
-    /* GRID & CARD SUPER PREMIUM */
+    /* GRID & CARD */
     .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
     .card {
         background: var(--card-bg); border-radius: var(--radius-md); overflow: hidden;
         display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
-        border: 1px solid transparent; /* Hilangkan border kaku */
-        height: 100%; position: relative; transition: all 0.3s ease;
+        border: 1px solid transparent; height: 100%; position: relative; transition: all 0.3s ease;
     }
     .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
     .card:active { transform: scale(0.98); }
     
-    .card.bundle { 
-        background: #FFFCFC; 
-        border: 1px solid rgba(217, 56, 58, 0.2); /* Border merah tipis elegan */
-    }
+    .card.bundle { background: #FFFCFC; border: 1px solid rgba(217, 56, 58, 0.2); }
     
-    /* Label Promo Bundle (Bukan Persen) */
     .promo-tag {
         position: absolute; top: 10px; left: 10px; background: var(--brand-primary);
         color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; 
@@ -181,15 +180,16 @@
     .price-core { display: flex; flex-direction: column; gap: 0px; }
     .price-core .coret { text-decoration: line-through; color: var(--text-muted); font-size: 11px; font-weight: 500;}
     .price-core .real { font-size: 15px; color: var(--text-main); font-weight: 800; }
-    .card.bundle .price-core .real { color: var(--brand-primary); } /* Merah hanya untuk bundle */
+    .card.bundle .price-core .real { color: var(--brand-primary); } 
 
-    /* Tombol Tambah Card */
     .add-btn {
         width: 100%; background: var(--bg-color); color: var(--text-main); 
-        border: none; padding: 10px 0; /* Lebih gemuk sedikit */
+        border: none; padding: 10px 0; 
         border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; 
         cursor: pointer; transition: all 0.2s ease; margin-top: auto;
         display: flex; align-items: center; justify-content: center; gap: 4px;
+        /* Tambahan agar tombol tidak bisa dipencet dobel cepat (mencegah error) */
+        position: relative; z-index: 1; 
     }
     .add-btn i { font-size: 16px; }
     .card.bundle .add-btn { background: var(--brand-light); color: var(--brand-primary); }
@@ -197,7 +197,7 @@
 
     .disclaimer { text-align: center; font-size: 11px; color: var(--text-muted); padding: 10px 20px 40px; }
 
-    /* FLOATING CART (Animasi Bounce) */
+    /* FLOATING CART */
     .cart-wrapper {
         position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
         width: 100%; max-width: 440px; z-index: 50; padding: 0 20px;
@@ -209,7 +209,6 @@
         transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .cart:active { transform: scale(0.95); }
-    /* Animasi saat item nambah */
     @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
     .cart.bump { animation: bounce 0.3s; }
     
@@ -231,7 +230,7 @@
     
     .checkout-text { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
 
-    /* MODAL BOTTOM SHEET */
+    /* MODAL */
     .modal-overlay { 
         display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
         background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 999; 
@@ -247,10 +246,7 @@
     }
     .modal-overlay.show .modal-content { transform: translateY(0); }
 
-    .modal-handle {
-        width: 40px; height: 4px; background: #E5E7EB; border-radius: 4px; margin: 0 auto 20px;
-    }
-
+    .modal-handle { width: 40px; height: 4px; background: #E5E7EB; border-radius: 4px; margin: 0 auto 20px; }
     .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
     .modal-header h2 { font-size: 20px; font-weight: 800; color: var(--text-main); line-height: 1.3; padding-right: 20px;}
     .close-modal { 
@@ -344,11 +340,11 @@
         </div>
 
         <div class="sticky-nav">
-            <a href="#cat-Bundling" class="nav-item promo-link" onclick="clearSearch()"><i class="ri-gift-line"></i> Paket Hemat</a>
-            <a href="#cat-Coffee" class="nav-item" onclick="clearSearch()"><i class="ri-cup-hot-line"></i> Coffee</a>
-            <a href="#cat-Non-Coffee" class="nav-item" onclick="clearSearch()"><i class="ri-drinks-line"></i> Non-Coffee</a>
-            <a href="#cat-Frappe" class="nav-item" onclick="clearSearch()"><i class="ri-goblet-line"></i> Frappe</a>
-            <a href="#cat-Food" class="nav-item" onclick="clearSearch()"><i class="ri-bread-line"></i> Food</a>
+            <a href="#cat-Bundling" class="nav-item promo-link"><i class="ri-gift-line"></i> Paket Hemat</a>
+            <a href="#cat-Coffee" class="nav-item"><i class="ri-cup-hot-line"></i> Coffee</a>
+            <a href="#cat-Non-Coffee" class="nav-item"><i class="ri-drinks-line"></i> Non-Coffee</a>
+            <a href="#cat-Frappe" class="nav-item"><i class="ri-goblet-line"></i> Frappe</a>
+            <a href="#cat-Food" class="nav-item"><i class="ri-bread-line"></i> Food</a>
         </div>
     </div>
 
@@ -543,7 +539,7 @@ const rawMenuData = [
     {name:"Wahyu Sapi Toast", priceReg: 16000, normal: 19000, category:"Food", img:"wahyu-sapi.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Butter Croissant", priceReg: 13000, normal: 15000, category:"Food", img:"butter-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Chocolate Croissant", priceReg: 16000, normal: 19000, category:"Food", img:"choco-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Sugar Donut", priceReg: 10000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true}, 
+    {name:"Sugar Donut", priceReg: 10000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Roti Srikaya", priceReg: 13000, normal: 15000, category:"Food", img:"srikaya.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Choco Chip Cookies", priceReg: 13000, normal: 14000, category:"Food", img:"choco-cookies.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Join The Dark Side Cookie", priceReg: 16000, normal: 21000, category:"Food", img:"darkside-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
@@ -567,16 +563,13 @@ const rawMenuData = [
 let cart = JSON.parse(localStorage.getItem("cartDetail")) || {};
 let tempItem = null;
 
-// Fungsi Render Dinamis dengan parameter Search Text
 function renderAllMenus(searchText = "") {
     const container = document.getElementById("allMenuContainer");
     const noResultMsg = document.getElementById("noResultMsg");
     container.innerHTML = "";
     
     const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Frappe", "Food"];
-    let itemFound = false;
-
-    // Filter Data Berdasarkan Pencarian Dulu
+    
     const filteredData = rawMenuData.filter(item => 
         item.name.toLowerCase().includes(searchText.toLowerCase())
     );
@@ -612,19 +605,15 @@ function renderAllMenus(searchText = "") {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
             let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
             
-            // Generate Inisial untuk Dummy Image
             let words = item.name.split(' ');
             let initials = words[0][0];
             if(words.length > 1) initials += words[1][0];
             initials = initials.toUpperCase();
 
-            // Label diskon dihapus sesuai permintaan
             let badgeHTML = isBundle ? '<div class="promo-tag">PAKET</div>' : '';
 
             const card = document.createElement("div");
             card.className = `card ${isBundle}`;
-            // id unik untuk animasi pencarian
-            card.id = `item-${item.name.replace(/\s+/g, '-')}`; 
             card.innerHTML = `
                 ${badgeHTML}
                 <div class="img-wrapper">
@@ -651,14 +640,10 @@ function renderAllMenus(searchText = "") {
     });
 }
 
-// FUNGSI PENCARIAN (REALTIME)
 function filterSearch() {
     const input = document.getElementById("searchInput").value;
     const clearBtn = document.getElementById("clearSearchBtn");
-    
-    // Tampilkan tombol silang jika ada teks
     clearBtn.style.display = input.length > 0 ? "block" : "none";
-    
     renderAllMenus(input);
 }
 
@@ -668,7 +653,6 @@ function clearSearch() {
     renderAllMenus("");
 }
 
-// FUNGSI MODAL
 function openVariantModal(itemName) {
     tempItem = rawMenuData.find(i => i.name === itemName);
     document.getElementById("v-title").innerText = tempItem.name;
@@ -735,14 +719,12 @@ function openVariantModal(itemName) {
 
 function updateVariantPriceUI() {
     let finalPrice = 0;
-    
     if (tempItem.category === "Food" || tempItem.priceReg) {
         finalPrice = tempItem.priceReg;
     } else {
         let baseNormal = tempItem.selectedSize === 'Large' ? tempItem.normalLarge : tempItem.normal;
         finalPrice = hitungHargaJual(baseNormal, tempItem.isOatmilk);
     }
-
     tempItem.currentPrice = finalPrice;
     document.getElementById("v-price-btn").innerText = formatRp(finalPrice);
 }
@@ -801,10 +783,9 @@ function addToCart() {
     closeVariantModal();
     updateCartUI();
     
-    // Trigger animasi cart bouncing
     const cartEl = document.querySelector('.cart');
     cartEl.classList.remove('bump');
-    void cartEl.offsetWidth; // trigger reflow
+    void cartEl.offsetWidth; 
     cartEl.classList.add('bump');
 }
 
@@ -909,26 +890,61 @@ document.getElementById("outletName").addEventListener("input", function() {
     document.getElementById("outletError").style.display = "none";
 });
 
-// Smooth Scroll Nav Aktif Otomatis
+// FIX PERBAIKAN SCROLL JADI SANGAT MULUS & RINGAN
+let scrollTimeout;
 const navItems = document.querySelectorAll('.nav-item');
-window.addEventListener('scroll', () => {
-    // Abaikan scroll active kalau lagi search
-    if(document.getElementById("searchInput").value.length > 0) return;
 
+function updateActiveNav() {
+    if(document.getElementById("searchInput").value.length > 0) return;
+    
     let current = '';
     const sections = document.querySelectorAll('.menu-section');
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 120) {
+        // Pengecekan disesuaikan agar pas di tengah layar
+        if (window.pageYOffset >= sectionTop - 200) {
             current = section.getAttribute('id');
         }
     });
-    
+
     navItems.forEach(item => {
         item.classList.remove('active');
         if (item.getAttribute('href').substring(1) === current) {
             item.classList.add('active');
-            item.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+            // Auto scroll nav bar
+            const navContainer = document.querySelector('.sticky-nav');
+            const scrollPos = item.offsetLeft - (navContainer.offsetWidth / 2) + (item.offsetWidth / 2);
+            navContainer.scrollTo({ left: scrollPos, behavior: 'smooth' });
+        }
+    });
+}
+
+// Membatasi event scroll agar tidak bikin lag browser (Throttling)
+window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+        window.cancelAnimationFrame(scrollTimeout);
+    }
+    scrollTimeout = window.requestAnimationFrame(() => {
+        updateActiveNav();
+    });
+});
+
+// Pastikan navigasi juga bisa di klik manual dan scroll ke tujuan dengan mulus
+navItems.forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if(targetElement) {
+            // Scroll ke elemen dengan offset agar tidak tertutup sticky header
+            const headerOffset = 130; 
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
         }
     });
 });
