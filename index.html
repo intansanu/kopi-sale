@@ -246,15 +246,7 @@
 
     /* Label Diskon di Foto */
 
-    .discount-tag {
 
-        position: absolute; top: 10px; left: 10px; background: var(--brand-primary);
-
-        color: white; font-size: 10px; font-weight: 800; padding: 4px 8px;
-
-        border-radius: var(--radius-sm); z-index: 2; letter-spacing: 0.5px;
-
-    }
 
 
 
@@ -1144,8 +1136,7 @@ function renderAllMenus() {
 
             card.innerHTML = `
 
-                ${isBundle ? '<div class="discount-tag">PROMO</div>' : `<div class="discount-tag">-${discountPercent}%</div>`}
-
+              
                 <div class="img-wrapper">
 
                     <div class="initials-placeholder">${initials}</div>
