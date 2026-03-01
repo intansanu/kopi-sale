@@ -24,8 +24,7 @@
 
     .app-container {
         width: 100%; max-width: 480px; background: var(--app-bg); position: relative;
-        min-height: 100vh; box-shadow: 0 0 50px rgba(0,0,0,0.1); 
-        padding-bottom: 140px; /* Tambah jarak bawah agar tidak tertutup keranjang melayang */
+        min-height: 100vh; box-shadow: 0 0 50px rgba(0,0,0,0.1); padding-bottom: 120px; 
     }
 
     .hero-banner {
@@ -57,23 +56,26 @@
 
     .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
-    /* FIX: KOTAK ANTI JEBOL */
+    /* PERBAIKAN STRUKTUR CARD AGAR TIDAK BOCOR (Anti-Jebol) */
     .card {
         background: var(--card-bg); border-radius: 16px; overflow: hidden;
         display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-        border: 1px solid var(--border-color); height: 100%;
+        border: 1px solid var(--border-color); height: 100%; /* Wajib isi biar setinggi gridnya */
     }
     .card.bundle { border: 1.5px solid var(--promo-red); background: #FFF9F9; }
     
-    .card img { 
-        width: 100%; 
-        aspect-ratio: 1 / 1; 
-        object-fit: cover; 
-        background: #EAE0D5; 
+    /* Paksa kotak gambar persegi sempurna */
+    .img-wrapper {
+        width: 100%; padding-bottom: 100%; /* Magic trick for 1:1 aspect ratio */
+        position: relative; background: #EAE0D5; flex-shrink: 0;
+    }
+    .img-wrapper img {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
     }
 
     .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; }
     
+    /* Bagian info teks mengambil sisa ruang yang ada */
     .card-info { flex-grow: 1; margin-bottom: 10px; }
     .card-info h3 { 
         font-size: 13px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; 
@@ -93,7 +95,7 @@
     }
     .add-btn:active { background: var(--accent); color: #fff; }
 
-    .disclaimer { text-align: center; font-size: 11px; color: var(--text-light); padding: 10px 20px 40px; font-style: italic; }
+    .disclaimer { text-align: center; font-size: 11px; color: var(--text-light); padding: 10px 20px 30px; font-style: italic; }
 
     .cart-wrapper {
         position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
@@ -154,7 +156,7 @@
         <a href="#cat-Coffee">☕ Coffee</a>
         <a href="#cat-Non-Coffee">🥤 Non-Coffee</a>
         <a href="#cat-Frappe">🍦 Frappe</a>
-        <a href="#cat-Food">🥐 Food</a>
+        <a href="#cat-Food">🥐 Food & Toast</a>
     </div>
 
     <div id="allMenuContainer"></div>
@@ -237,7 +239,7 @@
 </div>
 
 <script>
-const phone = "628XXXXXXXXXX"; // JANGAN LUPA GANTI NOMOR KAMU!
+const phone = "082281884811"; // NOMOR KAMU SUDAH AKTIF
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
@@ -362,13 +364,15 @@ function renderAllMenus() {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
             let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
             
-            // Singkatan otomatis buat dummy image estetik (maks 2 huruf kapital)
+            // Generate Singkatan Inisial Otomatis untuk Dummy Image (Maks 2 Huruf)
             let initials = item.name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
 
             const card = document.createElement("div");
             card.className = `card ${isBundle}`;
             card.innerHTML = `
-                <img src="images/${item.img}" onerror="this.src='https://placehold.co/400x400/EAE0D5/8B7A75?text=${initials}'" alt="${item.name}">
+                <div class="img-wrapper">
+                    <img src="images/${item.img}" onerror="this.src='https://placehold.co/400x400/EAE0D5/8B7A75?text=${initials}'" alt="${item.name}">
+                </div>
                 <div class="card-body">
                     <div class="card-info">
                         <h3>${item.name}</h3>
