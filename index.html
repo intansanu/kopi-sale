@@ -20,19 +20,12 @@ body{
 
 .container{
   width:100%;
-  max-width:500px;
+  max-width:550px;
 }
 
 .header{
   text-align:center;
   margin-bottom:25px;
-  animation:fadeDown 0.8s ease;
-}
-
-.header h1{
-  font-weight:700;
-  font-size:24px;
-  letter-spacing:1px;
 }
 
 .badge{
@@ -45,22 +38,24 @@ body{
   margin-bottom:10px;
 }
 
+.header h1{
+  font-size:22px;
+}
+
 .menu{
   display:grid;
-  gap:12px;
+  gap:14px;
   margin-bottom:25px;
 }
 
 .card{
   background:#2f2522;
-  padding:15px;
+  padding:12px;
   border-radius:18px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  gap:12px;
   transition:0.3s;
-  cursor:pointer;
-  animation:fadeUp 0.6s ease;
 }
 
 .card:hover{
@@ -68,38 +63,63 @@ body{
   transform:translateY(-3px);
 }
 
-.card button{
+.card img{
+  width:65px;
+  height:65px;
+  border-radius:12px;
+  object-fit:cover;
+}
+
+.card-info{
+  flex:1;
+}
+
+.card-info h3{
+  font-size:14px;
+}
+
+.price{
+  font-size:13px;
+  color:gold;
+}
+
+.qty-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.qty-btn button{
   background:gold;
   border:none;
-  padding:6px 12px;
-  border-radius:10px;
+  width:28px;
+  height:28px;
+  border-radius:8px;
   cursor:pointer;
-  font-weight:600;
+  font-weight:bold;
 }
 
 .cart{
   background:#2f2522;
   padding:18px;
   border-radius:18px;
-  animation:fadeUp 0.8s ease;
 }
 
 .cart h2{
   margin-bottom:10px;
-  font-size:18px;
+  font-size:16px;
 }
 
 .cart-item{
   display:flex;
   justify-content:space-between;
-  font-size:14px;
+  font-size:13px;
   margin-bottom:6px;
 }
 
 .total{
   font-weight:700;
   margin-top:10px;
-  font-size:16px;
 }
 
 .checkout{
@@ -112,16 +132,6 @@ body{
   font-weight:700;
   cursor:pointer;
 }
-
-@keyframes fadeDown{
-  from{opacity:0;transform:translateY(-20px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
 </style>
 </head>
 
@@ -131,34 +141,10 @@ body{
 
   <div class="header">
     <div class="badge">Voucher 50%</div>
-    <h1>Kopi Kenangan Luxury Deal</h1>
+    <h1>Kopi Kenangan Small Cup</h1>
   </div>
 
-  <div class="menu">
-    <div class="card">
-      <div>
-        <div>Kopi Kenangan Mantan Large</div>
-        <div>Rp19.000</div>
-      </div>
-      <button onclick="addToCart('Kopi Kenangan Mantan Large',19000)">+</button>
-    </div>
-
-    <div class="card">
-      <div>
-        <div>Americano Large</div>
-        <div>Rp19.000</div>
-      </div>
-      <button onclick="addToCart('Americano Large',19000)">+</button>
-    </div>
-
-    <div class="card">
-      <div>
-        <div>Thai Tea Large</div>
-        <div>Rp19.000</div>
-      </div>
-      <button onclick="addToCart('Thai Tea Large',19000)">+</button>
-    </div>
-  </div>
+  <div class="menu" id="menuList"></div>
 
   <div class="cart">
     <h2>Keranjang</h2>
@@ -170,45 +156,109 @@ body{
 </div>
 
 <script>
-let cart = [];
+const phone = "628XXXXXXXXXX"; // GANTI NOMOR
 
-function addToCart(name, price){
-  cart.push({name, price});
-  renderCart();
+// ====== DAFTAR MENU ======
+const menuData = [
+  {name:"Americano", price:14000, img:"images/americano.jpg"},
+  {name:"Kopi Kenangan Mantan", price:15000, img:"images/kopken.jpg"},
+  {name:"Thai Tea", price:17000, img:"images/thai-tea.jpg"},
+  {name:"Cappuccino", price:17000, img:"images/cappuccino.jpg"},
+  {name:"Latte", price:17000, img:"images/latte.jpg"},
+  {name:"Vanilla Latte", price:18000, img:"images/vanilla.jpg"},
+  {name:"Hazelnut Latte", price:18000, img:"images/hazelnut.jpg"},
+  {name:"Caramel Macchiato", price:19000, img:"images/caramel.jpg"},
+  {name:"Matcha Latte", price:18000, img:"images/matcha.jpg"},
+  {name:"Avocado Caramel", price:19000, img:"images/avocado.jpg"}
+];
+
+// ====== LOAD CART DARI LOCAL STORAGE ======
+let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+// ====== RENDER MENU ======
+const menuList = document.getElementById("menuList");
+
+menuData.forEach(item=>{
+  const card = document.createElement("div");
+  card.className = "card";
+
+  card.innerHTML = `
+    <img src="${item.img}">
+    <div class="card-info">
+      <h3>${item.name}</h3>
+      <div class="price">Rp ${item.price}</div>
+    </div>
+    <div class="qty-btn">
+      <button onclick="changeQty('${item.name}', -1)">-</button>
+      <span id="qty-${item.name}">${cart[item.name] || 0}</span>
+      <button onclick="changeQty('${item.name}', 1)">+</button>
+    </div>
+  `;
+
+  menuList.appendChild(card);
+});
+
+// ====== UBAH QTY ======
+function changeQty(name, amount){
+  if(!cart[name]) cart[name] = 0;
+  cart[name] += amount;
+
+  if(cart[name] <= 0) delete cart[name];
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateUI();
 }
 
-function renderCart(){
+// ====== UPDATE UI CART ======
+function updateUI(){
   const container = document.getElementById("cartItems");
   container.innerHTML = "";
   let total = 0;
 
-  cart.forEach(item=>{
-    total += item.price;
-    container.innerHTML += `
-      <div class="cart-item">
-        <span>${item.name}</span>
-        <span>Rp ${item.price}</span>
-      </div>
-    `;
+  menuData.forEach(item=>{
+    const qty = cart[item.name] || 0;
+    const qtySpan = document.getElementById(`qty-${item.name}`);
+    if(qtySpan) qtySpan.innerText = qty;
+
+    if(qty > 0){
+      const subtotal = qty * item.price;
+      total += subtotal;
+
+      container.innerHTML += `
+        <div class="cart-item">
+          <span>${item.name} x${qty}</span>
+          <span>Rp ${subtotal}</span>
+        </div>
+      `;
+    }
   });
 
   document.getElementById("totalPrice").innerText = total;
 }
 
+updateUI();
+
+// ====== CHECKOUT ======
 function checkout(){
-  if(cart.length === 0){
-    alert("Keranjang masih kosong.");
+  if(Object.keys(cart).length === 0){
+    alert("Keranjang kosong.");
     return;
   }
 
   let message = "Halo, saya mau order:%0A";
-  cart.forEach(item=>{
-    message += `- ${item.name} (Rp ${item.price})%0A`;
+  let total = 0;
+
+  menuData.forEach(item=>{
+    const qty = cart[item.name];
+    if(qty){
+      const subtotal = qty * item.price;
+      total += subtotal;
+      message += `- ${item.name} x${qty} (Rp ${subtotal})%0A`;
+    }
   });
 
-  message += `%0ATotal: Rp ${cart.reduce((sum,i)=>sum+i.price,0)}`;
+  message += `%0ATotal: Rp ${total}`;
 
-  let phone = "628XXXXXXXXXX"; // GANTI NOMOR
   window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 </script>
