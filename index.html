@@ -477,8 +477,6 @@ function hitungHargaJual(hargaNormal, isOatmilk = false) {
     return (baseHarga / 2) + 4500;
 }
 
-const rawMenuData = window.rawMenuData || rawMenuData; // tetap pakai data kamu
-
 let cart = JSON.parse(localStorage.getItem("cartDetail")) || {};
 let tempItem = null;
 
@@ -554,7 +552,7 @@ function renderAllMenus(searchText = "") {
                         </div>
                     </div>
                     <button class="add-btn" onclick="openVariantModal('${item.name.replace(/'/g, "\\'")}')">
-                        Tambah
+                        <i class="ri-add-line"></i> Tambah
                     </button>
                 </div>
             `;
@@ -565,9 +563,7 @@ function renderAllMenus(searchText = "") {
         container.appendChild(section);
     });
 
-    setTimeout(() => {
-        updateActiveNavOnScroll();
-    }, 100);
+    setTimeout(updateActiveNavOnScroll, 100);
 }
 
 /* =========================
@@ -588,7 +584,7 @@ function clearSearch() {
 }
 
 /* =========================
-   NAVBAR ROUTING FIX
+   NAVBAR ROUTING STABIL
 ========================= */
 
 const navItems = document.querySelectorAll('.nav-item');
@@ -659,6 +655,7 @@ navItems.forEach(item => {
 
 renderAllMenus();
 updateActiveNavOnScroll();
+updateCartUI();
 </script>
 </body>
 </html>
