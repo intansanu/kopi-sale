@@ -3,50 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Kopi Kenangan Reseller | Promo Spesial</title>
+<title>Kopken Premium Order</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
-    /* COLOR PALETTE PREMIUM */
+    /* COLOR PALETTE SUPER PREMIUM */
     :root {
-        --bg-color: #F8F9FA; /* Sangat soft off-white */
+        --bg-color: #F8F9FA;
         --app-bg: #FFFFFF;
         --card-bg: #FFFFFF;
         
-        --text-main: #1A1D1F; /* Hitam pekat tapi tidak absolute */
+        --text-main: #1A1D1F; 
         --text-muted: #6C757D;
         
-        --brand-primary: #D9383A; /* Merah khas Kopken */
+        --brand-primary: #D9383A;
         --brand-light: #FCE8E8;
         --accent-gold: #F59E0B;
         
-        --border-subtle: #E9ECEF;
-        --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-        --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
-        --shadow-lg: 0 12px 32px rgba(217, 56, 58, 0.15); /* Shadow merah tipis untuk button */
+        --border-subtle: #F3F4F6; /* Lebih soft dari sebelumnya */
+        --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
+        --shadow-md: 0 10px 30px rgba(0,0,0,0.05);
+        --shadow-lg: 0 16px 40px rgba(217, 56, 58, 0.15); 
         
-        --radius-sm: 8px;
-        --radius-md: 16px;
-        --radius-lg: 24px;
+        --radius-sm: 10px;
+        --radius-md: 20px;
+        --radius-lg: 28px;
         --radius-pill: 99px;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; background-color: var(--bg-color); }
 
-    body {
-        display: flex; justify-content: center; min-height: 100vh; color: var(--text-main);
-    }
+    body { display: flex; justify-content: center; min-height: 100vh; color: var(--text-main); }
 
-    /* CONTAINER ALA APLIKASI */
     .app-container {
         width: 100%; max-width: 480px; background: var(--app-bg); position: relative;
         min-height: 100vh; box-shadow: var(--shadow-md); padding-bottom: 140px;
         overflow-x: hidden;
     }
 
-    /* HERO BANNER PREMIUM */
+    /* HERO BANNER */
     .hero-banner {
         width: 100%; height: 260px; position: relative;
         background: linear-gradient(135deg, #1A1D1F 0%, #2D3136 100%);
@@ -54,30 +51,61 @@
         padding: 30px 24px; color: white; overflow: hidden;
     }
     
-    /* Dekorasi Pattern di Header */
     .hero-banner::after {
         content: ''; position: absolute; right: -20px; top: -20px;
         width: 200px; height: 200px; border-radius: 50%;
-        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
     }
 
     .badge-premium {
-        background: rgba(255,255,255,0.2); backdrop-filter: blur(8px);
+        background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
         color: white; padding: 6px 14px; border-radius: var(--radius-pill);
         font-size: 11px; font-weight: 700; width: max-content; margin-bottom: 12px;
-        border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.5px; text-transform: uppercase;
+        border: 1px solid rgba(255,255,255,0.05); letter-spacing: 0.5px; text-transform: uppercase;
         display: flex; align-items: center; gap: 6px;
     }
 
     .hero-banner h1 { font-size: 28px; font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 6px; z-index: 1;}
     .hero-banner p { font-size: 14px; color: rgba(255,255,255,0.8); z-index: 1; font-weight: 500;}
 
-    /* STICKY NAV MODERN (Pills Style) */
-    .sticky-nav {
+    /* AREA STICKY (Navigasi + Search) */
+    .sticky-area {
         position: sticky; top: 0; background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(12px); padding: 16px 20px; z-index: 20;
-        display: flex; gap: 10px; overflow-x: auto; border-bottom: 1px solid var(--border-subtle);
-        scrollbar-width: none;
+        backdrop-filter: blur(16px); z-index: 20;
+        border-bottom: 1px solid var(--border-subtle);
+        display: flex; flex-direction: column;
+    }
+
+    /* SEARCH BAR (BARU!) */
+    .search-container {
+        padding: 16px 20px 0;
+    }
+    .search-box {
+        position: relative; width: 100%; display: flex; align-items: center;
+    }
+    .search-box i {
+        position: absolute; left: 16px; color: var(--text-muted); font-size: 18px;
+    }
+    .search-input {
+        width: 100%; padding: 12px 16px 12px 42px; 
+        background: var(--bg-color); border: 1.5px solid transparent; 
+        border-radius: var(--radius-pill); font-size: 14px; font-weight: 500;
+        outline: none; transition: all 0.3s ease; color: var(--text-main);
+    }
+    .search-input:focus {
+        background: white; border-color: var(--brand-primary); box-shadow: var(--shadow-sm);
+    }
+    .search-input::placeholder { color: #9CA3AF; }
+    
+    /* Tombol Reset Search */
+    .clear-search {
+        position: absolute; right: 12px; background: none; border: none;
+        color: var(--text-muted); font-size: 18px; cursor: pointer; display: none;
+    }
+
+    /* STICKY NAV PILLS */
+    .sticky-nav {
+        padding: 16px 20px; display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none;
     }
     .sticky-nav::-webkit-scrollbar { display: none; }
     
@@ -87,42 +115,42 @@
         white-space: nowrap; transition: all 0.3s ease; border: 1px solid transparent;
         display: flex; align-items: center; gap: 6px;
     }
-    
     .nav-item i { font-size: 16px; }
-    
-    .nav-item.active, .nav-item:active { 
-        background: var(--text-main); color: white; 
-    }
-    
-    .nav-item.promo-link { 
-        background: var(--brand-light); color: var(--brand-primary); 
-    }
+    .nav-item.active { background: var(--text-main); color: white; }
+    .nav-item.promo-link { background: var(--brand-light); color: var(--brand-primary); }
 
     /* AREA MENU */
     .menu-section { padding: 24px 20px 10px; }
-    .section-header {
-        display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
-    }
-    .section-title { 
-        font-size: 20px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px;
-    }
-    .section-line { height: 2px; flex-grow: 1; background: var(--bg-color); border-radius: 2px;}
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .section-title { font-size: 20px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+    .section-line { height: 2px; flex-grow: 1; background: var(--border-subtle); border-radius: 2px;}
 
-    /* GRID & CARD PREMIUM */
+    /* PESAN JIKA PENCARIAN KOSONG */
+    .no-result {
+        text-align: center; padding: 40px 20px; color: var(--text-muted); display: none;
+        flex-direction: column; align-items: center; gap: 10px;
+    }
+    .no-result i { font-size: 48px; color: #D1D5DB; }
+
+    /* GRID & CARD SUPER PREMIUM */
     .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
     .card {
         background: var(--card-bg); border-radius: var(--radius-md); overflow: hidden;
         display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
-        border: 1px solid var(--border-subtle); height: 100%; position: relative;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid transparent; /* Hilangkan border kaku */
+        height: 100%; position: relative; transition: all 0.3s ease;
     }
+    .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
     .card:active { transform: scale(0.98); }
     
-    .card.bundle { border: 1.5px solid var(--brand-primary); background: #FFFCFC; }
+    .card.bundle { 
+        background: #FFFCFC; 
+        border: 1px solid rgba(217, 56, 58, 0.2); /* Border merah tipis elegan */
+    }
     
-    /* Label Diskon di Foto */
-    .discount-tag {
+    /* Label Promo Bundle (Bukan Persen) */
+    .promo-tag {
         position: absolute; top: 10px; left: 10px; background: var(--brand-primary);
         color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; 
         border-radius: var(--radius-sm); z-index: 2; letter-spacing: 0.5px;
@@ -130,13 +158,11 @@
 
     .img-wrapper {
         width: 100%; padding-bottom: 100%; position: relative; background: var(--bg-color); 
-        border-bottom: 1px solid var(--border-subtle);
     }
     .img-wrapper img {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
     }
     
-    /* Inisial Placeholder Estetik */
     .initials-placeholder {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; align-items: center; justify-content: center;
@@ -147,28 +173,31 @@
     
     .card-info { flex-grow: 1; margin-bottom: 14px; }
     .card-info h3 { 
-        font-size: 14px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; 
+        font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; 
         color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 2; 
         -webkit-box-orient: vertical; overflow: hidden; 
     }
     
-    .price-core { display: flex; flex-direction: column; gap: 2px; }
+    .price-core { display: flex; flex-direction: column; gap: 0px; }
     .price-core .coret { text-decoration: line-through; color: var(--text-muted); font-size: 11px; font-weight: 500;}
-    .price-core .real { font-size: 15px; color: var(--brand-primary); font-weight: 800; }
+    .price-core .real { font-size: 15px; color: var(--text-main); font-weight: 800; }
+    .card.bundle .price-core .real { color: var(--brand-primary); } /* Merah hanya untuk bundle */
 
-    /* Tombol Tambah Modern */
+    /* Tombol Tambah Card */
     .add-btn {
         width: 100%; background: var(--bg-color); color: var(--text-main); 
-        border: 1px solid var(--border-subtle); padding: 8px 0; 
+        border: none; padding: 10px 0; /* Lebih gemuk sedikit */
         border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; 
         cursor: pointer; transition: all 0.2s ease; margin-top: auto;
         display: flex; align-items: center; justify-content: center; gap: 4px;
     }
     .add-btn i { font-size: 16px; }
-    .card.bundle .add-btn { background: var(--brand-light); color: var(--brand-primary); border-color: transparent;}
-    .add-btn:active { background: var(--text-main); color: white; border-color: var(--text-main); }
+    .card.bundle .add-btn { background: var(--brand-light); color: var(--brand-primary); }
+    .add-btn:active { background: var(--text-main); color: white; }
 
-    /* FLOATING CART (Gaya Grab/GoFood) */
+    .disclaimer { text-align: center; font-size: 11px; color: var(--text-muted); padding: 10px 20px 40px; }
+
+    /* FLOATING CART (Animasi Bounce) */
     .cart-wrapper {
         position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
         width: 100%; max-width: 440px; z-index: 50; padding: 0 20px;
@@ -177,9 +206,12 @@
         background: var(--brand-primary); color: white; padding: 14px 20px; 
         border-radius: var(--radius-lg); display: flex; justify-content: space-between; 
         align-items: center; box-shadow: var(--shadow-lg); cursor: pointer;
-        transition: transform 0.2s ease;
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .cart:active { transform: scale(0.98); }
+    .cart:active { transform: scale(0.95); }
+    /* Animasi saat item nambah */
+    @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    .cart.bump { animation: bounce 0.3s; }
     
     .cart-left { display: flex; align-items: center; gap: 12px; }
     .cart-icon { 
@@ -199,26 +231,24 @@
     
     .checkout-text { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
 
-    /* MODAL BOTTOM SHEET (Mewah) */
+    /* MODAL BOTTOM SHEET */
     .modal-overlay { 
         display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
         background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 999; 
-        justify-content: center; align-items: flex-end;
-        opacity: 0; transition: opacity 0.3s ease;
+        justify-content: center; align-items: flex-end; opacity: 0; transition: opacity 0.3s ease;
     }
     .modal-overlay.show { opacity: 1; }
     
     .modal-content { 
         background: white; width: 100%; max-width: 480px; 
-        border-radius: 24px 24px 0 0; padding: 24px; max-height: 85vh; overflow-y: auto;
+        border-radius: 28px 28px 0 0; padding: 24px; max-height: 85vh; overflow-y: auto;
         transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex; flex-direction: column;
     }
     .modal-overlay.show .modal-content { transform: translateY(0); }
 
-    /* Handle (Garis kecil di atas modal) */
     .modal-handle {
-        width: 40px; height: 4px; background: #E5E7EB; border-radius: 4px;
-        margin: 0 auto 20px;
+        width: 40px; height: 4px; background: #E5E7EB; border-radius: 4px; margin: 0 auto 20px;
     }
 
     .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
@@ -229,7 +259,6 @@
         font-size: 20px; cursor: pointer; color: var(--text-muted); flex-shrink: 0;
     }
 
-    /* Kustomisasi Varian Radio Button */
     .variant-section { margin-bottom: 24px; }
     .variant-section h4 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
     .radio-group { display: flex; flex-direction: column; gap: 10px; }
@@ -237,12 +266,10 @@
     .radio-label { 
         display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; 
         border: 1px solid var(--border-subtle); border-radius: var(--radius-md); 
-        font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-        color: var(--text-muted);
+        font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text-muted);
     }
-    .radio-label input { display: none; } /* Sembunyikan radio bulat default */
+    .radio-label input { display: none; } 
     
-    /* Custom Radio Dot */
     .custom-radio {
         width: 20px; height: 20px; border: 2px solid #D1D5DB; border-radius: 50%;
         margin-right: 12px; position: relative; display: flex; align-items: center; justify-content: center;
@@ -253,12 +280,8 @@
     }
     
     .radio-label-content { display: flex; align-items: center; }
-    
-    .radio-label.selected { 
-        border-color: var(--brand-primary); background: var(--brand-light); color: var(--brand-primary); 
-    }
+    .radio-label.selected { border-color: var(--brand-primary); background: var(--brand-light); color: var(--brand-primary); }
 
-    /* Tombol Utama Modal */
     .btn-primary { 
         width: 100%; padding: 16px; background: var(--brand-primary); color: #fff; 
         border: none; border-radius: var(--radius-pill); font-weight: 700; font-size: 15px; 
@@ -267,7 +290,8 @@
     }
     .btn-primary:active { transform: scale(0.98); }
 
-    /* Keranjang Item */
+    /* Keranjang List */
+    .cart-items-container { max-height: 50vh; overflow-y: auto; padding-right: 5px; }
     .modal-item { 
         display: flex; justify-content: space-between; align-items: flex-start; 
         margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border-subtle); 
@@ -275,7 +299,7 @@
     .item-desc { flex: 1; padding-right: 15px; }
     .item-title { font-weight: 700; color: var(--text-main); font-size: 15px; margin-bottom: 4px; }
     .item-variants { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4;}
-    .item-price { font-weight: 800; color: var(--brand-primary); font-size: 14px; }
+    .item-price { font-weight: 800; color: var(--text-main); font-size: 14px; }
     
     .cart-qty-control { 
         display: flex; align-items: center; gap: 12px; background: var(--bg-color); 
@@ -286,8 +310,7 @@
         font-weight: bold; cursor: pointer; color: var(--text-main); box-shadow: var(--shadow-sm);
     }
     
-    /* Input Form Modern */
-    .input-group { margin-top: 20px; margin-bottom: 10px;}
+    .input-group { margin-top: 20px; margin-bottom: 10px; padding-top: 10px; border-top: 1px solid var(--border-subtle);}
     .input-label { font-size: 13px; font-weight: 700; margin-bottom: 8px; display: block; color: var(--text-main);}
     .outlet-input { 
         width: 100%; padding: 14px 16px; border: 1.5px solid var(--border-subtle); 
@@ -298,9 +321,7 @@
     .outlet-input.error { border-color: var(--brand-primary); background: var(--brand-light); }
     .error-msg { font-size: 12px; color: var(--brand-primary); display: none; margin-top: 6px; font-weight: 600; }
     
-    .btn-wa { 
-        background: #25D366; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2); 
-    }
+    .btn-wa { background: #25D366; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2); justify-content: center; gap: 8px; }
 </style>
 </head>
 <body>
@@ -308,23 +329,39 @@
 <div class="app-container">
     
     <div class="hero-banner">
-        <div class="badge-premium"><i class="ri-vip-crown-fill" style="color: var(--accent-gold);"></i> Promo Spesial</div>
-        <h1>Pesan Kopken<br>Lebih Hemat!</h1>
-        <p>Harga otomatis lebih murah dari aplikasi resmi.</p>
+        <div class="badge-premium"><i class="ri-vip-crown-fill" style="color: var(--accent-gold);"></i> Diskon Mitra</div>
+        <h1>Pesan Kopken<br>Jauh Lebih Hemat</h1>
+        <p>Harga reseller. Otomatis lebih murah.</p>
     </div>
 
-    <div class="sticky-nav">
-        <a href="#cat-Bundling" class="nav-item promo-link"><i class="ri-gift-line"></i> Paket Hemat</a>
-        <a href="#cat-Coffee" class="nav-item"><i class="ri-cup-hot-line"></i> Coffee</a>
-        <a href="#cat-Non-Coffee" class="nav-item"><i class="ri-drinks-line"></i> Non-Coffee</a>
-        <a href="#cat-Frappe" class="nav-item"><i class="ri-goblet-line"></i> Frappe</a>
-        <a href="#cat-Food" class="nav-item"><i class="ri-bread-line"></i> Food & Toast</a>
+    <div class="sticky-area">
+        <div class="search-container">
+            <div class="search-box">
+                <i class="ri-search-2-line"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Cari minuman atau roti..." onkeyup="filterSearch()">
+                <button class="clear-search" id="clearSearchBtn" onclick="clearSearch()"><i class="ri-close-circle-fill"></i></button>
+            </div>
+        </div>
+
+        <div class="sticky-nav">
+            <a href="#cat-Bundling" class="nav-item promo-link" onclick="clearSearch()"><i class="ri-gift-line"></i> Paket Hemat</a>
+            <a href="#cat-Coffee" class="nav-item" onclick="clearSearch()"><i class="ri-cup-hot-line"></i> Coffee</a>
+            <a href="#cat-Non-Coffee" class="nav-item" onclick="clearSearch()"><i class="ri-drinks-line"></i> Non-Coffee</a>
+            <a href="#cat-Frappe" class="nav-item" onclick="clearSearch()"><i class="ri-goblet-line"></i> Frappe</a>
+            <a href="#cat-Food" class="nav-item" onclick="clearSearch()"><i class="ri-bread-line"></i> Food</a>
+        </div>
+    </div>
+
+    <div class="no-result" id="noResultMsg">
+        <i class="ri-search-eye-line"></i>
+        <h3>Menu tidak ditemukan</h3>
+        <p style="font-size:13px">Coba gunakan kata kunci lain.</p>
     </div>
 
     <div id="allMenuContainer"></div>
 
     <div class="disclaimer">
-        *Harga dapat berubah mengikuti kebijakan outlet tujuan.
+        *Harga dapat menyesuaikan ketersediaan outlet tujuan.
     </div>
 
 </div>
@@ -337,11 +374,11 @@
                 <div class="cart-badge" id="itemCount">0</div>
             </div>
             <div class="cart-info">
-                <span>Total Estimasi</span>
+                <span>Estimasi</span>
                 <div class="total">Rp <span id="totalPrice">0</span></div>
             </div>
         </div>
-        <div class="checkout-text">Cek <i class="ri-arrow-right-s-line"></i></div>
+        <div class="checkout-text">Cek Keranjang <i class="ri-arrow-right-s-line"></i></div>
     </div>
 </div>
 
@@ -401,7 +438,7 @@
         </div>
 
         <button class="btn-primary" onclick="addToCart()">
-            <span>Tambah Pesanan</span>
+            <span>Tambah ke Keranjang</span>
             <span>Rp <span id="v-price-btn">0</span></span>
         </button>
     </div>
@@ -415,22 +452,22 @@
             <button class="close-modal" onclick="closeCartModal()"><i class="ri-close-line"></i></button>
         </div>
         
-        <div id="modalItems"></div>
+        <div class="cart-items-container" id="modalItems"></div>
         
         <div class="input-group">
             <label class="input-label">Pilih Outlet Tujuan</label>
-            <input type="text" id="outletName" class="outlet-input" placeholder="Misal: Kopi Kenangan Sudirman">
-            <div id="outletError" class="error-msg"><i class="ri-error-warning-line"></i> Mohon isi nama outlet terdekat.</div>
+            <input type="text" id="outletName" class="outlet-input" placeholder="Wajib: Ketik nama outlet terdekat">
+            <div id="outletError" class="error-msg"><i class="ri-error-warning-line"></i> Mohon isi nama outlet tujuan.</div>
         </div>
         
         <button class="btn-primary btn-wa" onclick="checkoutWA()">
-            <span><i class="ri-whatsapp-fill" style="font-size:18px; margin-right:6px; vertical-align:middle;"></i> Pesan Sekarang</span>
+            <i class="ri-whatsapp-fill" style="font-size:20px;"></i> Lanjut ke WhatsApp
         </button>
     </div>
 </div>
 
 <script>
-const phone = "628XXXXXXXXXX"; // JANGAN LUPA GANTI NOMOR
+const phone = "628XXXXXXXXXX"; // JANGAN LUPA GANTI NOMOR YA!
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
@@ -503,12 +540,10 @@ const rawMenuData = [
     {name:"Dutch Choco Kenangan Frappe", normal: 29000, normalLarge: 36000, category:"Frappe", img:"dutch-frappe.jpg"},
 
     // --- FOOD ---
-// --- FOOD ---
-    // Harga jual sudah diamankan agar margin minimal Rp 2.000 - Rp 3.500 per item
     {name:"Wahyu Sapi Toast", priceReg: 16000, normal: 19000, category:"Food", img:"wahyu-sapi.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Butter Croissant", priceReg: 13000, normal: 15000, category:"Food", img:"butter-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Chocolate Croissant", priceReg: 16000, normal: 19000, category:"Food", img:"choco-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
-    {name:"Sugar Donut", priceReg: 10000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true}, // Jangan didiskon, rawan rugi
+    {name:"Sugar Donut", priceReg: 10000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true}, 
     {name:"Roti Srikaya", priceReg: 13000, normal: 15000, category:"Food", img:"srikaya.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Choco Chip Cookies", priceReg: 13000, normal: 14000, category:"Food", img:"choco-cookies.jpg", noSize: true, noSugar: true, noMilk: true},
     {name:"Join The Dark Side Cookie", priceReg: 16000, normal: 21000, category:"Food", img:"darkside-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
@@ -532,13 +567,29 @@ const rawMenuData = [
 let cart = JSON.parse(localStorage.getItem("cartDetail")) || {};
 let tempItem = null;
 
-function renderAllMenus() {
+// Fungsi Render Dinamis dengan parameter Search Text
+function renderAllMenus(searchText = "") {
     const container = document.getElementById("allMenuContainer");
+    const noResultMsg = document.getElementById("noResultMsg");
     container.innerHTML = "";
+    
     const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Frappe", "Food"];
+    let itemFound = false;
+
+    // Filter Data Berdasarkan Pencarian Dulu
+    const filteredData = rawMenuData.filter(item => 
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+        noResultMsg.style.display = "flex";
+        return;
+    } else {
+        noResultMsg.style.display = "none";
+    }
 
     orderKat.forEach(cat => {
-        const items = rawMenuData.filter(item => item.category === cat);
+        const items = filteredData.filter(item => item.category === cat);
         if(items.length === 0) return;
 
         const section = document.createElement("div");
@@ -560,7 +611,6 @@ function renderAllMenus() {
         items.forEach((item) => {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
             let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
-            let discountPercent = Math.round(((item.normal - displayPrice) / item.normal) * 100);
             
             // Generate Inisial untuk Dummy Image
             let words = item.name.split(' ');
@@ -568,10 +618,15 @@ function renderAllMenus() {
             if(words.length > 1) initials += words[1][0];
             initials = initials.toUpperCase();
 
+            // Label diskon dihapus sesuai permintaan
+            let badgeHTML = isBundle ? '<div class="promo-tag">PAKET</div>' : '';
+
             const card = document.createElement("div");
             card.className = `card ${isBundle}`;
+            // id unik untuk animasi pencarian
+            card.id = `item-${item.name.replace(/\s+/g, '-')}`; 
             card.innerHTML = `
-                ${isBundle ? '<div class="discount-tag">PROMO</div>' : `<div class="discount-tag">-${discountPercent}%</div>`}
+                ${badgeHTML}
                 <div class="img-wrapper">
                     <div class="initials-placeholder">${initials}</div>
                     <img src="images/${item.img}" onerror="this.style.display='none'" alt="${item.name}">
@@ -596,6 +651,24 @@ function renderAllMenus() {
     });
 }
 
+// FUNGSI PENCARIAN (REALTIME)
+function filterSearch() {
+    const input = document.getElementById("searchInput").value;
+    const clearBtn = document.getElementById("clearSearchBtn");
+    
+    // Tampilkan tombol silang jika ada teks
+    clearBtn.style.display = input.length > 0 ? "block" : "none";
+    
+    renderAllMenus(input);
+}
+
+function clearSearch() {
+    document.getElementById("searchInput").value = "";
+    document.getElementById("clearSearchBtn").style.display = "none";
+    renderAllMenus("");
+}
+
+// FUNGSI MODAL
 function openVariantModal(itemName) {
     tempItem = rawMenuData.find(i => i.name === itemName);
     document.getElementById("v-title").innerText = tempItem.name;
@@ -657,7 +730,6 @@ function openVariantModal(itemName) {
     updateVariantPriceUI();
     const modal = document.getElementById("variantModal");
     modal.style.display = "flex";
-    // Timeout untuk animasi muncul
     setTimeout(() => modal.classList.add("show"), 10);
 }
 
@@ -680,7 +752,6 @@ function selectSize(element, size) {
     labels.forEach(l => l.classList.remove('selected'));
     element.classList.add('selected');
     element.querySelector('input').checked = true;
-    
     tempItem.selectedSize = size;
     updateVariantPriceUI();
 }
@@ -690,7 +761,6 @@ function selectMilk(element, isOatmilk) {
     labels.forEach(l => l.classList.remove('selected'));
     element.classList.add('selected');
     element.querySelector('input').checked = true;
-    
     tempItem.isOatmilk = isOatmilk;
     updateVariantPriceUI(); 
 }
@@ -700,7 +770,6 @@ function selectSugar(element) {
     labels.forEach(l => l.classList.remove('selected'));
     element.classList.add('selected');
     element.querySelector('input').checked = true;
-    
     tempItem.selectedSugar = element.querySelector('input').value;
 }
 
@@ -731,6 +800,12 @@ function addToCart() {
     saveCart();
     closeVariantModal();
     updateCartUI();
+    
+    // Trigger animasi cart bouncing
+    const cartEl = document.querySelector('.cart');
+    cartEl.classList.remove('bump');
+    void cartEl.offsetWidth; // trigger reflow
+    cartEl.classList.add('bump');
 }
 
 function changeQtyInCart(key, amount) {
@@ -738,7 +813,6 @@ function changeQtyInCart(key, amount) {
     if(cart[key].qty <= 0) delete cart[key];
     saveCart();
     updateCartUI();
-    
     if(Object.keys(cart).length === 0) closeCartModal();
 }
 
@@ -835,18 +909,21 @@ document.getElementById("outletName").addEventListener("input", function() {
     document.getElementById("outletError").style.display = "none";
 });
 
-// Smooth Scroll Sticky Nav Active State
-const sections = document.querySelectorAll('.menu-section');
+// Smooth Scroll Nav Aktif Otomatis
 const navItems = document.querySelectorAll('.nav-item');
-
 window.addEventListener('scroll', () => {
+    // Abaikan scroll active kalau lagi search
+    if(document.getElementById("searchInput").value.length > 0) return;
+
     let current = '';
+    const sections = document.querySelectorAll('.menu-section');
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 100) {
+        if (pageYOffset >= sectionTop - 120) {
             current = section.getAttribute('id');
         }
     });
+    
     navItems.forEach(item => {
         item.classList.remove('active');
         if (item.getAttribute('href').substring(1) === current) {
