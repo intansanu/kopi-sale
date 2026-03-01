@@ -133,6 +133,7 @@
         <a href="#cat-Bundling" class="promo-link">📦 Paket Promo</a>
         <a href="#cat-Coffee">☕ Coffee</a>
         <a href="#cat-Non-Coffee">🥤 Non-Coffee</a>
+        <a href="#cat-Frappe">🍦 Frappe</a>
         <a href="#cat-Food">🥐 Food & Toast</a>
     </div>
 
@@ -157,13 +158,25 @@
 <div class="modal-overlay" id="variantModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 id="v-title">Nama Minuman</h2>
+            <h2 id="v-title" style="font-size:16px;">Nama Minuman</h2>
             <button class="close-modal" onclick="closeVariantModal()">&times;</button>
         </div>
         
         <div id="v-size-section" class="variant-section">
             <h4>Pilih Ukuran</h4>
             <div class="radio-group" id="v-size-options"></div>
+        </div>
+
+        <div id="v-milk-section" class="variant-section">
+            <h4>Pilih Susu (Opsional)</h4>
+            <div class="radio-group">
+                <label class="radio-label selected" onclick="selectMilk(this, false)">
+                    <div><input type="radio" name="milk" value="Susu Biasa" checked> Susu Normal</div>
+                </label>
+                <label class="radio-label" onclick="selectMilk(this, true)">
+                    <div><input type="radio" name="milk" value="Oatmilk"> Ganti Oatmilk / Oatside</div>
+                </label>
+            </div>
         </div>
 
         <div id="v-sugar-section" class="variant-section">
@@ -206,82 +219,101 @@ const phone = "628XXXXXXXXXX"; // GANTI NOMOR
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
-// Menu Data Murni Menggunakan Tabel Manual Kamu (Tidak Ada Rumus Otomatis)
-const menuData = [
-    // --- BUNDLING (Contoh untuk maksimalkan voucher 2) ---
-    {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, priceReg: 33000, category:"Bundling", img:"bundle-2.jpg", noSugar: false, noSize: true},
-    {name:"Paket Roti (Mantan + Thai Tea + Srikaya)", normal: 56000, priceReg: 37000, category:"Bundling", img:"bundle-roti.jpg", noSugar: true, noSize: true},
+// RUMUS CERDAS SESUAI PERMINTAAN!
+// (Harga Normal / 2) + 4.500
+// Kalau Oatmilk: Harga Normalnya ditambah 3000 dulu sebelum dihitung.
+function hitungHargaJual(hargaNormal, isOatmilk = false) {
+    let baseHarga = hargaNormal;
+    if (isOatmilk) baseHarga += 3000;
+    return (baseHarga / 2) + 4500;
+}
 
-    // --- COFFEE (HARGA PERSIS TABEL) ---
-    {name:"Americano", normal: 17000, normalLarge: 23000, priceReg: 14000, category:"Coffee", img:"americano.jpg"},
-    {name:"Cappuccino", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Coffee", img:"cappuccino.jpg"},
-    {name:"Latte", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Coffee", img:"latte.jpg"},
-    {name:"Vanilla Latte", normal: 26000, normalLarge: 32000, priceReg: 18000, category:"Coffee", img:"vanilla-latte.jpg"},
-    {name:"Spanish Latte", normal: 19000, normalLarge: 25000, priceReg: 15000, category:"Coffee", img:"spanish-latte.jpg"},
-    {name:"Creamy Aren Latte", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Coffee", img:"creamy-aren.jpg"},
-    {name:"Butterscotch Aren Latte", normal: 20000, normalLarge: 26000, priceReg: 16000, category:"Coffee", img:"butter-aren.jpg"},
-    {name:"Butterscotch Sea Salt Latte", normal: 25000, normalLarge: 31000, priceReg: 18000, category:"Coffee", img:"butter-seasalt.jpg"},
-    {name:"Dua Shot Iced Shaken", normal: 28000, normalLarge: 34000, priceReg: 19000, category:"Coffee", img:"dua-shot.jpg"},
-    {name:"Caramel Macchiato", normal: 28000, normalLarge: 34000, priceReg: 19000, category:"Coffee", img:"caramel-mac.jpg"},
-    {name:"Hazelnut Latte", normal: 26000, normalLarge: 32000, priceReg: 18000, category:"Coffee", img:"hazelnut.jpg"},
-    {name:"Kopi Susu Black Aren", normal: 21000, normalLarge: 27000, priceReg: 16000, category:"Coffee", img:"black-aren.jpg"},
-    {name:"Matcha Espresso", normal: 26000, normalLarge: 32000, priceReg: 18000, category:"Coffee", img:"matcha-esp.jpg"},
-    {name:"Mocha Latte", normal: 28000, normalLarge: 34000, priceReg: 19000, category:"Coffee", img:"mocha-latte.jpg"},
-    {name:"Dubai Pistachio Latte", normal: 26000, normalLarge: 32000, priceReg: 18000, category:"Coffee", img:"dubai-pis.jpg"},
-    {name:"Pistachio Latte", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Coffee", img:"pistachio.jpg"},
-    {name:"Pistachio Aren Latte", normal: 19000, normalLarge: 25000, priceReg: 15000, category:"Coffee", img:"pis-aren.jpg"},
-    {name:"Cafe Malt Latte", normal: 23000, normalLarge: 29000, priceReg: 17000, category:"Coffee", img:"malt-latte.jpg"},
-    {name:"Kopi Kenangan Mantan", normal: 19000, normalLarge: 25000, priceReg: 15000, category:"Coffee", img:"kopken-mantan.jpg"},
-    {name:"Caramel Latte", normal: 26000, normalLarge: 32000, priceReg: 18000, category:"Coffee", img:"caramel-latte.jpg"},
-    {name:"Mocha Caramel", normal: 26000, normalLarge: 32000, priceReg: 18000, category:"Coffee", img:"mocha-caramel.jpg"},
-    {name:"Tiramisu Latte", normal: 20000, normalLarge: 26000, priceReg: 16000, category:"Coffee", img:"tiramisu.jpg"},
-    {name:"Tiramisu Mocha Latte", normal: 25000, normalLarge: 31000, priceReg: 18000, category:"Coffee", img:"tira-mocha.jpg"},
-    {name:"Toffee Nut Latte", normal: 19000, normalLarge: 25000, priceReg: 15000, category:"Coffee", img:"toffee.jpg"},
-    {name:"Toffee Nut Aren Latte", normal: 21000, normalLarge: 27000, priceReg: 16000, category:"Coffee", img:"toffee-aren.jpg"},
-    {name:"Toffee Nut Oat Latte", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Coffee", img:"toffee-oat.jpg"},
+// Data Menu (Hanya butuh Harga Normal, Harga Jual otomatis dihitung oleh sistem)
+const rawMenuData = [
+    // --- BUNDLING (Custom Harga) ---
+    {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, priceReg: 33000, category:"Bundling", img:"bundle-2.jpg", noSugar: true, noSize: true, noMilk: true},
+    {name:"Paket Roti (Mantan + Thai Tea + Srikaya)", normal: 56000, priceReg: 37000, category:"Bundling", img:"bundle-roti.jpg", noSugar: true, noSize: true, noMilk: true},
 
-    // --- NON COFFEE (HARGA PERSIS TABEL) ---
-    {name:"Choco Caramel", normal: 19000, normalLarge: 25000, priceReg: 15000, category:"Non-Coffee", img:"choco-caramel.jpg"},
-    {name:"Toffee Nut Choco Macchiato", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Non-Coffee", img:"toffee-choco.jpg"},
-    {name:"Butterscotch Sea Salt", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Non-Coffee", img:"bs-seasalt-nc.jpg"},
-    {name:"Babyccino", normal: 19000, normalLarge: 25000, priceReg: 15000, category:"Non-Coffee", img:"babyccino.jpg"},
-    {name:"Dubai Pistachio Chocolate", normal: 27000, normalLarge: 33000, priceReg: 19000, category:"Non-Coffee", img:"dubai-choco.jpg"},
-    {name:"Hazelnut Choco Milk Tea", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Non-Coffee", img:"hazel-milktea.jpg"},
-    {name:"Milo Dinosaur", normal: 23000, normalLarge: 29000, priceReg: 17000, category:"Non-Coffee", img:"milo.jpg"},
-    {name:"Oreo Shake", normal: 26000, normalLarge: 32000, priceReg: 18000, category:"Non-Coffee", img:"oreo.jpg"},
-    {name:"Raspberry Hibiscus", normal: 20000, normalLarge: 26000, priceReg: 16000, category:"Non-Coffee", img:"raspberry.jpg"},
-    {name:"Thai Tea", normal: 22000, normalLarge: 28000, priceReg: 17000, category:"Non-Coffee", img:"thaitea.jpg"},
-    {name:"Matcha Latte", normal: 25000, normalLarge: 31000, priceReg: 18000, category:"Non-Coffee", img:"matcha-latte.jpg"},
-    {name:"Avocado Caramel", normal: 28000, normalLarge: 34000, priceReg: 19000, category:"Non-Coffee", img:"avo-caramel.jpg"},
-    {name:"Avocado Milk", normal: 24000, normalLarge: 30000, priceReg: 17000, category:"Non-Coffee", img:"avo-milk.jpg"},
-    {name:"Dutch Chocolate", normal: 26000, normalLarge: 32000, priceReg: 18000, category:"Non-Coffee", img:"dutch.jpg"},
-    {name:"Hazelnut Dutch Choco", normal: 28000, normalLarge: 34000, priceReg: 19000, category:"Non-Coffee", img:"hazel-dutch.jpg"},
-    {name:"Lemon Black Tea", normal: 17000, normalLarge: 23000, priceReg: 14000, category:"Non-Coffee", img:"lemon-tea.jpg"},
-    {name:"Kenangan Milk Tea", normal: 21000, normalLarge: 27000, priceReg: 16000, category:"Non-Coffee", img:"kenangan-milktea.jpg"},
+    // --- COFFEE ---
+    {name:"Kopi Kenangan Mantan", normal: 19000, normalLarge: 25000, category:"Coffee", img:"kopken-mantan.jpg"},
+    {name:"Americano", normal: 17000, normalLarge: 22000, category:"Coffee", img:"americano.jpg"},
+    {name:"Cappuccino", normal: 22000, normalLarge: 29000, category:"Coffee", img:"cappuccino.jpg"},
+    {name:"Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"latte.jpg"},
+    {name:"Vanilla Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"vanilla-latte.jpg"},
+    {name:"Spanish Latte", normal: 19000, normalLarge: 27000, category:"Coffee", img:"spanish-latte.jpg"},
+    {name:"Creamy Aren Latte", normal: 22000, normalLarge: 31000, category:"Coffee", img:"creamy-aren.jpg"},
+    {name:"Butterscotch Aren Latte", normal: 20000, normalLarge: 27000, category:"Coffee", img:"butter-aren.jpg"},
+    {name:"Butterscotch Sea Salt Latte", normal: 25000, normalLarge: 33000, category:"Coffee", img:"butter-seasalt.jpg"},
+    {name:"Dua Shot Iced Shaken", normal: 28000, normalLarge: 38000, category:"Coffee", img:"dua-shot.jpg"},
+    {name:"Caramel Macchiato", normal: 28000, normalLarge: 38000, category:"Coffee", img:"caramel-mac.jpg"},
+    {name:"Hazelnut Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"hazelnut.jpg"},
+    {name:"Kopi Susu Black Aren", normal: 21000, normalLarge: 30000, category:"Coffee", img:"black-aren.jpg"},
+    {name:"Matcha Espresso", normal: 26000, normalLarge: 35000, category:"Coffee", img:"matcha-esp.jpg"},
+    {name:"Mocha Latte", normal: 28000, normalLarge: 38000, category:"Coffee", img:"mocha-latte.jpg"},
+    {name:"Dubai Pistachio Latte", normal: 26000, normalLarge: 33000, category:"Coffee", img:"dubai-pis.jpg"},
+    {name:"Pistachio Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"pistachio.jpg"},
+    {name:"Pistachio Aren Latte", normal: 19000, normalLarge: 26000, category:"Coffee", img:"pis-aren.jpg"},
+    {name:"Cafe Malt Latte", normal: 23000, normalLarge: 30000, category:"Coffee", img:"malt-latte.jpg"},
+    {name:"Caramel Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"caramel-latte.jpg"},
+    {name:"Mocha Caramel", normal: 26000, normalLarge: 33000, category:"Coffee", img:"mocha-caramel.jpg"},
+    {name:"Tiramisu Latte", normal: 20000, normalLarge: 27000, category:"Coffee", img:"tiramisu.jpg"},
+    {name:"Tiramisu Mocha Latte", normal: 25000, normalLarge: 32000, category:"Coffee", img:"tira-mocha.jpg"},
+    {name:"Toffee Nut Latte", normal: 19000, normalLarge: 26000, category:"Coffee", img:"toffee.jpg"},
+    {name:"Toffee Nut Aren Latte", normal: 21000, normalLarge: 28000, category:"Coffee", img:"toffee-aren.jpg"},
+    {name:"Toffee Nut Oat Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"toffee-oat.jpg", noMilk: true}, // Oatmilk gabisa diganti oat lagi
+    {name:"Avocado Coffee", normal: 28000, normalLarge: 38000, category:"Coffee", img:"avo-coffee.jpg"},
 
-    // --- FOOD & TOAST (HARGA PERSIS TABEL) ---
-    {name:"Wahyu Sapi Toast", normal: 19000, priceReg: 15000, category:"Food", img:"wahyu-sapi.jpg"},
-    {name:"Butter Croissant", normal: 15000, priceReg: 13000, category:"Food", img:"butter-croissant.jpg"},
-    {name:"Chocolate Croissant", normal: 19000, priceReg: 15000, category:"Food", img:"choco-croissant.jpg"},
-    {name:"Sugar Donut", normal: 10000, priceReg: 11000, category:"Food", img:"sugar-donut.jpg"},
-    {name:"Roti Srikaya", normal: 15000, priceReg: 13000, category:"Food", img:"srikaya.jpg"},
-    {name:"Choco Chip Cookies", normal: 14000, priceReg: 13000, category:"Food", img:"choco-cookies.jpg"},
-    {name:"Join The Dark Side Cookie", normal: 21000, priceReg: 16000, category:"Food", img:"darkside-cookie.jpg"},
-    {name:"Friend Chip Cookie", normal: 17000, priceReg: 14000, category:"Food", img:"friend-cookie.jpg"},
-    {name:"Roti Sisir Coklat", normal: 14000, priceReg: 13000, category:"Food", img:"sisir-coklat.jpg"},
-    {name:"Dirty Croissant Milo", normal: 20000, priceReg: 16000, category:"Food", img:"dirty-croissant.jpg"},
-    {name:"Bambang Choco Cheese", normal: 17000, priceReg: 14000, category:"Food", img:"bambang-toast.jpg"},
-    {name:"Adam Ayam Toast", normal: 19000, priceReg: 15000, category:"Food", img:"adam-ayam.jpg"},
-    {name:"Donut Tiramisu", normal: 14000, priceReg: 13000, category:"Food", img:"donut-tiramisu.jpg"},
-    {name:"Danish Tiramisu", normal: 20000, priceReg: 16000, category:"Food", img:"danish-tiramisu.jpg"},
-    {name:"Bolu Marble Ube", normal: 15000, priceReg: 13000, category:"Food", img:"bolu-ube.jpg"},
-    {name:"Canele Original", normal: 14000, priceReg: 13000, category:"Food", img:"canele.jpg"},
-    {name:"Canele Toffee Nut", normal: 16000, priceReg: 14000, category:"Food", img:"canele-toffee.jpg"},
-    {name:"Donut Abon", normal: 14000, priceReg: 13000, category:"Food", img:"donut-abon.jpg"},
-    {name:"Donut Almond", normal: 14000, priceReg: 13000, category:"Food", img:"donut-almond.jpg"},
-    {name:"Roti Gulung Abon", normal: 18000, priceReg: 15000, category:"Food", img:"gulung-abon.jpg"},
-    {name:"Roti Gulung Aren", normal: 15000, priceReg: 13000, category:"Food", img:"gulung-aren.jpg"},
-    {name:"Roti Sisir Original", normal: 12000, priceReg: 12000, category:"Food", img:"sisir-ori.jpg"}
+    // --- NON COFFEE ---
+    {name:"Choco Caramel", normal: 19000, normalLarge: 26000, category:"Non-Coffee", img:"choco-caramel.jpg"},
+    {name:"Toffee Nut Choco Macchiato", normal: 22000, normalLarge: null, category:"Non-Coffee", img:"toffee-choco.jpg"},
+    {name:"Butterscotch Sea Salt Crumble", normal: 22000, normalLarge: null, category:"Non-Coffee", img:"bs-seasalt-nc.jpg"},
+    {name:"Babyccino", normal: 19000, normalLarge: null, category:"Non-Coffee", img:"babyccino.jpg"},
+    {name:"Dubai Pistachio Chocolate", normal: 27000, normalLarge: 34000, category:"Non-Coffee", img:"dubai-choco.jpg"},
+    {name:"Hazelnut Choco Milk Tea", normal: 22000, normalLarge: 29000, category:"Non-Coffee", img:"hazel-milktea.jpg"},
+    {name:"Milo Dinosaur", normal: 23000, normalLarge: 30000, category:"Non-Coffee", img:"milo.jpg"},
+    {name:"Oreo Shake", normal: 26000, normalLarge: 34000, category:"Non-Coffee", img:"oreo.jpg"},
+    {name:"Raspberry Hibiscus", normal: 20000, normalLarge: 27000, category:"Non-Coffee", img:"raspberry.jpg"},
+    {name:"Thai Tea", normal: 17000, normalLarge: 22000, category:"Non-Coffee", img:"thaitea.jpg"},
+    {name:"Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"matcha-latte.jpg"},
+    {name:"Oatside Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"oatside-matcha.jpg", noMilk: true}, // Udah Oatside
+    {name:"Avocado Caramel", normal: 28000, normalLarge: 38000, category:"Non-Coffee", img:"avo-caramel.jpg"},
+    {name:"Avocado Milk", normal: 24000, normalLarge: 34000, category:"Non-Coffee", img:"avo-milk.jpg"},
+    {name:"Dutch Chocolate", normal: 26000, normalLarge: 36000, category:"Non-Coffee", img:"dutch.jpg"},
+    {name:"Hazelnut Dutch Choco", normal: 28000, normalLarge: 38000, category:"Non-Coffee", img:"hazel-dutch.jpg"},
+    {name:"Lemon Black Tea", normal: 17000, normalLarge: 24000, category:"Non-Coffee", img:"lemon-tea.jpg"},
+    {name:"Kenangan Milk Tea", normal: 21000, normalLarge: 27000, category:"Non-Coffee", img:"kenangan-milktea.jpg"},
+
+    // --- FRAPPE ---
+    {name:"Choco Caramel Frappe", normal: 28000, normalLarge: 35000, category:"Frappe", img:"choco-frappe.jpg"},
+    {name:"Tiramisu Frappe", normal: 28000, normalLarge: 35000, category:"Frappe", img:"tiramisu-frappe.jpg"},
+    {name:"Butterscotch Kenangan Frappe", normal: 30000, normalLarge: 40000, category:"Frappe", img:"bs-frappe.jpg"},
+    {name:"Matcha Kenangan Frappe", normal: 32000, normalLarge: 42000, category:"Frappe", img:"matcha-frappe.jpg"},
+    {name:"Kopi Kenangan Mantan Frappe", normal: 27000, normalLarge: 34000, category:"Frappe", img:"kopken-frappe.jpg"},
+    {name:"Dutch Choco Kenangan Frappe", normal: 29000, normalLarge: 36000, category:"Frappe", img:"dutch-frappe.jpg"},
+
+    // --- FOOD (Harga Fix dari tabel kamu, rumusnya beda krn food) ---
+    {name:"Wahyu Sapi Toast", priceReg: 15000, normal: 19000, category:"Food", img:"wahyu-sapi.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Butter Croissant", priceReg: 13000, normal: 15000, category:"Food", img:"butter-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Chocolate Croissant", priceReg: 15000, normal: 19000, category:"Food", img:"choco-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Sugar Donut", priceReg: 11000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Roti Srikaya", priceReg: 13000, normal: 15000, category:"Food", img:"srikaya.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Choco Chip Cookies", priceReg: 13000, normal: 14000, category:"Food", img:"choco-cookies.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Join The Dark Side Cookie", priceReg: 16000, normal: 21000, category:"Food", img:"darkside-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Friend Chip Cookie", priceReg: 14000, normal: 17000, category:"Food", img:"friend-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Roti Sisir Coklat", priceReg: 13000, normal: 14000, category:"Food", img:"sisir-coklat.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Dirty Croissant Milo", priceReg: 16000, normal: 20000, category:"Food", img:"dirty-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Bambang Choco Cheese", priceReg: 14000, normal: 17000, category:"Food", img:"bambang-toast.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Adam Ayam Toast", priceReg: 15000, normal: 19000, category:"Food", img:"adam-ayam.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Donut Tiramisu", priceReg: 13000, normal: 14000, category:"Food", img:"donut-tiramisu.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Danish Tiramisu", priceReg: 16000, normal: 20000, category:"Food", img:"danish-tiramisu.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Bolu Marble Ube", priceReg: 13000, normal: 15000, category:"Food", img:"bolu-ube.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Canele Original", priceReg: 13000, normal: 14000, category:"Food", img:"canele.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Canele Toffee Nut", priceReg: 14000, normal: 16000, category:"Food", img:"canele-toffee.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Donut Abon", priceReg: 13000, normal: 14000, category:"Food", img:"donut-abon.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Donut Almond", priceReg: 13000, normal: 14000, category:"Food", img:"donut-almond.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Roti Gulung Abon", priceReg: 15000, normal: 18000, category:"Food", img:"gulung-abon.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Roti Gulung Aren", priceReg: 13000, normal: 15000, category:"Food", img:"gulung-aren.jpg", noSize: true, noSugar: true, noMilk: true},
+    {name:"Roti Sisir Original", priceReg: 12000, normal: 12000, category:"Food", img:"sisir-ori.jpg", noSize: true, noSugar: true, noMilk: true}
 ];
 
 let cart = JSON.parse(localStorage.getItem("cartDetail")) || {};
@@ -290,18 +322,17 @@ let tempItem = null;
 function renderAllMenus() {
     const container = document.getElementById("allMenuContainer");
     container.innerHTML = "";
-
-    const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Food"];
+    const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Frappe", "Food"];
 
     orderKat.forEach(cat => {
-        const items = menuData.filter(item => item.category === cat);
+        const items = rawMenuData.filter(item => item.category === cat);
         if(items.length === 0) return;
 
         const section = document.createElement("div");
         section.className = "menu-section";
         section.id = `cat-${cat}`;
 
-        let icon = cat === 'Coffee' ? '☕' : cat === 'Non-Coffee' ? '🥤' : cat === 'Bundling' ? '📦' : '🥐';
+        let icon = cat === 'Coffee' ? '☕' : cat === 'Non-Coffee' ? '🥤' : cat === 'Bundling' ? '📦' : cat === 'Frappe' ? '🍦' : '🥐';
         let titleColor = cat === 'Bundling' ? 'color: var(--promo-red);' : '';
         section.innerHTML = `<div class="section-title" style="${titleColor}">${icon} ${cat}</div>`;
 
@@ -310,6 +341,10 @@ function renderAllMenus() {
 
         items.forEach((item) => {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
+            
+            // Tentukan Harga Tampil di Depan (Harga Reguler tanpa Oatmilk)
+            let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
+
             const card = document.createElement("div");
             card.className = `card ${isBundle}`;
             card.innerHTML = `
@@ -319,7 +354,7 @@ function renderAllMenus() {
                         <h3>${item.name}</h3>
                         <div class="price-core">
                             <span class="coret">Rp ${formatRp(item.normal)}</span>
-                            <span class="real">Rp ${formatRp(item.priceReg)}</span>
+                            <span class="real">Rp ${formatRp(displayPrice)}</span>
                         </div>
                     </div>
                     <button class="add-btn" onclick="openVariantModal('${item.name.replace(/'/g, "\\'")}')">Tambah</button>
@@ -333,48 +368,58 @@ function renderAllMenus() {
 }
 
 function openVariantModal(itemName) {
-    tempItem = menuData.find(i => i.name === itemName);
+    tempItem = rawMenuData.find(i => i.name === itemName);
     document.getElementById("v-title").innerText = tempItem.name;
     
+    // Set Default Status di state sementara
+    tempItem.selectedSize = "Regular";
+    tempItem.isOatmilk = false;
+    tempItem.selectedSugar = "Normal";
+
+    // 1. BAGIAN UKURAN
     const sizeSection = document.getElementById("v-size-section");
     const sizeOptions = document.getElementById("v-size-options");
     sizeOptions.innerHTML = "";
 
     if (tempItem.category === "Food" || tempItem.noSize) {
         sizeSection.style.display = "none";
-        tempItem.selectedSize = "Regular";
-        tempItem.currentPrice = tempItem.priceReg;
     } else {
         sizeSection.style.display = "block";
-        tempItem.selectedSize = "Regular"; 
-        tempItem.currentPrice = tempItem.priceReg;
-
-        // HARGA LARGE SEMENTARA (+ 3000 dari Harga Jual Regular). 
-        // Nanti bisa diganti pas kamu kirim list Large-nya.
-        const hargaJualLarge = tempItem.priceReg + 3000;
-
         sizeOptions.innerHTML += `
-            <label class="radio-label selected" onclick="selectSize(this, 'Regular', ${tempItem.priceReg})">
+            <label class="radio-label selected" onclick="selectSize(this, 'Regular')">
                 <div><input type="radio" name="size" value="Regular" checked> Regular</div>
-                <div style="font-weight:600">Rp ${formatRp(tempItem.priceReg)}</div>
-            </label>
-            <label class="radio-label" onclick="selectSize(this, 'Large', ${hargaJualLarge})">
-                <div><input type="radio" name="size" value="Large"> Large</div>
-                <div style="font-weight:600">Rp ${formatRp(hargaJualLarge)}</div>
             </label>
         `;
+        if (tempItem.normalLarge) {
+            sizeOptions.innerHTML += `
+                <label class="radio-label" onclick="selectSize(this, 'Large')">
+                    <div><input type="radio" name="size" value="Large"> Large</div>
+                </label>
+            `;
+        }
     }
 
+    // 2. BAGIAN SUSU OATMILK
+    const milkSection = document.getElementById("v-milk-section");
+    if (tempItem.category === "Food" || tempItem.noMilk) {
+        milkSection.style.display = "none";
+    } else {
+        milkSection.style.display = "block";
+        const milkLabels = milkSection.querySelectorAll('.radio-label');
+        milkLabels.forEach(l => l.classList.remove('selected'));
+        milkLabels[0].classList.add('selected'); // Default Susu Biasa
+        milkLabels[0].querySelector('input').checked = true;
+    }
+
+    // 3. BAGIAN GULA
     const sugarSection = document.getElementById("v-sugar-section");
     if (tempItem.category === "Food" || tempItem.noSugar) {
         sugarSection.style.display = "none";
-        tempItem.selectedSugar = "Normal";
     } else {
         sugarSection.style.display = "block";
-        tempItem.selectedSugar = "Normal";
         const sugarLabels = sugarSection.querySelectorAll('.radio-label');
         sugarLabels.forEach(l => l.classList.remove('selected'));
-        sugarLabels[0].classList.add('selected');
+        sugarLabels[0].classList.add('selected'); // Default Normal
         sugarLabels[0].querySelector('input').checked = true;
     }
 
@@ -382,28 +427,50 @@ function openVariantModal(itemName) {
     document.getElementById("variantModal").style.display = "flex";
 }
 
-function selectSize(element, size, price) {
+// Fungsi Update Harga Dinamis Tiap Kali Diklik
+function updateVariantPriceUI() {
+    let finalPrice = 0;
+    
+    if (tempItem.category === "Food" || tempItem.priceReg) {
+        // Kalau makanan / Bundle (yg harganya dihardcode)
+        finalPrice = tempItem.priceReg;
+    } else {
+        // Hitung otomatis pakai rumus maut bosku!
+        let baseNormal = tempItem.selectedSize === 'Large' ? tempItem.normalLarge : tempItem.normal;
+        finalPrice = hitungHargaJual(baseNormal, tempItem.isOatmilk);
+    }
+
+    tempItem.currentPrice = finalPrice; // simpan harga aktif
+    document.getElementById("v-price-btn").innerText = formatRp(finalPrice);
+}
+
+function selectSize(element, size) {
     const labels = document.getElementById("v-size-options").querySelectorAll('.radio-label');
     labels.forEach(l => l.classList.remove('selected'));
     element.classList.add('selected');
     element.querySelector('input').checked = true;
     
     tempItem.selectedSize = size;
-    tempItem.currentPrice = price;
-    updateVariantPriceUI();
+    updateVariantPriceUI(); // Hitung ulang harga
+}
+
+function selectMilk(element, isOatmilk) {
+    const labels = document.getElementById("v-milk-section").querySelectorAll('.radio-label');
+    labels.forEach(l => l.classList.remove('selected'));
+    element.classList.add('selected');
+    element.querySelector('input').checked = true;
+    
+    tempItem.isOatmilk = isOatmilk;
+    updateVariantPriceUI(); // Hitung ulang harga (+3000 ke base)
 }
 
 function selectSugar(element) {
     const labels = document.getElementById("v-sugar-section").querySelectorAll('.radio-label');
     labels.forEach(l => l.classList.remove('selected'));
     element.classList.add('selected');
-    const input = element.querySelector('input');
-    input.checked = true;
-    tempItem.selectedSugar = input.value;
-}
-
-function updateVariantPriceUI() {
-    document.getElementById("v-price-btn").innerText = formatRp(tempItem.currentPrice);
+    element.querySelector('input').checked = true;
+    
+    tempItem.selectedSugar = element.querySelector('input').value;
 }
 
 function closeVariantModal() { document.getElementById("variantModal").style.display = "none"; }
@@ -411,6 +478,7 @@ function closeVariantModal() { document.getElementById("variantModal").style.dis
 function addToCart() {
     let key = `${tempItem.name}`;
     if(tempItem.category !== "Food" && !tempItem.noSize) key += `|${tempItem.selectedSize}`;
+    if(tempItem.category !== "Food" && !tempItem.noMilk && tempItem.isOatmilk) key += `|Oatmilk`;
     if(tempItem.category !== "Food" && !tempItem.noSugar) key += `|${tempItem.selectedSugar}`;
 
     if(!cart[key]) {
@@ -418,6 +486,7 @@ function addToCart() {
             name: tempItem.name,
             size: tempItem.category !== "Food" && !tempItem.noSize ? tempItem.selectedSize : null,
             sugar: tempItem.category !== "Food" && !tempItem.noSugar ? tempItem.selectedSugar : null,
+            milk: tempItem.isOatmilk ? "Oatmilk" : null,
             price: tempItem.currentPrice,
             qty: 0
         };
@@ -454,6 +523,7 @@ function updateCartUI() {
 
         let variantText = [];
         if(item.size) variantText.push(`Uk: ${item.size}`);
+        if(item.milk) variantText.push(`Susu: ${item.milk}`);
         if(item.sugar) variantText.push(`Gula: ${item.sugar}`);
         let variantStr = variantText.length > 0 ? variantText.join(' | ') : '';
 
@@ -495,7 +565,8 @@ function checkoutWA(){
         total += subtotal;
         
         message += `▪️ *${item.name}*%0A`;
-        if(item.size) message += `   ├ Uk: ${item.size}%0A`;
+        if(item.size) message += `   ├ Ukuran: ${item.size}%0A`;
+        if(item.milk) message += `   ├ Susu: ${item.milk}%0A`;
         if(item.sugar) message += `   ├ Gula: ${item.sugar}%0A`;
         message += `   └ ${item.qty} x Rp ${formatRp(item.price)} = *Rp ${formatRp(subtotal)}*%0A%0A`;
     }
