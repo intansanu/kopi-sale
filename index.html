@@ -28,7 +28,7 @@
     }
 
     .hero-banner {
-        width: 100%; height: 200px;
+        width: 100%; height: 210px;
         background: linear-gradient(to bottom, rgba(58, 46, 42, 0.2), rgba(58, 46, 42, 0.8)), 
                     url('https://placehold.co/600x400/C28C65/FFFFFF?text=KOPKEN+PROMO') center/cover;
         display: flex; flex-direction: column; justify-content: flex-end; padding: 25px 20px; color: white;
@@ -39,13 +39,13 @@
     .sticky-nav {
         position: sticky; top: 0; background: rgba(250, 246, 240, 0.95);
         backdrop-filter: blur(10px); padding: 15px 20px; z-index: 10;
-        display: flex; gap: 12px; overflow-x: auto; border-bottom: 1px solid var(--border-color);
+        display: flex; gap: 10px; overflow-x: auto; border-bottom: 1px solid var(--border-color);
         scrollbar-width: none;
     }
     .sticky-nav::-webkit-scrollbar { display: none; }
     .sticky-nav a {
         text-decoration: none; background: var(--card-bg); color: var(--text-dark);
-        padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 500;
+        padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
         white-space: nowrap; border: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     .sticky-nav a.promo-link { border-color: var(--promo-red); color: var(--promo-red); font-weight: 600; background: #fffcfc; }
@@ -56,28 +56,44 @@
 
     .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
+    /* PERBAIKAN STRUKTUR CARD AGAR TIDAK BOCOR/TERPOTONG */
     .card {
         background: var(--card-bg); border-radius: 16px; overflow: hidden;
-        display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        border: 1px solid rgba(234, 224, 213, 0.5);
+        display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border: 1px solid var(--border-color); height: 100%;
     }
     .card.bundle { border: 1.5px solid var(--promo-red); background: #FFF9F9; }
-    .card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #F0EBE1; }
-    .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
-    .card-info h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; color: var(--text-dark); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     
-    .price-core { display: flex; flex-direction: column; margin-bottom: 12px; }
-    .price-core .coret { text-decoration: line-through; color: #b5a9a5; font-size: 11px; }
+    .img-wrapper {
+        width: 100%; padding-bottom: 100%; /* Memaksa kotak gambar jadi persegi sempurna 1:1 */
+        position: relative; background: #EAE0D5; flex-shrink: 0;
+    }
+    .img-wrapper img {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; }
+    
+    .card-info { flex-grow: 1; margin-bottom: 10px; }
+    .card-info h3 { 
+        font-size: 13px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; 
+        color: var(--text-dark); display: -webkit-box; -webkit-line-clamp: 3; 
+        -webkit-box-orient: vertical; overflow: hidden; 
+    }
+    
+    .price-core { display: flex; flex-direction: column; }
+    .price-core .coret { text-decoration: line-through; color: #b5a9a5; font-size: 11px; margin-bottom: -2px; }
     .price-core .real { font-size: 14px; color: var(--accent); font-weight: 700; }
     .card.bundle .price-core .real { color: var(--promo-red); }
 
     .add-btn {
         width: 100%; background: var(--card-bg); color: var(--accent); border: 1px solid var(--accent);
-        padding: 6px 0; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;
+        padding: 7px 0; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;
+        margin-top: auto; /* Memaksa tombol selalu rata di bagian paling bawah kartu */
     }
     .add-btn:active { background: var(--accent); color: #fff; }
 
-    .disclaimer { text-align: center; font-size: 11px; color: var(--text-light); padding: 10px 20px 30px; font-style: italic; }
+    .disclaimer { text-align: center; font-size: 11px; color: var(--text-light); padding: 10px 20px 40px; font-style: italic; }
 
     .cart-wrapper {
         position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
@@ -86,7 +102,7 @@
     .cart {
         background: #3a2e2a; color: #fff; padding: 14px 20px; border-radius: 16px;
         display: flex; justify-content: space-between; align-items: center;
-        box-shadow: 0 10px 30px rgba(58, 46, 42, 0.3); margin: 0 20px; cursor: pointer;
+        box-shadow: 0 10px 30px rgba(58, 46, 42, 0.4); margin: 0 20px; cursor: pointer;
     }
     .cart-info small { font-size: 11px; color: #D3C9C5; }
     .total { font-size: 16px; font-weight: 700; color: #fff; }
@@ -115,7 +131,7 @@
     .cart-qty-control { display: flex; align-items: center; gap: 10px; background: var(--app-bg); border-radius: 8px; padding: 4px; }
     .cart-qty-control button { background: var(--card-bg); border: 1px solid var(--border-color); width: 24px; height: 24px; border-radius: 6px; font-weight: bold; cursor: pointer; }
     
-    /* Input Wajib Isi */
+    /* Input Outlet Validation */
     .outlet-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 13px; margin-top: 15px; margin-bottom: 5px; outline: none; transition: 0.3s; }
     .outlet-input:focus { border-color: var(--accent); }
     .outlet-input.error { border-color: var(--promo-red); background: #fffcfc; }
@@ -138,7 +154,7 @@
         <a href="#cat-Coffee">☕ Coffee</a>
         <a href="#cat-Non-Coffee">🥤 Non-Coffee</a>
         <a href="#cat-Frappe">🍦 Frappe</a>
-        <a href="#cat-Food">🥐 Food & Toast</a>
+        <a href="#cat-Food">🥐 Food</a>
     </div>
 
     <div id="allMenuContainer"></div>
@@ -221,11 +237,11 @@
 </div>
 
 <script>
-const phone = "6282281884811"; // GANTI NOMOR
+const phone = "628XXXXXXXXXX"; // JANGAN LUPA GANTI NOMOR KAMU!
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
-// RUMUS HARGA MINUMAN (Voucher 1)
+// RUMUS CERDAS HARGA JUAL
 function hitungHargaJual(hargaNormal, isOatmilk = false) {
     let baseHarga = hargaNormal;
     if (isOatmilk) baseHarga += 3000;
@@ -233,8 +249,7 @@ function hitungHargaJual(hargaNormal, isOatmilk = false) {
 }
 
 const rawMenuData = [
-    // --- BUNDLING ---
-    // Rumus Bundling: (Total Normal / 2) + 5000
+    // --- BUNDLING (Harga sudah Fix dari rumusmu) ---
     {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, priceReg: 30000, category:"Bundling", img:"bundle-2.jpg", noSugar: true, noSize: true, noMilk: true},
     {name:"Paket Roti (Mantan + Thai Tea + Srikaya)", normal: 56000, priceReg: 33000, category:"Bundling", img:"bundle-roti.jpg", noSugar: true, noSize: true, noMilk: true},
 
@@ -346,11 +361,16 @@ function renderAllMenus() {
         items.forEach((item) => {
             const isBundle = item.category === "Bundling" ? "bundle" : "";
             let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
+            
+            // Generate Inisial untuk placeholder yang keren! (Maks 2 huruf)
+            let initials = item.name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
 
             const card = document.createElement("div");
             card.className = `card ${isBundle}`;
             card.innerHTML = `
-                <img src="images/${item.img}" onerror="this.src='https://placehold.co/200x200/F0EBE1/8B7A75?text=${encodeURIComponent(item.name.substring(0,3))}'" alt="${item.name}">
+                <div class="img-wrapper">
+                    <img src="images/${item.img}" onerror="this.src='https://placehold.co/400x400/EAE0D5/8B7A75?text=${initials}'" alt="${item.name}">
+                </div>
                 <div class="card-body">
                     <div class="card-info">
                         <h3>${item.name}</h3>
@@ -583,7 +603,6 @@ function checkoutWA(){
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 
-// Hapus error state pas user mulai ngetik outlet
 document.getElementById("outletName").addEventListener("input", function() {
     this.classList.remove("error");
     document.getElementById("outletError").style.display = "none";
