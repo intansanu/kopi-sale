@@ -1,661 +1,1725 @@
 <!DOCTYPE html>
+
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Kopken Premium Order</title>
+
+<title>Kopi Kenangan Reseller | Promo Spesial</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
+
+
 <style>
-    /* COLOR PALETTE SUPER PREMIUM */
+
+    /* COLOR PALETTE PREMIUM */
+
     :root {
-        --bg-color: #F8F9FA;
+
+        --bg-color: #F8F9FA; /* Sangat soft off-white */
+
         --app-bg: #FFFFFF;
+
         --card-bg: #FFFFFF;
-        
-        --text-main: #1A1D1F; 
+
+       
+
+        --text-main: #1A1D1F; /* Hitam pekat tapi tidak absolute */
+
         --text-muted: #6C757D;
-        
-        --brand-primary: #D9383A;
+
+       
+
+        --brand-primary: #D9383A; /* Merah khas Kopken */
+
         --brand-light: #FCE8E8;
+
         --accent-gold: #F59E0B;
-        
-        --border-subtle: #F3F4F6;
-        --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
-        --shadow-md: 0 10px 30px rgba(0,0,0,0.05);
-        --shadow-lg: 0 16px 40px rgba(217, 56, 58, 0.15); 
-        
-        --radius-sm: 10px;
-        --radius-md: 20px;
-        --radius-lg: 28px;
+
+       
+
+        --border-subtle: #E9ECEF;
+
+        --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+
+        --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+
+        --shadow-lg: 0 12px 32px rgba(217, 56, 58, 0.15); /* Shadow merah tipis untuk button */
+
+       
+
+        --radius-sm: 8px;
+
+        --radius-md: 16px;
+
+        --radius-lg: 24px;
+
         --radius-pill: 99px;
+
     }
+
+
 
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+
     html { scroll-behavior: smooth; background-color: var(--bg-color); }
 
-    /* FIX SCROLL & LAYOUT */
-    body { 
-        background-color: var(--bg-color); 
-        color: var(--text-main); 
-        margin: 0; 
-        padding: 0;
-        /* Penting agar scroll lancar di iOS */
-        -webkit-overflow-scrolling: touch; 
+
+
+    body {
+
+        display: flex; justify-content: center; min-height: 100vh; color: var(--text-main);
+
     }
+
+
+
+    /* CONTAINER ALA APLIKASI */
 
     .app-container {
-        margin: 0 auto; 
-        width: 100%; 
-        max-width: 480px; 
-        background: var(--app-bg); 
-        position: relative;
-        min-height: 100vh; 
-        box-shadow: var(--shadow-md); 
-        padding-bottom: 140px;
+
+        width: 100%; max-width: 480px; background: var(--app-bg); position: relative;
+
+        min-height: 100vh; box-shadow: var(--shadow-md); padding-bottom: 140px;
+
         overflow-x: hidden;
+
     }
 
-    /* HERO BANNER */
+
+
+    /* HERO BANNER PREMIUM */
+
     .hero-banner {
+
         width: 100%; height: 260px; position: relative;
+
         background: linear-gradient(135deg, #1A1D1F 0%, #2D3136 100%);
-        display: flex; flex-direction: column; justify-content: flex-end; 
+
+        display: flex; flex-direction: column; justify-content: flex-end;
+
         padding: 30px 24px; color: white; overflow: hidden;
+
     }
-    
+
+   
+
+    /* Dekorasi Pattern di Header */
+
     .hero-banner::after {
+
         content: ''; position: absolute; right: -20px; top: -20px;
+
         width: 200px; height: 200px; border-radius: 50%;
-        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
+
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+
     }
+
+
 
     .badge-premium {
-        background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+
+        background: rgba(255,255,255,0.2); backdrop-filter: blur(8px);
+
         color: white; padding: 6px 14px; border-radius: var(--radius-pill);
+
         font-size: 11px; font-weight: 700; width: max-content; margin-bottom: 12px;
-        border: 1px solid rgba(255,255,255,0.05); letter-spacing: 0.5px; text-transform: uppercase;
+
+        border: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.5px; text-transform: uppercase;
+
         display: flex; align-items: center; gap: 6px;
+
     }
+
+
 
     .hero-banner h1 { font-size: 28px; font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 6px; z-index: 1;}
+
     .hero-banner p { font-size: 14px; color: rgba(255,255,255,0.8); z-index: 1; font-weight: 500;}
 
-    /* AREA STICKY (Navigasi + Search) */
-    .sticky-area {
-        position: sticky; top: 0; background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(16px); z-index: 20;
-        border-bottom: 1px solid var(--border-subtle);
-        display: flex; flex-direction: column;
-    }
 
-    /* SEARCH BAR */
-    .search-container { padding: 16px 20px 0; }
-    .search-box { position: relative; width: 100%; display: flex; align-items: center; }
-    .search-box i { position: absolute; left: 16px; color: var(--text-muted); font-size: 18px; }
-    .search-input {
-        width: 100%; padding: 12px 16px 12px 42px; 
-        background: var(--bg-color); border: 1.5px solid transparent; 
-        border-radius: var(--radius-pill); font-size: 14px; font-weight: 500;
-        outline: none; transition: all 0.3s ease; color: var(--text-main);
-    }
-    .search-input:focus { background: white; border-color: var(--brand-primary); box-shadow: var(--shadow-sm); }
-    .search-input::placeholder { color: #9CA3AF; }
-    .clear-search {
-        position: absolute; right: 12px; background: none; border: none;
-        color: var(--text-muted); font-size: 18px; cursor: pointer; display: none;
-    }
 
-    /* STICKY NAV PILLS */
+    /* STICKY NAV MODERN (Pills Style) */
+
     .sticky-nav {
-        padding: 16px 20px; display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none;
+
+        position: sticky; top: 0; background: rgba(255, 255, 255, 0.95);
+
+        backdrop-filter: blur(12px); padding: 16px 20px; z-index: 20;
+
+        display: flex; gap: 10px; overflow-x: auto; border-bottom: 1px solid var(--border-subtle);
+
+        scrollbar-width: none;
+
     }
+
     .sticky-nav::-webkit-scrollbar { display: none; }
-    
+
+   
+
     .nav-item {
+
         text-decoration: none; background: var(--bg-color); color: var(--text-muted);
+
         padding: 8px 18px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600;
+
         white-space: nowrap; transition: all 0.3s ease; border: 1px solid transparent;
+
         display: flex; align-items: center; gap: 6px;
+
     }
+
+   
+
     .nav-item i { font-size: 16px; }
-    .nav-item.active { background: var(--text-main); color: white; }
-    .nav-item.promo-link { background: var(--brand-light); color: var(--brand-primary); }
+
+   
+
+    .nav-item.active, .nav-item:active {
+
+        background: var(--text-main); color: white;
+
+    }
+
+   
+
+    .nav-item.promo-link {
+
+        background: var(--brand-light); color: var(--brand-primary);
+
+    }
+
+
 
     /* AREA MENU */
+
     .menu-section { padding: 24px 20px 10px; }
-    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-    .section-title { font-size: 20px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
-    .section-line { height: 2px; flex-grow: 1; background: var(--border-subtle); border-radius: 2px;}
 
-    /* KOSONG PENCARIAN */
-    .no-result {
-        text-align: center; padding: 40px 20px; color: var(--text-muted); display: none;
-        flex-direction: column; align-items: center; gap: 10px;
+    .section-header {
+
+        display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+
     }
-    .no-result i { font-size: 48px; color: #D1D5DB; }
 
-    /* GRID & CARD */
+    .section-title {
+
+        font-size: 20px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px;
+
+    }
+
+    .section-line { height: 2px; flex-grow: 1; background: var(--bg-color); border-radius: 2px;}
+
+
+
+    /* GRID & CARD PREMIUM */
+
     .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
+
+
     .card {
+
         background: var(--card-bg); border-radius: var(--radius-md); overflow: hidden;
+
         display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
-        border: 1px solid transparent; height: 100%; position: relative; transition: all 0.3s ease;
+
+        border: 1px solid var(--border-subtle); height: 100%; position: relative;
+
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
     }
-    .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
     .card:active { transform: scale(0.98); }
-    
-    .card.bundle { background: #FFFCFC; border: 1px solid rgba(217, 56, 58, 0.2); }
-    
-    .promo-tag {
+
+   
+
+    .card.bundle { border: 1.5px solid var(--brand-primary); background: #FFFCFC; }
+
+   
+
+    /* Label Diskon di Foto */
+
+    .discount-tag {
+
         position: absolute; top: 10px; left: 10px; background: var(--brand-primary);
-        color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; 
+
+        color: white; font-size: 10px; font-weight: 800; padding: 4px 8px;
+
         border-radius: var(--radius-sm); z-index: 2; letter-spacing: 0.5px;
+
     }
+
+
 
     .img-wrapper {
-        width: 100%; padding-bottom: 100%; position: relative; background: var(--bg-color); 
+
+        width: 100%; padding-bottom: 100%; position: relative; background: var(--bg-color);
+
+        border-bottom: 1px solid var(--border-subtle);
+
     }
+
     .img-wrapper img {
+
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+
     }
-    
+
+   
+
+    /* Inisial Placeholder Estetik */
+
     .initials-placeholder {
+
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+
         display: flex; align-items: center; justify-content: center;
+
         font-size: 32px; font-weight: 800; color: #D1D5DB; letter-spacing: -1px;
+
     }
+
+
 
     .card-body { padding: 14px; display: flex; flex-direction: column; flex-grow: 1; }
-    
+
+   
+
     .card-info { flex-grow: 1; margin-bottom: 14px; }
-    .card-info h3 { 
-        font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; 
-        color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 2; 
-        -webkit-box-orient: vertical; overflow: hidden; 
+
+    .card-info h3 {
+
+        font-size: 14px; font-weight: 700; margin-bottom: 8px; line-height: 1.3;
+
+        color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 2;
+
+        -webkit-box-orient: vertical; overflow: hidden;
+
     }
-    
-    .price-core { display: flex; flex-direction: column; gap: 0px; }
+
+   
+
+    .price-core { display: flex; flex-direction: column; gap: 2px; }
+
     .price-core .coret { text-decoration: line-through; color: var(--text-muted); font-size: 11px; font-weight: 500;}
-    .price-core .real { font-size: 15px; color: var(--text-main); font-weight: 800; }
-    .card.bundle .price-core .real { color: var(--brand-primary); } 
+
+    .price-core .real { font-size: 15px; color: var(--brand-primary); font-weight: 800; }
+
+
+
+    /* Tombol Tambah Modern */
 
     .add-btn {
-        width: 100%; background: var(--bg-color); color: var(--text-main); 
-        border: none; padding: 10px 0; 
-        border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; 
+
+        width: 100%; background: var(--bg-color); color: var(--text-main);
+
+        border: 1px solid var(--border-subtle); padding: 8px 0;
+
+        border-radius: var(--radius-pill); font-size: 13px; font-weight: 700;
+
         cursor: pointer; transition: all 0.2s ease; margin-top: auto;
+
         display: flex; align-items: center; justify-content: center; gap: 4px;
-        /* Tambahan agar tombol tidak bisa dipencet dobel cepat (mencegah error) */
-        position: relative; z-index: 1; 
+
     }
+
     .add-btn i { font-size: 16px; }
-    .card.bundle .add-btn { background: var(--brand-light); color: var(--brand-primary); }
-    .add-btn:active { background: var(--text-main); color: white; }
 
-    .disclaimer { text-align: center; font-size: 11px; color: var(--text-muted); padding: 10px 20px 40px; }
+    .card.bundle .add-btn { background: var(--brand-light); color: var(--brand-primary); border-color: transparent;}
 
-    /* FLOATING CART */
+    .add-btn:active { background: var(--text-main); color: white; border-color: var(--text-main); }
+
+
+
+    /* FLOATING CART (Gaya Grab/GoFood) */
+
     .cart-wrapper {
+
         position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+
         width: 100%; max-width: 440px; z-index: 50; padding: 0 20px;
+
     }
+
     .cart {
-        background: var(--brand-primary); color: white; padding: 14px 20px; 
-        border-radius: var(--radius-lg); display: flex; justify-content: space-between; 
+
+        background: var(--brand-primary); color: white; padding: 14px 20px;
+
+        border-radius: var(--radius-lg); display: flex; justify-content: space-between;
+
         align-items: center; box-shadow: var(--shadow-lg); cursor: pointer;
-        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        transition: transform 0.2s ease;
+
     }
-    .cart:active { transform: scale(0.95); }
-    @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-    .cart.bump { animation: bounce 0.3s; }
-    
+
+    .cart:active { transform: scale(0.98); }
+
+   
+
     .cart-left { display: flex; align-items: center; gap: 12px; }
-    .cart-icon { 
-        background: rgba(255,255,255,0.2); width: 40px; height: 40px; 
+
+    .cart-icon {
+
+        background: rgba(255,255,255,0.2); width: 40px; height: 40px;
+
         border-radius: 50%; display: flex; align-items: center; justify-content: center;
+
         font-size: 20px; position: relative;
+
     }
+
     .cart-badge {
+
         position: absolute; top: -4px; right: -4px; background: white; color: var(--brand-primary);
+
         font-size: 11px; font-weight: 800; width: 20px; height: 20px; border-radius: 50%;
+
         display: flex; align-items: center; justify-content: center;
+
     }
-    
+
+   
+
     .cart-info { display: flex; flex-direction: column; }
+
     .cart-info span { font-size: 12px; opacity: 0.9; font-weight: 500;}
+
     .total { font-size: 16px; font-weight: 800; }
-    
+
+   
+
     .checkout-text { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
 
-    /* MODAL */
-    .modal-overlay { 
-        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-        background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 999; 
-        justify-content: center; align-items: flex-end; opacity: 0; transition: opacity 0.3s ease;
+
+
+    /* MODAL BOTTOM SHEET (Mewah) */
+
+    .modal-overlay {
+
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+
+        background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 999;
+
+        justify-content: center; align-items: flex-end;
+
+        opacity: 0; transition: opacity 0.3s ease;
+
     }
+
     .modal-overlay.show { opacity: 1; }
-    
-    .modal-content { 
-        background: white; width: 100%; max-width: 480px; 
-        border-radius: 28px 28px 0 0; padding: 24px; max-height: 85vh; overflow-y: auto;
+
+   
+
+    .modal-content {
+
+        background: white; width: 100%; max-width: 480px;
+
+        border-radius: 24px 24px 0 0; padding: 24px; max-height: 85vh; overflow-y: auto;
+
         transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        display: flex; flex-direction: column;
+
     }
+
     .modal-overlay.show .modal-content { transform: translateY(0); }
 
-    .modal-handle { width: 40px; height: 4px; background: #E5E7EB; border-radius: 4px; margin: 0 auto 20px; }
-    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-    .modal-header h2 { font-size: 20px; font-weight: 800; color: var(--text-main); line-height: 1.3; padding-right: 20px;}
-    .close-modal { 
-        background: var(--bg-color); border: none; width: 32px; height: 32px; 
-        border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        font-size: 20px; cursor: pointer; color: var(--text-muted); flex-shrink: 0;
+
+
+    /* Handle (Garis kecil di atas modal) */
+
+    .modal-handle {
+
+        width: 40px; height: 4px; background: #E5E7EB; border-radius: 4px;
+
+        margin: 0 auto 20px;
+
     }
+
+
+
+    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+
+    .modal-header h2 { font-size: 20px; font-weight: 800; color: var(--text-main); line-height: 1.3; padding-right: 20px;}
+
+    .close-modal {
+
+        background: var(--bg-color); border: none; width: 32px; height: 32px;
+
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+
+        font-size: 20px; cursor: pointer; color: var(--text-muted); flex-shrink: 0;
+
+    }
+
+
+
+    /* Kustomisasi Varian Radio Button */
 
     .variant-section { margin-bottom: 24px; }
-    .variant-section h4 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
-    .radio-group { display: flex; flex-direction: column; gap: 10px; }
-    
-    .radio-label { 
-        display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; 
-        border: 1px solid var(--border-subtle); border-radius: var(--radius-md); 
-        font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text-muted);
-    }
-    .radio-label input { display: none; } 
-    
-    .custom-radio {
-        width: 20px; height: 20px; border: 2px solid #D1D5DB; border-radius: 50%;
-        margin-right: 12px; position: relative; display: flex; align-items: center; justify-content: center;
-    }
-    .radio-label.selected .custom-radio { border-color: var(--brand-primary); }
-    .radio-label.selected .custom-radio::after {
-        content: ''; width: 10px; height: 10px; background: var(--brand-primary); border-radius: 50%;
-    }
-    
-    .radio-label-content { display: flex; align-items: center; }
-    .radio-label.selected { border-color: var(--brand-primary); background: var(--brand-light); color: var(--brand-primary); }
 
-    .btn-primary { 
-        width: 100%; padding: 16px; background: var(--brand-primary); color: #fff; 
-        border: none; border-radius: var(--radius-pill); font-weight: 700; font-size: 15px; 
-        margin-top: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-        box-shadow: var(--shadow-lg); transition: 0.2s;
+    .variant-section h4 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+
+    .radio-group { display: flex; flex-direction: column; gap: 10px; }
+
+   
+
+    .radio-label {
+
+        display: flex; justify-content: space-between; align-items: center; padding: 14px 16px;
+
+        border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+
+        font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+
+        color: var(--text-muted);
+
     }
+
+    .radio-label input { display: none; } /* Sembunyikan radio bulat default */
+
+   
+
+    /* Custom Radio Dot */
+
+    .custom-radio {
+
+        width: 20px; height: 20px; border: 2px solid #D1D5DB; border-radius: 50%;
+
+        margin-right: 12px; position: relative; display: flex; align-items: center; justify-content: center;
+
+    }
+
+    .radio-label.selected .custom-radio { border-color: var(--brand-primary); }
+
+    .radio-label.selected .custom-radio::after {
+
+        content: ''; width: 10px; height: 10px; background: var(--brand-primary); border-radius: 50%;
+
+    }
+
+   
+
+    .radio-label-content { display: flex; align-items: center; }
+
+   
+
+    .radio-label.selected {
+
+        border-color: var(--brand-primary); background: var(--brand-light); color: var(--brand-primary);
+
+    }
+
+
+
+    /* Tombol Utama Modal */
+
+    .btn-primary {
+
+        width: 100%; padding: 16px; background: var(--brand-primary); color: #fff;
+
+        border: none; border-radius: var(--radius-pill); font-weight: 700; font-size: 15px;
+
+        margin-top: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+
+        box-shadow: var(--shadow-lg); transition: 0.2s;
+
+    }
+
     .btn-primary:active { transform: scale(0.98); }
 
-    .menu-section {
-        scroll-margin-top: 140px;
+
+
+    /* Keranjang Item */
+
+    .modal-item {
+
+        display: flex; justify-content: space-between; align-items: flex-start;
+
+        margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border-subtle);
+
     }
 
-    /* Keranjang List */
-    .cart-items-container { max-height: 50vh; overflow-y: auto; padding-right: 5px; }
-    .modal-item { 
-        display: flex; justify-content: space-between; align-items: flex-start; 
-        margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border-subtle); 
-    }
     .item-desc { flex: 1; padding-right: 15px; }
+
     .item-title { font-weight: 700; color: var(--text-main); font-size: 15px; margin-bottom: 4px; }
+
     .item-variants { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4;}
-    .item-price { font-weight: 800; color: var(--text-main); font-size: 14px; }
-    
-    .cart-qty-control { 
-        display: flex; align-items: center; gap: 12px; background: var(--bg-color); 
+
+    .item-price { font-weight: 800; color: var(--brand-primary); font-size: 14px; }
+
+   
+
+    .cart-qty-control {
+
+        display: flex; align-items: center; gap: 12px; background: var(--bg-color);
+
         border-radius: var(--radius-pill); padding: 4px; border: 1px solid var(--border-subtle);
+
     }
-    .cart-qty-control button { 
-        background: white; border: none; width: 28px; height: 28px; border-radius: 50%; 
+
+    .cart-qty-control button {
+
+        background: white; border: none; width: 28px; height: 28px; border-radius: 50%;
+
         font-weight: bold; cursor: pointer; color: var(--text-main); box-shadow: var(--shadow-sm);
+
     }
-    
-    .input-group { margin-top: 20px; margin-bottom: 10px; padding-top: 10px; border-top: 1px solid var(--border-subtle);}
+
+   
+
+    /* Input Form Modern */
+
+    .input-group { margin-top: 20px; margin-bottom: 10px;}
+
     .input-label { font-size: 13px; font-weight: 700; margin-bottom: 8px; display: block; color: var(--text-main);}
-    .outlet-input { 
-        width: 100%; padding: 14px 16px; border: 1.5px solid var(--border-subtle); 
-        border-radius: var(--radius-md); font-size: 14px; outline: none; transition: 0.3s; 
+
+    .outlet-input {
+
+        width: 100%; padding: 14px 16px; border: 1.5px solid var(--border-subtle);
+
+        border-radius: var(--radius-md); font-size: 14px; outline: none; transition: 0.3s;
+
         background: var(--bg-color); font-weight: 500;
+
     }
+
     .outlet-input:focus { border-color: var(--text-main); background: white; }
+
     .outlet-input.error { border-color: var(--brand-primary); background: var(--brand-light); }
+
     .error-msg { font-size: 12px; color: var(--brand-primary); display: none; margin-top: 6px; font-weight: 600; }
-    
-    .btn-wa { background: #25D366; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2); justify-content: center; gap: 8px; }
+
+   
+
+    .btn-wa {
+
+        background: #25D366; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
+
+    }
+
 </style>
+
 </head>
+
 <body>
 
+
+
 <div class="app-container">
-    
+
+   
+
     <div class="hero-banner">
-        <div class="badge-premium"><i class="ri-vip-crown-fill" style="color: var(--accent-gold);"></i> Diskon Mitra</div>
-        <h1>Pesan Kopken<br>Jauh Lebih Hemat</h1>
-        <p>Harga reseller. Otomatis lebih murah.</p>
+
+        <div class="badge-premium"><i class="ri-vip-crown-fill" style="color: var(--accent-gold);"></i> Promo Spesial</div>
+
+        <h1>Pesan Kopken<br>Lebih Hemat!</h1>
+
+        <p>Harga otomatis lebih murah dari aplikasi resmi.</p>
+
     </div>
 
-    <div class="sticky-area">
-        <div class="search-container">
-            <div class="search-box">
-                <i class="ri-search-2-line"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Cari minuman atau roti..." onkeyup="filterSearch()">
-                <button class="clear-search" id="clearSearchBtn" onclick="clearSearch()"><i class="ri-close-circle-fill"></i></button>
-            </div>
-        </div>
 
-        <div class="sticky-nav">
-            <a href="#cat-Bundling" class="nav-item promo-link"><i class="ri-gift-line"></i> Paket Hemat</a>
-            <a href="#cat-Coffee" class="nav-item"><i class="ri-cup-hot-line"></i> Coffee</a>
-            <a href="#cat-Non-Coffee" class="nav-item"><i class="ri-drinks-line"></i> Non-Coffee</a>
-            <a href="#cat-Frappe" class="nav-item"><i class="ri-goblet-line"></i> Frappe</a>
-            <a href="#cat-Food" class="nav-item"><i class="ri-bread-line"></i> Food</a>
-        </div>
+
+    <div class="sticky-nav">
+
+        <a href="#cat-Bundling" class="nav-item promo-link"><i class="ri-gift-line"></i> Paket Hemat</a>
+
+        <a href="#cat-Coffee" class="nav-item"><i class="ri-cup-hot-line"></i> Coffee</a>
+
+        <a href="#cat-Non-Coffee" class="nav-item"><i class="ri-drinks-line"></i> Non-Coffee</a>
+
+        <a href="#cat-Frappe" class="nav-item"><i class="ri-goblet-line"></i> Frappe</a>
+
+        <a href="#cat-Food" class="nav-item"><i class="ri-bread-line"></i> Food & Toast</a>
+
     </div>
 
-    <div class="no-result" id="noResultMsg">
-        <i class="ri-search-eye-line"></i>
-        <h3>Menu tidak ditemukan</h3>
-        <p style="font-size:13px">Coba gunakan kata kunci lain.</p>
-    </div>
+
 
     <div id="allMenuContainer"></div>
 
+
+
     <div class="disclaimer">
-        *Harga dapat menyesuaikan ketersediaan outlet tujuan.
+
+        *Harga dapat berubah mengikuti kebijakan outlet tujuan.
+
     </div>
 
+
+
 </div>
+
+
 
 <div class="cart-wrapper" id="cartBar" style="display: none;">
+
     <div class="cart" onclick="openCartModal()">
+
         <div class="cart-left">
+
             <div class="cart-icon">
+
                 <i class="ri-shopping-bag-3-fill"></i>
+
                 <div class="cart-badge" id="itemCount">0</div>
+
             </div>
+
             <div class="cart-info">
-                <span>Estimasi</span>
+
+                <span>Total Estimasi</span>
+
                 <div class="total">Rp <span id="totalPrice">0</span></div>
+
             </div>
+
         </div>
-        <div class="checkout-text">Cek Keranjang <i class="ri-arrow-right-s-line"></i></div>
+
+        <div class="checkout-text">Cek <i class="ri-arrow-right-s-line"></i></div>
+
     </div>
+
 </div>
+
+
 
 <div class="modal-overlay" id="variantModal">
+
     <div class="modal-content">
+
         <div class="modal-handle"></div>
+
         <div class="modal-header">
+
             <h2 id="v-title">Nama Minuman</h2>
+
             <button class="close-modal" onclick="closeVariantModal()"><i class="ri-close-line"></i></button>
+
         </div>
-        
+
+       
+
         <div id="v-size-section" class="variant-section">
+
             <h4>Ukuran</h4>
+
             <div class="radio-group" id="v-size-options"></div>
+
         </div>
+
+
 
         <div id="v-milk-section" class="variant-section">
+
             <h4>Pilihan Susu <span style="font-weight:500; color:#6C757D; font-size:12px">(Opsional)</span></h4>
+
             <div class="radio-group">
+
                 <label class="radio-label selected" onclick="selectMilk(this, false)">
+
                     <div class="radio-label-content">
+
                         <div class="custom-radio"></div>
+
                         <input type="radio" name="milk" value="Susu Biasa" checked> Susu Normal
+
                     </div>
+
                 </label>
+
                 <label class="radio-label" onclick="selectMilk(this, true)">
+
                     <div class="radio-label-content">
+
                         <div class="custom-radio"></div>
+
                         <input type="radio" name="milk" value="Oatmilk"> Oatside / Oatmilk
+
                     </div>
+
                 </label>
+
             </div>
+
         </div>
+
+
 
         <div id="v-sugar-section" class="variant-section">
+
             <h4>Tingkat Kemanisan</h4>
+
             <div class="radio-group">
+
                 <label class="radio-label selected" onclick="selectSugar(this)">
+
                     <div class="radio-label-content">
+
                         <div class="custom-radio"></div>
+
                         <input type="radio" name="sugar" value="Normal" checked> Normal
+
                     </div>
+
                 </label>
+
                 <label class="radio-label" onclick="selectSugar(this)">
+
                     <div class="radio-label-content">
+
                         <div class="custom-radio"></div>
+
                         <input type="radio" name="sugar" value="Less Sugar"> Less Sugar
+
                     </div>
+
                 </label>
+
                 <label class="radio-label" onclick="selectSugar(this)">
+
                     <div class="radio-label-content">
+
                         <div class="custom-radio"></div>
+
                         <input type="radio" name="sugar" value="No Sugar"> No Sugar
+
                     </div>
+
                 </label>
+
             </div>
+
         </div>
+
+
 
         <button class="btn-primary" onclick="addToCart()">
-            <span>Tambah ke Keranjang</span>
+
+            <span>Tambah Pesanan</span>
+
             <span>Rp <span id="v-price-btn">0</span></span>
+
         </button>
+
     </div>
+
 </div>
+
+
 
 <div class="modal-overlay" id="cartModal">
+
     <div class="modal-content">
+
         <div class="modal-handle"></div>
+
         <div class="modal-header">
+
             <h2>Rincian Pesanan</h2>
+
             <button class="close-modal" onclick="closeCartModal()"><i class="ri-close-line"></i></button>
+
         </div>
-        
-        <div class="cart-items-container" id="modalItems"></div>
-        
+
+       
+
+        <div id="modalItems"></div>
+
+       
+
         <div class="input-group">
+
             <label class="input-label">Pilih Outlet Tujuan</label>
-            <input type="text" id="outletName" class="outlet-input" placeholder="Wajib: Ketik nama outlet terdekat">
-            <div id="outletError" class="error-msg"><i class="ri-error-warning-line"></i> Mohon isi nama outlet tujuan.</div>
+
+            <input type="text" id="outletName" class="outlet-input" placeholder="Misal: Kopi Kenangan Sudirman">
+
+            <div id="outletError" class="error-msg"><i class="ri-error-warning-line"></i> Mohon isi nama outlet terdekat.</div>
+
         </div>
-        
+
+       
+
         <button class="btn-primary btn-wa" onclick="checkoutWA()">
-            <i class="ri-whatsapp-fill" style="font-size:20px;"></i> Lanjut ke WhatsApp
+
+            <span><i class="ri-whatsapp-fill" style="font-size:18px; margin-right:6px; vertical-align:middle;"></i> Pesan Sekarang</span>
+
         </button>
+
     </div>
+
 </div>
 
+
+
 <script>
-const phone = "6282281884811"; // GANTI NOMOR
+
+const phone = "628XXXXXXXXXX"; // JANGAN LUPA GANTI NOMOR
+
+
 
 const formatRp = (angka) => angka.toLocaleString('id-ID');
 
+
+
 function hitungHargaJual(hargaNormal, isOatmilk = false) {
+
     let baseHarga = hargaNormal;
+
     if (isOatmilk) baseHarga += 3000;
+
     return (baseHarga / 2) + 4500;
+
 }
 
+
+
+const rawMenuData = [
+
+    // --- BUNDLING ---
+
+    {name:"Paket Berdua Large (2 Kopken Mantan)", normal: 50000, priceReg: 30000, category:"Bundling", img:"bundle-2.jpg", noSugar: true, noSize: true, noMilk: true},
+
+    {name:"Paket Roti (Mantan + Thai Tea + Srikaya)", normal: 56000, priceReg: 33000, category:"Bundling", img:"bundle-roti.jpg", noSugar: true, noSize: true, noMilk: true},
+
+
+
+    // --- COFFEE ---
+
+    {name:"Kopi Kenangan Mantan", normal: 19000, normalLarge: 25000, category:"Coffee", img:"kopken-mantan.jpg"},
+
+    {name:"Americano", normal: 17000, normalLarge: 22000, category:"Coffee", img:"americano.jpg", noSugar: true, noMilk: true},
+
+    {name:"Cappuccino", normal: 22000, normalLarge: 29000, category:"Coffee", img:"cappuccino.jpg"},
+
+    {name:"Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"latte.jpg"},
+
+    {name:"Vanilla Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"vanilla-latte.jpg"},
+
+    {name:"Spanish Latte", normal: 19000, normalLarge: 27000, category:"Coffee", img:"spanish-latte.jpg"},
+
+    {name:"Creamy Aren Latte", normal: 22000, normalLarge: 31000, category:"Coffee", img:"creamy-aren.jpg"},
+
+    {name:"Butterscotch Aren Latte", normal: 20000, normalLarge: 27000, category:"Coffee", img:"butter-aren.jpg"},
+
+    {name:"Butterscotch Sea Salt Latte", normal: 25000, normalLarge: 33000, category:"Coffee", img:"butter-seasalt.jpg"},
+
+    {name:"Dua Shot Iced Shaken", normal: 28000, normalLarge: 38000, category:"Coffee", img:"dua-shot.jpg"},
+
+    {name:"Caramel Macchiato", normal: 28000, normalLarge: 38000, category:"Coffee", img:"caramel-mac.jpg"},
+
+    {name:"Hazelnut Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"hazelnut.jpg"},
+
+    {name:"Kopi Susu Black Aren", normal: 21000, normalLarge: 30000, category:"Coffee", img:"black-aren.jpg"},
+
+    {name:"Matcha Espresso", normal: 26000, normalLarge: 35000, category:"Coffee", img:"matcha-esp.jpg"},
+
+    {name:"Mocha Latte", normal: 28000, normalLarge: 38000, category:"Coffee", img:"mocha-latte.jpg"},
+
+    {name:"Dubai Pistachio Latte", normal: 26000, normalLarge: 33000, category:"Coffee", img:"dubai-pis.jpg"},
+
+    {name:"Pistachio Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"pistachio.jpg"},
+
+    {name:"Pistachio Aren Latte", normal: 19000, normalLarge: 26000, category:"Coffee", img:"pis-aren.jpg"},
+
+    {name:"Cafe Malt Latte", normal: 23000, normalLarge: 30000, category:"Coffee", img:"malt-latte.jpg"},
+
+    {name:"Caramel Latte", normal: 26000, normalLarge: 34000, category:"Coffee", img:"caramel-latte.jpg"},
+
+    {name:"Mocha Caramel", normal: 26000, normalLarge: 33000, category:"Coffee", img:"mocha-caramel.jpg"},
+
+    {name:"Tiramisu Latte", normal: 20000, normalLarge: 27000, category:"Coffee", img:"tiramisu.jpg"},
+
+    {name:"Tiramisu Mocha Latte", normal: 25000, normalLarge: 32000, category:"Coffee", img:"tira-mocha.jpg"},
+
+    {name:"Toffee Nut Latte", normal: 19000, normalLarge: 26000, category:"Coffee", img:"toffee.jpg"},
+
+    {name:"Toffee Nut Aren Latte", normal: 21000, normalLarge: 28000, category:"Coffee", img:"toffee-aren.jpg"},
+
+    {name:"Toffee Nut Oat Latte", normal: 22000, normalLarge: 29000, category:"Coffee", img:"toffee-oat.jpg", noMilk: true},
+
+    {name:"Avocado Coffee", normal: 28000, normalLarge: 38000, category:"Coffee", img:"avo-coffee.jpg"},
+
+
+
+    // --- NON COFFEE ---
+
+    {name:"Choco Caramel", normal: 19000, normalLarge: 26000, category:"Non-Coffee", img:"choco-caramel.jpg"},
+
+    {name:"Toffee Nut Choco Macchiato", normal: 22000, normalLarge: null, category:"Non-Coffee", img:"toffee-choco.jpg"},
+
+    {name:"Butterscotch Sea Salt Crumble", normal: 22000, normalLarge: null, category:"Non-Coffee", img:"bs-seasalt-nc.jpg"},
+
+    {name:"Babyccino", normal: 19000, normalLarge: null, category:"Non-Coffee", img:"babyccino.jpg"},
+
+    {name:"Dubai Pistachio Chocolate", normal: 27000, normalLarge: 34000, category:"Non-Coffee", img:"dubai-choco.jpg"},
+
+    {name:"Hazelnut Choco Milk Tea", normal: 22000, normalLarge: 29000, category:"Non-Coffee", img:"hazel-milktea.jpg"},
+
+    {name:"Milo Dinosaur", normal: 23000, normalLarge: 30000, category:"Non-Coffee", img:"milo.jpg"},
+
+    {name:"Oreo Shake", normal: 26000, normalLarge: 34000, category:"Non-Coffee", img:"oreo.jpg"},
+
+    {name:"Raspberry Hibiscus", normal: 20000, normalLarge: 27000, category:"Non-Coffee", img:"raspberry.jpg"},
+
+    {name:"Thai Tea", normal: 17000, normalLarge: 22000, category:"Non-Coffee", img:"thaitea.jpg"},
+
+    {name:"Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"matcha-latte.jpg"},
+
+    {name:"Oatside Matcha Latte", normal: 25000, normalLarge: 32000, category:"Non-Coffee", img:"oatside-matcha.jpg", noMilk: true},
+
+    {name:"Avocado Caramel", normal: 28000, normalLarge: 38000, category:"Non-Coffee", img:"avo-caramel.jpg"},
+
+    {name:"Avocado Milk", normal: 24000, normalLarge: 34000, category:"Non-Coffee", img:"avo-milk.jpg"},
+
+    {name:"Dutch Chocolate", normal: 26000, normalLarge: 36000, category:"Non-Coffee", img:"dutch.jpg"},
+
+    {name:"Hazelnut Dutch Choco", normal: 28000, normalLarge: 38000, category:"Non-Coffee", img:"hazel-dutch.jpg"},
+
+    {name:"Lemon Black Tea", normal: 17000, normalLarge: 24000, category:"Non-Coffee", img:"lemon-tea.jpg"},
+
+    {name:"Kenangan Milk Tea", normal: 21000, normalLarge: 27000, category:"Non-Coffee", img:"kenangan-milktea.jpg"},
+
+
+
+    // --- FRAPPE ---
+
+    {name:"Choco Caramel Frappe", normal: 28000, normalLarge: 35000, category:"Frappe", img:"choco-frappe.jpg"},
+
+    {name:"Tiramisu Frappe", normal: 28000, normalLarge: 35000, category:"Frappe", img:"tiramisu-frappe.jpg"},
+
+    {name:"Butterscotch Kenangan Frappe", normal: 30000, normalLarge: 40000, category:"Frappe", img:"bs-frappe.jpg"},
+
+    {name:"Matcha Kenangan Frappe", normal: 32000, normalLarge: 42000, category:"Frappe", img:"matcha-frappe.jpg"},
+
+    {name:"Kopi Kenangan Mantan Frappe", normal: 27000, normalLarge: 34000, category:"Frappe", img:"kopken-frappe.jpg"},
+
+    {name:"Dutch Choco Kenangan Frappe", normal: 29000, normalLarge: 36000, category:"Frappe", img:"dutch-frappe.jpg"},
+
+
+
+    // --- FOOD ---
+
+// --- FOOD ---
+
+    // Harga jual sudah diamankan agar margin minimal Rp 2.000 - Rp 3.500 per item
+
+    {name:"Wahyu Sapi Toast", priceReg: 16000, normal: 19000, category:"Food", img:"wahyu-sapi.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Butter Croissant", priceReg: 13000, normal: 15000, category:"Food", img:"butter-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Chocolate Croissant", priceReg: 16000, normal: 19000, category:"Food", img:"choco-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Sugar Donut", priceReg: 10000, normal: 10000, category:"Food", img:"sugar-donut.jpg", noSize: true, noSugar: true, noMilk: true}, // Jangan didiskon, rawan rugi
+
+    {name:"Roti Srikaya", priceReg: 13000, normal: 15000, category:"Food", img:"srikaya.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Choco Chip Cookies", priceReg: 13000, normal: 14000, category:"Food", img:"choco-cookies.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Join The Dark Side Cookie", priceReg: 16000, normal: 21000, category:"Food", img:"darkside-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Friend Chip Cookie", priceReg: 14000, normal: 17000, category:"Food", img:"friend-cookie.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Roti Sisir Coklat", priceReg: 13000, normal: 14000, category:"Food", img:"sisir-coklat.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Dirty Croissant Milo", priceReg: 16000, normal: 20000, category:"Food", img:"dirty-croissant.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Bambang Choco Cheese", priceReg: 14000, normal: 17000, category:"Food", img:"bambang-toast.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Adam Ayam Toast", priceReg: 16000, normal: 19000, category:"Food", img:"adam-ayam.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Donut Tiramisu", priceReg: 13000, normal: 14000, category:"Food", img:"donut-tiramisu.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Danish Tiramisu", priceReg: 16000, normal: 20000, category:"Food", img:"danish-tiramisu.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Bolu Marble Ube", priceReg: 13000, normal: 15000, category:"Food", img:"bolu-ube.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Canele Original", priceReg: 13000, normal: 14000, category:"Food", img:"canele.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Canele Toffee Nut", priceReg: 14000, normal: 16000, category:"Food", img:"canele-toffee.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Donut Abon", priceReg: 13000, normal: 14000, category:"Food", img:"donut-abon.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Donut Almond", priceReg: 13000, normal: 14000, category:"Food", img:"donut-almond.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Roti Gulung Abon", priceReg: 15000, normal: 18000, category:"Food", img:"gulung-abon.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Roti Gulung Aren", priceReg: 13000, normal: 15000, category:"Food", img:"gulung-aren.jpg", noSize: true, noSugar: true, noMilk: true},
+
+    {name:"Roti Sisir Original", priceReg: 12000, normal: 12000, category:"Food", img:"sisir-ori.jpg", noSize: true, noSugar: true, noMilk: true}
+
+];
+
+
+
 let cart = JSON.parse(localStorage.getItem("cartDetail")) || {};
+
 let tempItem = null;
 
-/* =========================
-   RENDER MENU
-========================= */
 
-function renderAllMenus(searchText = "") {
+
+function renderAllMenus() {
+
     const container = document.getElementById("allMenuContainer");
-    const noResultMsg = document.getElementById("noResultMsg");
+
     container.innerHTML = "";
 
     const orderKat = ["Bundling", "Coffee", "Non-Coffee", "Frappe", "Food"];
 
-    const filteredData = rawMenuData.filter(item =>
-        item.name.toLowerCase().includes(searchText.toLowerCase())
-    );
 
-    if (filteredData.length === 0) {
-        noResultMsg.style.display = "flex";
-        return;
-    } else {
-        noResultMsg.style.display = "none";
-    }
 
     orderKat.forEach(cat => {
-        const items = filteredData.filter(item => item.category === cat);
-        if (items.length === 0) return;
+
+        const items = rawMenuData.filter(item => item.category === cat);
+
+        if(items.length === 0) return;
+
+
 
         const section = document.createElement("div");
+
         section.className = "menu-section";
+
         section.id = `cat-${cat}`;
 
-        let sectionName =
-            cat === "Food" ? "Food & Toast" :
-            cat === "Bundling" ? "Paket Hemat" : cat;
+
+
+        let sectionName = cat === "Food" ? "Food & Toast" : cat === "Bundling" ? "Paket Hemat" : cat;
+
+       
 
         section.innerHTML = `
+
             <div class="section-header">
+
                 <h2 class="section-title">${sectionName}</h2>
+
                 <div class="section-line"></div>
+
             </div>
+
         `;
 
+
+
         const grid = document.createElement("div");
+
         grid.className = "menu-grid";
 
+
+
         items.forEach((item) => {
+
             const isBundle = item.category === "Bundling" ? "bundle" : "";
+
             let displayPrice = item.priceReg ? item.priceReg : hitungHargaJual(item.normal, false);
 
+            let discountPercent = Math.round(((item.normal - displayPrice) / item.normal) * 100);
+
+           
+
+            // Generate Inisial untuk Dummy Image
+
             let words = item.name.split(' ');
+
             let initials = words[0][0];
-            if (words.length > 1) initials += words[1][0];
+
+            if(words.length > 1) initials += words[1][0];
+
             initials = initials.toUpperCase();
 
-            let badgeHTML = isBundle ? '<div class="promo-tag">PAKET</div>' : '';
+
 
             const card = document.createElement("div");
+
             card.className = `card ${isBundle}`;
+
             card.innerHTML = `
-                ${badgeHTML}
+
+                ${isBundle ? '<div class="discount-tag">PROMO</div>' : `<div class="discount-tag">-${discountPercent}%</div>`}
+
                 <div class="img-wrapper">
+
                     <div class="initials-placeholder">${initials}</div>
+
                     <img src="images/${item.img}" onerror="this.style.display='none'" alt="${item.name}">
+
                 </div>
+
                 <div class="card-body">
+
                     <div class="card-info">
+
                         <h3>${item.name}</h3>
+
                         <div class="price-core">
+
                             <span class="coret">Rp ${formatRp(item.normal)}</span>
+
                             <span class="real">Rp ${formatRp(displayPrice)}</span>
+
                         </div>
+
                     </div>
+
                     <button class="add-btn" onclick="openVariantModal('${item.name.replace(/'/g, "\\'")}')">
+
                         <i class="ri-add-line"></i> Tambah
+
                     </button>
+
                 </div>
+
             `;
+
             grid.appendChild(card);
+
         });
 
         section.appendChild(grid);
+
         container.appendChild(section);
+
     });
 
-    setTimeout(updateActiveNavOnScroll, 100);
 }
 
-/* =========================
-   SEARCH
-========================= */
 
-function filterSearch() {
-    const input = document.getElementById("searchInput").value;
-    document.getElementById("clearSearchBtn").style.display =
-        input.length > 0 ? "block" : "none";
-    renderAllMenus(input);
+
+function openVariantModal(itemName) {
+
+    tempItem = rawMenuData.find(i => i.name === itemName);
+
+    document.getElementById("v-title").innerText = tempItem.name;
+
+   
+
+    tempItem.selectedSize = "Regular";
+
+    tempItem.isOatmilk = false;
+
+    tempItem.selectedSugar = "Normal";
+
+
+
+    const sizeSection = document.getElementById("v-size-section");
+
+    const sizeOptions = document.getElementById("v-size-options");
+
+    sizeOptions.innerHTML = "";
+
+
+
+    if (tempItem.category === "Food" || tempItem.noSize) {
+
+        sizeSection.style.display = "none";
+
+    } else {
+
+        sizeSection.style.display = "block";
+
+        sizeOptions.innerHTML += `
+
+            <label class="radio-label selected" onclick="selectSize(this, 'Regular')">
+
+                <div class="radio-label-content">
+
+                    <div class="custom-radio"></div>
+
+                    <input type="radio" name="size" value="Regular" checked> Regular
+
+                </div>
+
+            </label>
+
+        `;
+
+        if (tempItem.normalLarge) {
+
+            sizeOptions.innerHTML += `
+
+                <label class="radio-label" onclick="selectSize(this, 'Large')">
+
+                    <div class="radio-label-content">
+
+                        <div class="custom-radio"></div>
+
+                        <input type="radio" name="size" value="Large"> Large
+
+                    </div>
+
+                </label>
+
+            `;
+
+        }
+
+    }
+
+
+
+    const milkSection = document.getElementById("v-milk-section");
+
+    if (tempItem.category === "Food" || tempItem.noMilk) {
+
+        milkSection.style.display = "none";
+
+    } else {
+
+        milkSection.style.display = "block";
+
+        const milkLabels = milkSection.querySelectorAll('.radio-label');
+
+        milkLabels.forEach(l => l.classList.remove('selected'));
+
+        milkLabels[0].classList.add('selected');
+
+        milkLabels[0].querySelector('input').checked = true;
+
+    }
+
+
+
+    const sugarSection = document.getElementById("v-sugar-section");
+
+    if (tempItem.category === "Food" || tempItem.noSugar) {
+
+        sugarSection.style.display = "none";
+
+    } else {
+
+        sugarSection.style.display = "block";
+
+        const sugarLabels = sugarSection.querySelectorAll('.radio-label');
+
+        sugarLabels.forEach(l => l.classList.remove('selected'));
+
+        sugarLabels[0].classList.add('selected');
+
+        sugarLabels[0].querySelector('input').checked = true;
+
+    }
+
+
+
+    updateVariantPriceUI();
+
+    const modal = document.getElementById("variantModal");
+
+    modal.style.display = "flex";
+
+    // Timeout untuk animasi muncul
+
+    setTimeout(() => modal.classList.add("show"), 10);
+
 }
 
-function clearSearch() {
-    document.getElementById("searchInput").value = "";
-    document.getElementById("clearSearchBtn").style.display = "none";
-    renderAllMenus("");
+
+
+function updateVariantPriceUI() {
+
+    let finalPrice = 0;
+
+   
+
+    if (tempItem.category === "Food" || tempItem.priceReg) {
+
+        finalPrice = tempItem.priceReg;
+
+    } else {
+
+        let baseNormal = tempItem.selectedSize === 'Large' ? tempItem.normalLarge : tempItem.normal;
+
+        finalPrice = hitungHargaJual(baseNormal, tempItem.isOatmilk);
+
+    }
+
+
+
+    tempItem.currentPrice = finalPrice;
+
+    document.getElementById("v-price-btn").innerText = formatRp(finalPrice);
+
 }
 
-/* =========================
-   NAVBAR ROUTING STABIL
-========================= */
+
+
+function selectSize(element, size) {
+
+    const labels = document.getElementById("v-size-options").querySelectorAll('.radio-label');
+
+    labels.forEach(l => l.classList.remove('selected'));
+
+    element.classList.add('selected');
+
+    element.querySelector('input').checked = true;
+
+   
+
+    tempItem.selectedSize = size;
+
+    updateVariantPriceUI();
+
+}
+
+
+
+function selectMilk(element, isOatmilk) {
+
+    const labels = document.getElementById("v-milk-section").querySelectorAll('.radio-label');
+
+    labels.forEach(l => l.classList.remove('selected'));
+
+    element.classList.add('selected');
+
+    element.querySelector('input').checked = true;
+
+   
+
+    tempItem.isOatmilk = isOatmilk;
+
+    updateVariantPriceUI();
+
+}
+
+
+
+function selectSugar(element) {
+
+    const labels = document.getElementById("v-sugar-section").querySelectorAll('.radio-label');
+
+    labels.forEach(l => l.classList.remove('selected'));
+
+    element.classList.add('selected');
+
+    element.querySelector('input').checked = true;
+
+   
+
+    tempItem.selectedSugar = element.querySelector('input').value;
+
+}
+
+
+
+function closeVariantModal() {
+
+    const modal = document.getElementById("variantModal");
+
+    modal.classList.remove("show");
+
+    setTimeout(() => modal.style.display = "none", 300);
+
+}
+
+
+
+function addToCart() {
+
+    let key = `${tempItem.name}`;
+
+    if(tempItem.category !== "Food" && !tempItem.noSize) key += `|${tempItem.selectedSize}`;
+
+    if(tempItem.category !== "Food" && !tempItem.noMilk && tempItem.isOatmilk) key += `|Oatmilk`;
+
+    if(tempItem.category !== "Food" && !tempItem.noSugar) key += `|${tempItem.selectedSugar}`;
+
+
+
+    if(!cart[key]) {
+
+        cart[key] = {
+
+            name: tempItem.name,
+
+            size: tempItem.category !== "Food" && !tempItem.noSize ? tempItem.selectedSize : null,
+
+            sugar: tempItem.category !== "Food" && !tempItem.noSugar ? tempItem.selectedSugar : null,
+
+            milk: tempItem.isOatmilk ? "Oatmilk" : null,
+
+            price: tempItem.currentPrice,
+
+            qty: 0
+
+        };
+
+    }
+
+    cart[key].qty += 1;
+
+   
+
+    saveCart();
+
+    closeVariantModal();
+
+    updateCartUI();
+
+}
+
+
+
+function changeQtyInCart(key, amount) {
+
+    cart[key].qty += amount;
+
+    if(cart[key].qty <= 0) delete cart[key];
+
+    saveCart();
+
+    updateCartUI();
+
+   
+
+    if(Object.keys(cart).length === 0) closeCartModal();
+
+}
+
+
+
+function saveCart() { localStorage.setItem("cartDetail", JSON.stringify(cart)); }
+
+
+
+function updateCartUI() {
+
+    let totalHarga = 0;
+
+    let totalItem = 0;
+
+    const modalItems = document.getElementById("modalItems");
+
+    modalItems.innerHTML = "";
+
+
+
+    for (const key in cart) {
+
+        const item = cart[key];
+
+        const subtotal = item.qty * item.price;
+
+        totalHarga += subtotal;
+
+        totalItem += item.qty;
+
+
+
+        let variantText = [];
+
+        if(item.size) variantText.push(`${item.size}`);
+
+        if(item.milk) variantText.push(`${item.milk}`);
+
+        if(item.sugar) variantText.push(`${item.sugar}`);
+
+        let variantStr = variantText.length > 0 ? variantText.join(' • ') : '';
+
+
+
+        modalItems.innerHTML += `
+
+            <div class="modal-item">
+
+                <div class="item-desc">
+
+                    <div class="item-title">${item.name}</div>
+
+                    <div class="item-variants">${variantStr}</div>
+
+                    <div class="item-price">Rp ${formatRp(item.price)}</div>
+
+                </div>
+
+                <div class="cart-qty-control">
+
+                    <button onclick="changeQtyInCart('${key.replace(/'/g, "\\'")}', -1)"><i class="ri-subtract-line"></i></button>
+
+                    <span style="font-size:14px; font-weight:700; width:20px; text-align:center">${item.qty}</span>
+
+                    <button onclick="changeQtyInCart('${key.replace(/'/g, "\\'")}', 1)"><i class="ri-add-line"></i></button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+
+    document.getElementById("itemCount").innerText = totalItem;
+
+    document.getElementById("totalPrice").innerText = formatRp(totalHarga);
+
+
+
+    const cartBar = document.getElementById("cartBar");
+
+    cartBar.style.display = totalItem > 0 ? "block" : "none";
+
+}
+
+
+
+function openCartModal() {
+
+    const modal = document.getElementById("cartModal");
+
+    modal.style.display = "flex";
+
+    setTimeout(() => modal.classList.add("show"), 10);
+
+}
+
+function closeCartModal() {
+
+    const modal = document.getElementById("cartModal");
+
+    modal.classList.remove("show");
+
+    setTimeout(() => modal.style.display = "none", 300);
+
+}
+
+
+
+function checkoutWA(){
+
+    const outletInput = document.getElementById("outletName");
+
+    const outletError = document.getElementById("outletError");
+
+    const outlet = outletInput.value.trim();
+
+   
+
+    if(!outlet) {
+
+        outletInput.classList.add("error");
+
+        outletError.style.display = "block";
+
+        outletInput.focus();
+
+        return;
+
+    } else {
+
+        outletInput.classList.remove("error");
+
+        outletError.style.display = "none";
+
+    }
+
+
+
+    let message = `Halo, saya mau order Kopken (Harga Promo):%0A%0A*📍 Outlet Tujuan:* ${outlet}%0A%0A*🛒 PESANAN:*%0A`;
+
+    let total = 0;
+
+
+
+    for (const key in cart) {
+
+        const item = cart[key];
+
+        const subtotal = item.qty * item.price;
+
+        total += subtotal;
+
+       
+
+        message += `▪️ *${item.name}*%0A`;
+
+        if(item.size) message += `   ├ Ukuran: ${item.size}%0A`;
+
+        if(item.milk) message += `   ├ Susu: ${item.milk}%0A`;
+
+        if(item.sugar) message += `   ├ Gula: ${item.sugar}%0A`;
+
+        message += `   └ ${item.qty} x Rp ${formatRp(item.price)} = *Rp ${formatRp(subtotal)}*%0A%0A`;
+
+    }
+
+
+
+    message += `*Total Estimasi: Rp ${formatRp(total)}*%0A%0AMohon konfirmasinya ya. Makasih!`;
+
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+
+}
+
+
+
+document.getElementById("outletName").addEventListener("input", function() {
+
+    this.classList.remove("error");
+
+    document.getElementById("outletError").style.display = "none";
+
+});
+
+
+
+// Smooth Scroll Sticky Nav Active State
+
+const sections = document.querySelectorAll('.menu-section');
 
 const navItems = document.querySelectorAll('.nav-item');
 
-function setActiveNav(targetId) {
-    navItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('href') === `#${targetId}`) {
-            item.classList.add('active');
 
-            const navContainer = document.querySelector('.sticky-nav');
-            const scrollPos =
-                item.offsetLeft -
-                (navContainer.offsetWidth / 2) +
-                (item.offsetWidth / 2);
 
-            navContainer.scrollTo({
-                left: scrollPos,
-                behavior: 'smooth'
-            });
-        }
-    });
-}
+window.addEventListener('scroll', () => {
 
-function updateActiveNavOnScroll() {
-    if (document.getElementById("searchInput").value.length > 0) return;
-
-    const sections = document.querySelectorAll('.menu-section');
-    let currentSection = '';
+    let current = '';
 
     sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 180 && rect.bottom >= 180) {
-            currentSection = section.id;
+
+        const sectionTop = section.offsetTop;
+
+        if (pageYOffset >= sectionTop - 100) {
+
+            current = section.getAttribute('id');
+
         }
+
     });
 
-    if (currentSection) {
-        setActiveNav(currentSection);
-        history.replaceState(null, null, `#${currentSection}`);
-    }
-}
+    navItems.forEach(item => {
 
-window.addEventListener('scroll', updateActiveNavOnScroll);
+        item.classList.remove('active');
 
-navItems.forEach(item => {
-    item.addEventListener('click', function (e) {
-        e.preventDefault();
+        if (item.getAttribute('href').substring(1) === current) {
 
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
+            item.classList.add('active');
 
-        if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            item.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
 
-            setActiveNav(targetId);
-            history.pushState(null, null, `#${targetId}`);
         }
+
     });
+
 });
 
-/* =========================
-   INIT
-========================= */
+
 
 renderAllMenus();
-updateActiveNavOnScroll();
+
 updateCartUI();
+
 </script>
+
 </body>
+
 </html>
